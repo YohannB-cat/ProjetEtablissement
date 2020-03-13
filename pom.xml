@@ -11,7 +11,7 @@
 	<groupId>com.fr.adaming</groupId>
 	<artifactId>ProjetEtablissement</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-dlfqsdqsdfjqsdlfj<name>ProjetEtablissement</name>
+        <name>ProjetEtablissement</name>
 	<description>Projet etablissement du groupe de Clara</description>
 
 	<properties>
