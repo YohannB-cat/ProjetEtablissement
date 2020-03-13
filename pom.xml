@@ -11,8 +11,8 @@
 	<groupId>com.fr.adaming</groupId>
 	<artifactId>ProjetEtablissement</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ProjetEtablissement</name>
-	<description>Projet etablissement du groupe de Claraa</description>
+        <name>ProjetEtablissement</name>
+	<description>Projet etablissement du groupe de Clara</description>
 
 	<properties>
 		<java.version>1.8</java.version>
