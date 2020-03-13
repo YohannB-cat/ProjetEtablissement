@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class ClasseDtoCreate {
 	
+	private int id;
+	
 	private String nom;
 	
 	private List<Etudiant> liste;
