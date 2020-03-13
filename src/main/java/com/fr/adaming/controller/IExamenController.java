@@ -23,22 +23,22 @@ public interface IExamenController {
 	
 	//create examen 
 	@PostMapping
-	public ResponseEntity<ResponseDto> createExamen(@RequestBody @Valid ExamenDtoCreate dto);
+	public ResponseEntity<ResponseDto> create(@RequestBody @Valid ExamenDtoCreate dto);
 	
 	//read examen 
-	@GetMapping
-	public  ResponseEntity<ResponseDto> readExamen(@RequestParam (name = "id") int id);
+	@GetMapping (path = "id")
+	public  ResponseEntity<ResponseDto> find(@RequestParam (name = "id", required = false) int id);
 	
 	//read all examen
-	@GetMapping
-	public  ResponseEntity<ResponseDto> readAll(@RequestBody List<Examen> listeExamen);
+	@GetMapping (path = "all")
+	public  ResponseEntity<ResponseDto> findAll(@RequestBody List<Examen> listeExamen);
 	
 	//update examen
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@RequestBody @Valid ExamenDto dto);
 	
 	//delete examen
-	@DeleteMapping (path = "{id}")
-	public  ResponseEntity<ResponseDto> delete(@PathVariable (name = "id") int id);
+	@DeleteMapping (path ="{id}")
+	public  ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id);
 
 }
