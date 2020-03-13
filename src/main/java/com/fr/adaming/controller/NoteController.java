@@ -1,5 +1,11 @@
 package com.fr.adaming.controller;
 
-public class NoteController {
+import org.springframework.http.ResponseEntity;
+
+import com.fr.adaming.dto.ResponseDto;
+
+public class NoteController implements INoteController{
+
+
 
 }

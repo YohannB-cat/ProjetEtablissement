@@ -1,7 +1,10 @@
 package com.fr.adaming.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,28 +12,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.fr.adaming.dto.ExamenDto;
+import com.fr.adaming.dto.ExamenDtoCreate;
+import com.fr.adaming.dto.ResponseDto;
 
 @RequestMapping (path ="examen/")
 public interface IExamenController {
 	
 	//create examen 
 	@PostMapping
-	public void ResponseEntity<ResponseDto> createExamen(@RequestBody @Valid ExamenCreateDto dto);
+	public ResponseEntity<ResponseDto> createExamen(@RequestBody @Valid ExamenDtoCreate dto);
 	
 	//read examen 
 	@GetMapping
-	public void ResponseEntity<ResponseDto> readExamen(@RequestBody @Valid ExamenReadDto dto);
+	public  ResponseEntity<ResponseDto> readExamen(@RequestParam (name = "id") int id);
 	
 	//read all examen
 	@GetMapping
-	public void ResponseEntity<ResponseDto> readAll(@RequestBody @Valid ExamenReadAllDto dto);
+	public  ResponseEntity<ResponseDto> readAll(@RequestBody List<Examen> listeExamen);
 	
 	//update examen
 	@PutMapping
-	public void ResponseEntity<ResponseDto> update(@RequestBody @Valid UpdateDto dto);
+	public ResponseEntity<ResponseDto> update(@RequestBody @Valid ExamenDto dto);
 	
 	//delete examen
 	@DeleteMapping (path = "{id}")
-	public void ResponseEntity<ResponseDto> delete(@PathVariable (name = "id") int id);
+	public  ResponseEntity<ResponseDto> delete(@PathVariable (name = "id") int id);
 
 }

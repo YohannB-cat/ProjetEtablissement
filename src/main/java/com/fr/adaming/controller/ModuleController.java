@@ -1,5 +1,5 @@
 package com.fr.adaming.controller;
 
-public class ModuleController {
+public class ModuleController implements IModuleController{
 
 }
