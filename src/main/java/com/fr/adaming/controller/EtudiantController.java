@@ -1,5 +1,7 @@
 package com.fr.adaming.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.converter.ConverterChat;
+import com.fr.adaming.converter.EtudiantConverter;
+import com.fr.adaming.dto.DtoChat;
+import com.fr.adaming.dto.DtoResponse;
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
@@ -49,33 +55,68 @@ public class EtudiantController implements IEtudiantController {
 		
 	}
 
+	// Methode update
 	@Override
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody EtudiantDtoCreate dto) {
-		
+		boolean result = service.update(EtudiantConverter.convertEtudiantDtoCreateToEtudiant(dto));
+		DtoResponse resp = null;
+
+		if (!result) {
+			resp = new ResponseDto(true, "SUCCESS", null);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(false, "FAIL", null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 	@Override
 	@GetMapping(path = "/{id}")
-	public void findById(@PathVariable int id) {
+	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
+		EtudiantDtoCreate dto = EtudiantConverter.convertEtudiantToEtudiantDtoCreate(service.findById(id));
+		ResponseDto resp = null;
 
+		if (dto != null) {
+			resp = new ResponseDto(false, "SUCCESS", dto);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(true, "FAIL", dto);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
-	
+
 	@Override
 	@GetMapping(path = "/{name}")
-	public void findByName(@PathVariable String name) {
+	public ResponseEntity<ResponseDto> findByName(@PathVariable(name = "name") String name) {
+		EtudiantDtoCreate dto = EtudiantConverter.convertEtudiantToEtudiantDtoCreate(service.findByName(name));
+		ResponseDto resp = null;
 
+		if (dto != null) {
+			resp = new ResponseDto(false, "SUCCESS", dto);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(true, "FAIL", dto);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 	@Override
 	@GetMapping
-	public void findAll() {
+	public ResponseEntity<ResponseDto> findAll() {
+		List<EtudiantDtoCreate> list = service.findAll();
 
+		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id) {
+	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
+		boolean result = service.delete(id);
+		ResponseDto resp = null;
 
+		if (!result) {
+			resp = new ResponseDto(true, "SUCCESS", null);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(false, "FAIL", null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 }
