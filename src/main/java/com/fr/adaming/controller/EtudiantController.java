@@ -24,6 +24,7 @@ import com.fr.adaming.dto.DtoResponse;
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.service.IEtudiantService;
 
 @RestController
 @RequestMapping(path = "/etudiant")
@@ -31,7 +32,7 @@ public class EtudiantController implements IEtudiantController {
 
 	@Autowired
 	@Qualifier("serviceetudiant")
-	private IServiceEtudiant service;
+	private IEtudiantService service;
 
 	// Methode create
 	@Override

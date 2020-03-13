@@ -2,6 +2,8 @@ package com.fr.adaming.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 
 import com.fr.adaming.dto.ModuleDto;
@@ -9,6 +11,10 @@ import com.fr.adaming.dto.ModuleDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
 public class ModuleController implements IModuleController{
+	
+	@Autowired
+	@Qualifier("servicemodule")
+	private IServiceModule service;
 
 	//create
 	@Override

@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,32 +19,26 @@ import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
 @RestController
-@RequestMapping(path = "/etudiant")
-public interface IEtudiantController {
-
-<<<<<<< HEAD
-
-=======
+@RequestMapping(path = "/absances")
+public interface IAbsanceController {
+	
 	@Autowired
-	@Qualifier("etudiantservice")
-	private IEtudiantService service;
->>>>>>> f55f28d15a8d089e611b7da2abe73826545b0ce7
+	@Qualifier("absancesservice")
+	private IAbsanceService service;
 
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto);
+	public ResponseEntity<ResponseDto> create(@Valid @RequestBody AbsanceDto dto);
 
 	@PutMapping
-	public ResponseEntity<ResponseDto> update(@Valid @RequestBody EtudiantDtoCreate dto);
+	public ResponseEntity<ResponseDto> update(@Valid @RequestBody AbsanceDtoCreate dto);
 
 	@GetMapping(path = "/{id}")
 	public void findById(@PathVariable int id);
-	
-	@GetMapping(path = "/{name}")
-	public void findByName(@PathVariable String name);
 
 	@GetMapping
 	public void findAll();
 
 	@DeleteMapping(path = "/{id}")
 	public void delete(@PathVariable int id);
+
 }

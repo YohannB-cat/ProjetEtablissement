@@ -32,7 +32,7 @@ public interface IExamenController {
 	
 	//read examen 
 	@GetMapping (path = "id")
-	public  ResponseEntity<ResponseDto> find(@RequestParam (name = "id", required = false) int id);
+	public  ResponseEntity<ResponseDto> findById(@RequestParam (name = "id", required = false) int id);
 	
 	//read all examen
 	@GetMapping (path = "all")

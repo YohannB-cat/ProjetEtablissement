@@ -4,13 +4,20 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 
 import com.fr.adaming.dto.ExamenDtoCreate;
 import com.fr.adaming.dto.NoteDto;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.service.INoteService;
 
 public class NoteController implements INoteController{
+	
+	@Autowired
+	@Qualifier("servicenote")
+	private INoteService service;
 
 	//create
 	@Override

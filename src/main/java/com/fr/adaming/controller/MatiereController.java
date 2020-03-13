@@ -4,14 +4,21 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fr.adaming.dto.MatiereDto;
 import com.fr.adaming.dto.MatiereDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.service.IMatiereService;
 
 public class MatiereController implements IMatiereController{
+	
+	@Autowired
+	@Qualifier("servicematiere")
+	private IMatiereService service;
 
 	//create matiere
 	@Override
