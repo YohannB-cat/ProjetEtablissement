@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.entity.Examen;
 
 @RequestMapping (path ="examen/")
 public interface IExamenController {

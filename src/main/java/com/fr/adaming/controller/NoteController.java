@@ -35,7 +35,7 @@ public class NoteController implements INoteController{
 
 	//find All
 	@Override
-	public ResponseEntity<ResponseDto> findAll(List<Note> listeNote) {
+	public ResponseEntity<ResponseDto> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

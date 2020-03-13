@@ -36,7 +36,7 @@ public class MatiereController implements IMatiereController{
 
 	//find all
 	@Override
-	public ResponseEntity<ResponseDto> findAll(@Valid List<Matiere> listeMatiere) {
+	public ResponseEntity<ResponseDto> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

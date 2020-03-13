@@ -23,9 +23,7 @@ import com.fr.adaming.dto.ResponseDto;
 @RequestMapping(path = "/etudiant")
 public interface IEtudiantController {
 
-	@Autowired
-	@Qualifier("serviceetudiant")
-	private IServiceEtudiant service;
+
 
 	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto);

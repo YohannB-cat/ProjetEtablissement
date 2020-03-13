@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.fr.adaming.dto.ModuleDto;
+import com.fr.adaming.dto.ModuleDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
 public class ModuleController implements IModuleController{
@@ -31,7 +33,7 @@ public class ModuleController implements IModuleController{
 
 	// Find All
 	@Override
-	public ResponseEntity<ResponseDto> findAll(List<Module> listeModule) {
+	public ResponseEntity<ResponseDto> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
