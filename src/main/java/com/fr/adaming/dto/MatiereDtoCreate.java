@@ -1,5 +1,13 @@
 package com.fr.adaming.dto;
 
-public class MatiereDtoCreate {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data @NoArgsConstructor @AllArgsConstructor
+public class MatiereDtoCreate {
+	
+	private int id;
+	
+	private String nom;
 }
