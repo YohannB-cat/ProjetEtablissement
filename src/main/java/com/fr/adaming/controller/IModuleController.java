@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fr.adaming.dto.MatiereDto;
 import com.fr.adaming.dto.MatiereDtoCreate;
+import com.fr.adaming.dto.ModuleDto;
+import com.fr.adaming.dto.ModuleDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
 @RequestMapping (path = "module/")
@@ -35,9 +37,9 @@ public interface IModuleController {
 	
 	//read all
 	@GetMapping (path = "all")
-	public  ResponseEntity<ResponseDto> findAll(@RequestBody List<Module> listeModule);
+	public  ResponseEntity<ResponseDto> findAll();
 	
-	//update module 
+	//update module
 	@PutMapping
 	public ResponseEntity<ResponseDto> update (@RequestBody @Valid ModuleDto dto);
 		

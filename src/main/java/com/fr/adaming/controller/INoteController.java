@@ -33,11 +33,11 @@ public interface INoteController {
 	
 	//read note by etudiant
 	@GetMapping (path = "etudiant")
-	public ResponseEntity<ResponseDto> findByNote (@RequestParam (name = "etudiant", required = false) int etudiant);
+	public ResponseEntity<ResponseDto> findByEtudiant (@RequestParam (name = "etudiant", required = false) int etudiant);
 	
 	//read all
 	@GetMapping (path = "all")
-	public ResponseEntity<ResponseDto> findAll(@RequestBody List<Note> listeNote);
+	public ResponseEntity<ResponseDto> findAll();
 	
 	//update
 	@PutMapping

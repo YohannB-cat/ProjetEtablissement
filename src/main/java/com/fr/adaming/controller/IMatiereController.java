@@ -36,7 +36,7 @@ public interface IMatiereController {
 	
 	// read all
 	@GetMapping (path = "all")
-	public ResponseEntity<ResponseDto> findAll(@RequestBody @Valid List<Matiere> listeMatiere);
+	public ResponseEntity<ResponseDto> findAll();
 	
 	// update matiere by id
 	@PutMapping
