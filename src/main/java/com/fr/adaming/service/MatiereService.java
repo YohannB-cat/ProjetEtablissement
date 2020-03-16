@@ -13,7 +13,7 @@ import com.fr.adaming.Dao.IMatiereDao;
 import com.fr.adaming.entity.Matiere;
 
 public class MatiereService implements IMatiereService {
-	
+
 	@Autowired
 	private IMatiereDao dao;
 
@@ -104,8 +104,20 @@ public class MatiereService implements IMatiereService {
 
 	@Override
 	public boolean deleteByNom(String nom) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (dao.findByNom(nom) != null && nom != null) {
+				dao.deleteByNom(nom);
+				return true;
+			} else {
+				return false;
+			}
+		} catch (InvalidDataAccessApiUsageException e) {
+			e.printStackTrace();
+			return false;
+		} catch (EmptyResultDataAccessException er) {
+			er.printStackTrace();
+			return false;
+		}
 	}
 
 }
