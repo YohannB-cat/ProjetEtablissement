@@ -26,7 +26,7 @@ public class NoteConverter implements IConverter<Note, NoteDto> {
 
 	@Override
 	public NoteDto DtoToEntite(Note entite) {
-		NoteDto dto = new NoteDto(entite.getId_etudiant(), entite.getId_module(),entite.getValeur());
+		NoteDto dto = new NoteDto(entite.getIdEtudiant(), entite.getId_module(),entite.getValeur());
 		return dto;
 	}
 
@@ -34,7 +34,7 @@ public class NoteConverter implements IConverter<Note, NoteDto> {
 	public List<NoteDto> ListDtoToEntite(List<Note> entite) {
 		List<NoteDto> liste = new ArrayList<NoteDto>();
 		for (Note e : entite) {
-			liste.add(new NoteDto(e.getId_etudiant(), e.getId_module(),e.getValeur()));
+			liste.add(new NoteDto(e.getIdEtudiant(), e.getId_module(),e.getValeur()));
 		}
 		return liste;
 	}
