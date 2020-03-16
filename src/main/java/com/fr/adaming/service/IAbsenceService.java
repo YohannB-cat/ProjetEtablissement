@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.fr.adaming.entity.Absence;
 
-public interface IAbsenceController {
+public interface IAbsenceService {
+	
 	public Absence create(Absence absence);
 
 	public List<Absence> findAll();

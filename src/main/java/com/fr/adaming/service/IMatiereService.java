@@ -12,7 +12,7 @@ public interface IMatiereService {
 
 	public Matiere findById(int id);
 
-	public Matiere findByNom(String email);
+	public Matiere findByNom(String nom);
 
 	public boolean update(Matiere matiere);
 
