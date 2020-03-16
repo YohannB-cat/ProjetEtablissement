@@ -48,7 +48,7 @@ public interface IModuleController {
 	
 	//update module
 	@PutMapping
-	public ResponseEntity<ResponseDto> update (@RequestBody @Valid ModuleDto dto);
+	public ResponseEntity<ResponseDto> update (@RequestBody @Valid ModuleDtoCreate dto);
 		
 	//delete module by id
 	@DeleteMapping (path = "{id}")

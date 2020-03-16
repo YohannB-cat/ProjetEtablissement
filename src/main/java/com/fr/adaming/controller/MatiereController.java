@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.converter.ExamenConverter;
+import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.converter.MatiereConverter;
 import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;
@@ -28,11 +29,19 @@ public class MatiereController implements IMatiereController {
 	@Autowired
 	@Qualifier("matiereservice")
 	private IMatiereService service;
+	
+	@Autowired
+	private IConverter<Matiere, MatiereDtoCreate> matiereCreateDto;
+	
+	@Autowired
+	private IConverter<Matiere, MatiereDto> matiereDto;
+	
 
 	// create matiere
 	@Override
 	public ResponseEntity<ResponseDto> create(@Valid MatiereDtoCreate dto) {
-		MatiereDto matiere = MatiereConverter.convertMatiereToMatiereDtoCreate().service.create(MatiereConverter.convertMatiereDtoCreateToMatiere(dto)));
+		MatiereDtoCreate matiere = matiereCreateDto.entiteToDto(service.create(matiereCreateDto.dtoToEntite(dto)));
+				
 		
 		//initialisation de la reponse
 		ResponseDto resp = null;
@@ -49,8 +58,8 @@ public class MatiereController implements IMatiereController {
 	// find by id
 	@Override
 	public ResponseEntity<ResponseDto> findById(int id) {
-		Matiere matiere = service.findById(id);
-
+		MatiereDto matiere =  matiereDto.entiteToDto(service.findById(id));
+	
 		// initialisation de la reponse
 		ResponseDto resp = null;
 
@@ -66,7 +75,8 @@ public class MatiereController implements IMatiereController {
 	// find by nom
 	@Override
 	public ResponseEntity<ResponseDto> findByNom(String nom) {
-		Matiere matiere = service.findByNom(nom);
+		MatiereDto matiere = matiereDto.entiteToDto(service.findByNom(nom));
+				
 
 		// initialisation de la reponse
 		ResponseDto resp = null;
@@ -83,7 +93,9 @@ public class MatiereController implements IMatiereController {
 	// find all
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		List<Matiere> list = service.findAll();
+		List<MatiereDto> list = matiereDto.listEntiteToDto(service.findAll());
+				
+		
 		ResponseDto resp = null;
 		if (list != null) {
 			resp = new ResponseDto(false, "SUCCESS", list);
@@ -95,8 +107,10 @@ public class MatiereController implements IMatiereController {
 
 	// udpdate
 	@Override
-	public ResponseEntity<ResponseDto> update(MatiereDto dto) {
-		boolean result = service.update(MatiereConverter.convertMatiereDtoToMatiere(dto));
+	public ResponseEntity<ResponseDto> update(MatiereDtoCreate dto) {
+		boolean result = service.update(matiereCreateDto.dtoToEntite(dto));
+				
+				
 		ResponseDto resp = null;
 
 		if (!result) {

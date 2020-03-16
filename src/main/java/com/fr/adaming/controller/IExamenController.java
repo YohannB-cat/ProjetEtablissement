@@ -45,7 +45,7 @@ public interface IExamenController {
 	
 	//update examen
 	@PutMapping
-	public ResponseEntity<ResponseDto> update(@RequestBody @Valid ExamenDto dto);
+	public ResponseEntity<ResponseDto> update(@RequestBody @Valid ExamenDtoCreate dto);
 	
 	//delete examen
 	@DeleteMapping (path ="{id}")

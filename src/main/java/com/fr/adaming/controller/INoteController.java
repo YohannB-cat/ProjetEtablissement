@@ -46,7 +46,7 @@ public interface INoteController {
 	
 	//update
 	@PutMapping
-	public ResponseEntity<ResponseDto> update (@RequestBody @Valid NoteDto dto);
+	public ResponseEntity<ResponseDto> update (@RequestBody @Valid NoteDtoCreate dto);
 	
 	// delete Note by ID
 	@DeleteMapping(path = "{id}")

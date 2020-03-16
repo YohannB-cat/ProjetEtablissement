@@ -10,10 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fr.adaming.converter.EtudiantConverter;
 import com.fr.adaming.converter.ExamenConverter;
-import com.fr.adaming.dto.EtudiantDto;
-import com.fr.adaming.dto.EtudiantDtoCreate;
+import com.fr.adaming.converter.ExamenCreateConverter;
+import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
@@ -26,11 +25,19 @@ public class ExamenController implements IExamenController {
 	@Autowired
 	@Qualifier("examenservice")
 	private IExamenService service;
+	
+	@Autowired
+	private IConverter<Examen, ExamenDtoCreate> examCreateDto;
+	
+	@Autowired
+	private IConverter<Examen, ExamenDto> examDto;
+	
 
 	// create
 	@Override
 	public ResponseEntity<ResponseDto> create(@Valid ExamenDtoCreate dto) {
-		ExamenDto exam = ExamenConverter.convertExamentToExamenDtoCreate().service.create(ExamenConverter.convertExamenDtoCreateToExamen(dto)));
+		ExamenDtoCreate exam =
+				examCreateDto.entiteToDto(service.create(examCreateDto.dtoToEntite(dto)));
 		
 				//initialisation de la reponse
 				ResponseDto resp = null;
@@ -47,7 +54,8 @@ public class ExamenController implements IExamenController {
 	// find
 	@Override
 	public ResponseEntity<ResponseDto> findById(int id) {
-		Examen exam = service.findById(id);
+		ExamenDto exam = examDto.entiteToDto(service.findById(id));
+				
 		
 		//initialisation de la reponse
 		ResponseDto resp = null;
@@ -65,7 +73,9 @@ public class ExamenController implements IExamenController {
 	// find All
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		List<Examen> list = service.findAll();
+		List<ExamenDto> list = examDto.listEntiteToDto(service.findAll());
+				
+		
 		ResponseDto resp = null;
 		if (list != null) {
 			 resp = new ResponseDto(false, "SUCCESS", list);
@@ -77,8 +87,9 @@ public class ExamenController implements IExamenController {
 
 	// update
 	@Override
-	public ResponseEntity<ResponseDto> update(@Valid ExamenDto dto) {
-		boolean result = service.update(ExamenConverter.convertExamenDtoToExamen(dto));
+	public ResponseEntity<ResponseDto> update(@Valid ExamenDtoCreate dto) {
+		boolean result = service.update(examCreateDto.dtoToEntite(dto));
+				
 		ResponseDto resp = null;
 
 		if (!result) {

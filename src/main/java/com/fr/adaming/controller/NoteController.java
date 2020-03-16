@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.converter.NoteConverter;
 import com.fr.adaming.dto.NoteDto;
 import com.fr.adaming.dto.NoteDtoCreate;
@@ -24,27 +25,34 @@ public class NoteController implements INoteController {
 	@Qualifier("noteservice")
 	private INoteService service;
 
+	@Autowired
+	private IConverter<Note, NoteDtoCreate> noteCreateDto;
+
+	@Autowired
+	private IConverter<Note, NoteDto> noteDto;
+
 	// create
 	@Override
 	public ResponseEntity<ResponseDto> create(@Valid NoteDtoCreate dto) {
-		NoteDto note = NoteConverter.convertNoteToNoteDtoCreate().service.create(NoteConverter.convertNoteDtoCreateToNote(dto)));
-		
-		//initialisation de la reponse
+		NoteDtoCreate note = noteCreateDto.entiteToDto(service.create(noteCreateDto.dtoToEntite(dto)));
+
+		// initialisation de la reponse
 		ResponseDto resp = null;
-		
-		//Attribution de la réponse en fonction du retour DB et de la conposition de l'objet
+
+		// Attribution de la réponse en fonction du retour DB et de la conposition de
+		// l'objet
 		if (note != null) {
 			resp = new ResponseDto(false, "SUCCESS", note);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, "FAIL", note);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-}
+	}
 
 	// find By Id
 	@Override
 	public ResponseEntity<ResponseDto> findById(int id) {
-		Note note = service.findById(id);
+		NoteDto note = noteDto.entiteToDto(service.findById(id));
 
 		// initialisation de la reponse
 		ResponseDto resp = null;
@@ -61,7 +69,7 @@ public class NoteController implements INoteController {
 	// fidn By Etudiant
 	@Override
 	public ResponseEntity<ResponseDto> findByEtudiant(int etudiant) {
-		Note note = service.findByEtudiant(etudiant);
+		NoteDto note = noteDto.entiteToDto(service.findByEtudiant(etudiant));
 
 		// initialisation de la reponse
 		ResponseDto resp = null;
@@ -78,7 +86,8 @@ public class NoteController implements INoteController {
 	// find All
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		List<Note> list = service.findAll();
+		List<NoteDto> list = noteDto.listEntiteToDto(service.findAll());
+
 		ResponseDto resp = null;
 		if (list != null) {
 			resp = new ResponseDto(false, "SUCCESS", list);
@@ -91,8 +100,9 @@ public class NoteController implements INoteController {
 
 	// Update
 	@Override
-	public ResponseEntity<ResponseDto> update(@Valid NoteDto dto) {
-		boolean result = service.update(NoteConverter.convertNoteDtoToNote(dto));
+	public ResponseEntity<ResponseDto> update(@Valid NoteDtoCreate dto) {
+		boolean result = service.update(noteCreateDto.dtoToEntite(dto));
+				
 		ResponseDto resp = null;
 
 		if (!result) {

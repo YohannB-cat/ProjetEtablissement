@@ -46,7 +46,7 @@ public interface IMatiereController {
 	
 	// update matiere by id
 	@PutMapping
-	public ResponseEntity<ResponseDto> update(@RequestBody MatiereDto dto);
+	public ResponseEntity<ResponseDto> update(@RequestBody MatiereDtoCreate dto);
 	
 	// delete matiere by id
 	@DeleteMapping (path = "{id}")

@@ -9,33 +9,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.converter.ModuleConverter;
-import com.fr.adaming.dto.ModuleDto;
-import com.fr.adaming.dto.ModuleDtoCreate;
 import com.fr.adaming.dto.ModuleDto;
 import com.fr.adaming.dto.ModuleDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.Module;
-import com.fr.adaming.service.IExamenService;
 import com.fr.adaming.service.IModuleService;
 
 @RestController
-public class ModuleController implements IModuleController{
-	
+public class ModuleController implements IModuleController {
+
 	@Autowired
 	@Qualifier("modulenservice")
-	private IExamenService service;
+	private IModuleService service;
 
-	//create
+	@Autowired
+	private IConverter<Module, ModuleDtoCreate> modulCreateDto;
+
+	@Autowired
+	private IConverter<Module, ModuleDto> modulDto;
+
+	// create
 	@Override
 	public ResponseEntity<ResponseDto> create(ModuleDtoCreate dto) {
-ModuleDto module = ModuleConverter.convertModuleToModuleDtoCreate().service.create(ModuleConverter.convertModuleDtoCreateToModule(dto)));
-		
-		//initialisation de la reponse
+		ModuleDtoCreate module = modulCreateDto.entiteToDto(service.create(modulCreateDto.dtoToEntite(dto)));
+
+		// initialisation de la reponse
 		ResponseDto resp = null;
-		
-		//Attribution de la réponse en fonction du retour DB et de la conposition de l'objet
-		if (module!= null) {
+
+		// Attribution de la réponse en fonction du retour DB et de la conposition de
+		// l'objet
+		if (module != null) {
 			resp = new ResponseDto(false, "SUCCESS", module);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
@@ -43,10 +48,10 @@ ModuleDto module = ModuleConverter.convertModuleToModuleDtoCreate().service.crea
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
-	//find By Id
+	// find By Id
 	@Override
 	public ResponseEntity<ResponseDto> findById(int id) {
-		Module module = service.findById(id);
+		ModuleDto module = modulDto.entiteToDto(service.findById(id));
 
 		// initialisation de la reponse
 		ResponseDto resp = null;
@@ -60,10 +65,10 @@ ModuleDto module = ModuleConverter.convertModuleToModuleDtoCreate().service.crea
 		}
 	}
 
-	//find By Nom
+	// find By Nom
 	@Override
 	public ResponseEntity<ResponseDto> findByNom(String nom) {
-		Module module = service.findByNom(nom);
+		ModuleDto module = modulDto.entiteToDto(service.findByNom(nom));
 
 		// initialisation de la reponse
 		ResponseDto resp = null;
@@ -80,7 +85,8 @@ ModuleDto module = ModuleConverter.convertModuleToModuleDtoCreate().service.crea
 	// Find All
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		List<Module> list = service.findAll();
+		List<ModuleDto> list = modulDto.listEntiteToDto(service.findAll());
+
 		ResponseDto resp = null;
 		if (list != null) {
 			resp = new ResponseDto(false, "SUCCESS", list);
@@ -90,10 +96,10 @@ ModuleDto module = ModuleConverter.convertModuleToModuleDtoCreate().service.crea
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
-	//Update
+	// Update
 	@Override
-	public ResponseEntity<ResponseDto> update(ModuleDto dto) {
-		boolean result = service.update(ModuleConverter.convertModuleDtoToModule(dto));
+	public ResponseEntity<ResponseDto> update(ModuleDtoCreate dto) {
+		boolean result = service.update(modulCreateDto.dtoToEntite(dto));
 		ResponseDto resp = null;
 
 		if (!result) {
@@ -104,7 +110,7 @@ ModuleDto module = ModuleConverter.convertModuleToModuleDtoCreate().service.crea
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
-	//Delete By Id
+	// Delete By Id
 	@Override
 	public ResponseEntity<ResponseDto> deleteById(int id) {
 		boolean result = service.deleteById(id);
@@ -117,9 +123,8 @@ ModuleDto module = ModuleConverter.convertModuleToModuleDtoCreate().service.crea
 		resp = new ResponseDto(false, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
-	
-	
-	//Delete By Nom
+
+	// Delete By Nom
 	@Override
 	public ResponseEntity<ResponseDto> deleteByNom(String nom) {
 		boolean result = service.deleteByNom(nom);
