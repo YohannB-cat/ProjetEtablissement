@@ -9,14 +9,14 @@ import com.fr.adaming.entity.Etudiant;
 public class EtudiantConverter implements IConverter<Etudiant, EtudiantDto> {
 
 	@Override
-	public Etudiant entiteToDto(EtudiantDto dto) {
+	public Etudiant dtoToEntite(EtudiantDto dto) {
 		Etudiant entite = new Etudiant(0, dto.getNom(), dto.getPrenom(), dto.getAdresse(), dto.getVille(),
 				dto.getEmail(), dto.getCodePostal(), dto.getCni(), dto.getTelephone(), dto.isSexe(), dto.isEnEtude());
 		return entite;
 	}
 
 	@Override
-	public List<Etudiant> listEntiteToDto(List<EtudiantDto> dtoliste) {
+	public List<Etudiant> listDtoToEntite(List<EtudiantDto> dtoliste) {
 		List<Etudiant> liste = new ArrayList<Etudiant>();
 		for (EtudiantDto dto : dtoliste) {
 			liste.add(new Etudiant(0, dto.getNom(), dto.getPrenom(), dto.getAdresse(), dto.getVille(), dto.getEmail(),
@@ -26,7 +26,7 @@ public class EtudiantConverter implements IConverter<Etudiant, EtudiantDto> {
 	}
 
 	@Override
-	public EtudiantDto dtoToEntite(Etudiant entite) {
+	public EtudiantDto entiteToDto(Etudiant entite) {
 		EtudiantDto dto = new EtudiantDto(entite.getNom(), entite.getPrenom(), entite.getAdresse(),
 				entite.getCodePostale(), entite.getVille(), entite.isSexe(), entite.getCni(), entite.getTelephone(),
 				entite.getEmail(), entite.isEnEtude());
@@ -34,7 +34,7 @@ public class EtudiantConverter implements IConverter<Etudiant, EtudiantDto> {
 	}
 
 	@Override
-	public List<EtudiantDto> listDtoToEntite(List<Etudiant> entite) {
+	public List<EtudiantDto> listEntiteToDto(List<Etudiant> entite) {
 		List<EtudiantDto> liste = new ArrayList<EtudiantDto>();
 		for (Etudiant e : entite) {
 			liste.add(new EtudiantDto(e.getNom(), e.getPrenom(), e.getAdresse(), e.getCodePostale(), e.getVille(),

@@ -9,13 +9,13 @@ import com.fr.adaming.entity.Module;
 public class ModuleConverter implements IConverter<Module, ModuleDto> {
 
 	@Override
-	public Module entiteToDto(ModuleDto dto) {
+	public Module dtoToEntite(ModuleDto dto) {
 		Module entite = new Module(0, dto.getNom(),dto.getMatiere());
 		return entite;
 	}
 
 	@Override
-	public List<Module> listEntiteToDto(List<ModuleDto> dtoliste) {
+	public List<Module> listDtoToEntite(List<ModuleDto> dtoliste) {
 		List<Module> liste = new ArrayList<Module>();
 		for (ModuleDto dto : dtoliste) {
 			liste.add(new Module(0, dto.getNom(),dto.getMatiere()));
@@ -24,13 +24,13 @@ public class ModuleConverter implements IConverter<Module, ModuleDto> {
 	}
 
 	@Override
-	public ModuleDto dtoToEntite(Module entite) {
+	public ModuleDto entiteToDto(Module entite) {
 		ModuleDto dto = new ModuleDto(entite.getNom(), entite.getMatiere());
 		return dto;
 	}
 
 	@Override
-	public List<ModuleDto> listDtoToEntite(List<Module> entite) {
+	public List<ModuleDto> listEntiteToDto(List<Module> entite) {
 		List<ModuleDto> liste = new ArrayList<ModuleDto>();
 		for (Module e : entite) {
 			liste.add(new ModuleDto(e.getNom(), e.getMatiere()));
