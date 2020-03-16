@@ -2,7 +2,10 @@ package com.fr.adaming.service;
 
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 
@@ -16,26 +19,60 @@ public class ClasseService implements IClasseService{
 
 	@Override
 	public Classe create(Classe classe) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			if (classe == null || dao.existsById(classe.getId())) {
+				return null;
+			}
+			return dao.save(classe);
+		} catch (DataIntegrityViolationException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		catch (ConstraintViolationException er) {
+			er.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<Classe> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		if (dao.findAll().isEmpty()) {
+			return null;
+		}
+		return dao.findAll();
 	}
 
 	@Override
 	public Classe findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			if (id != 0) {
+				return dao.findById(id).orElse(null);
+			} else {
+				return null;
+			}
+		} catch (InvalidDataAccessApiUsageException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public boolean update(Classe classe) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (dao.existsById(classe.getId())) {
+				dao.save(classe);
+				return true;
+			} else {
+				return false;
+			}
+		} catch (InvalidDataAccessApiUsageException er) {
+			er.printStackTrace();
+			return false;
+		} catch (NullPointerException ec) {
+			ec.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -55,5 +92,4 @@ public class ClasseService implements IClasseService{
 			return false;
 		}
 	}
-
 }

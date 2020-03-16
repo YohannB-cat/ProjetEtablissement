@@ -9,7 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 
-import com.fr.adaming.Dao.IExamenDao;
+import com.fr.adaming.dao.IExamenDao;
 import com.fr.adaming.entity.Examen;
 
 public class ExamenService implements IExamenService {
