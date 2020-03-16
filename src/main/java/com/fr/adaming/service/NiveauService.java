@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dao.INiveauDao;
 import com.fr.adaming.entity.Niveau;
 
+@Service("niveauservice")
 public class NiveauService implements INiveauService {
 	
 	@Autowired
@@ -28,7 +30,6 @@ public class NiveauService implements INiveauService {
 			e.printStackTrace();
 			return null;
 		}
-
 		catch (ConstraintViolationException er) {
 			er.printStackTrace();
 			return null;

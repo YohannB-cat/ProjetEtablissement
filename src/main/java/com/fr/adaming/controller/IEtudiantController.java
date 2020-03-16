@@ -18,17 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.service.IEtudiantService;
 
 @RestController
 @RequestMapping(path = "/etudiant")
 public interface IEtudiantController {
-	
-	@Autowired
-	@Qualifier("etudiantservice")
-	private IEtudiantService service;
 
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto);
+	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDtoCreate dto);
 
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody EtudiantDtoCreate dto);

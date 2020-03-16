@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.fr.adaming.converter.ClasseConverter;
-import com.fr.adaming.converter.EtudiantConverter;
+import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.ClasseDto;
 import com.fr.adaming.dto.ClasseDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.entity.Classe;
 import com.fr.adaming.service.IClasseService;
 
 public class ClassController implements IClasseController {
@@ -27,13 +27,16 @@ public class ClassController implements IClasseController {
 	@Autowired
 	@Qualifier("classeservice")
 	private IClasseService service;
+	
+	private IConverter<Classe, ClasseDto> convert;
+	private IConverter<Classe, ClasseDtoCreate> convertCreate;
 
 	@Override
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@Valid @RequestBody ClasseDto dto) {
-		ClasseDto etu = 
-				ClasseConverter.convertClasseToClasseDto().
-				service.create(ClasseConverter.convertClasseDtoToClasse(dto)));
+	public ResponseEntity<ResponseDto> create(@Valid @RequestBody ClasseDtoCreate dto) {
+		ClasseDtoCreate etu = 
+				convertCreate.entiteToDto(
+				service.create(convertCreate.dtoToEntite(dto)));
 			
 		ResponseDto resp = null;
 		
@@ -48,7 +51,7 @@ public class ClassController implements IClasseController {
 	@Override
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody ClasseDtoCreate dto) {
-		boolean result = service.update(ClasseConverter.convertClasseDtoCreateToClasse(dto));
+		boolean result = service.update(convertCreate.dtoToEntite(dto));
 		ResponseDto resp = null;
 
 		if (!result) {
@@ -62,21 +65,7 @@ public class ClassController implements IClasseController {
 	@Override
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
-		ClasseDtoCreate dto = ClasseConverter.convertClasseToClasseDtoCreate(service.findById(id));
-		ResponseDto resp = null;
-
-		if (dto != null) {
-			resp = new ResponseDto(false, "SUCCESS", dto);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(true, "FAIL", dto);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-	}
-
-	@Override
-	@GetMapping(path = "/{name}")
-	public ResponseEntity<ResponseDto> findByName(@PathVariable(name = "name") String name) {
-		ClasseDtoCreate dto = ClasseConverter.convertClasseToClasseDtoCreate(service.findByName(name));
+		ClasseDto dto = convert.entiteToDto(service.findById(id));
 		ResponseDto resp = null;
 
 		if (dto != null) {
@@ -90,15 +79,16 @@ public class ClassController implements IClasseController {
 	@Override
 	@GetMapping
 	public ResponseEntity<ResponseDto> findAll() {
-		List<ClasseDtoCreate> list = service.findAll();
-
-		return ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+		List<ClasseDto> list = convert.listEntiteToDto(service.findAll());
+		
+		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
 	@Override
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(int id) {
-		boolean result = service.delete(id);
+		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
 		if (!result) {

@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.converter.EtudiantConverter;
+import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.entity.Etudiant;
 import com.fr.adaming.service.IEtudiantService;
 
 @RestController
@@ -30,20 +32,20 @@ public class EtudiantController implements IEtudiantController {
 	@Autowired
 	@Qualifier("etudiantservice")
 	private IEtudiantService service;
+	
+	private IConverter<Etudiant, EtudiantDto> convert;
+	private IConverter<Etudiant, EtudiantDtoCreate> convertCreate;
 
 	// Methode create
 	@Override
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto){
-		// Conversion du dto en etu, enregistrement, reconversion en dto, stockage dans etu
-		EtudiantDto etu = 
-		EtudiantConverter.convertEtudiantToEtudiantDto().
-		service.create(EtudiantConverter.convertEtudiantDtoToEtudiant(dto)));
+	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDtoCreate dto){
+		EtudiantDtoCreate etu = 
+		convertCreate.entiteToDto(
+		service.create(convertCreate.dtoToEntite(dto)));
 		
-		//initialisation de la reponse
 		ResponseDto resp = null;
 		
-		//Attribution de la réponse en fonction du retour DB et de la conposition de l'objet
 		if (etu != null) {
 			resp = new ResponseDto(false, "SUCCESS", etu);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -53,11 +55,10 @@ public class EtudiantController implements IEtudiantController {
 		
 	}
 
-	// Methode update
 	@Override
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody EtudiantDtoCreate dto) {
-		boolean result = service.update(EtudiantConverter.convertEtudiantDtoCreateToEtudiant(dto));
+		boolean result = service.update(convertCreate.dtoToEntite(dto));
 		ResponseDto resp = null;
 
 		if (!result) {
@@ -71,7 +72,7 @@ public class EtudiantController implements IEtudiantController {
 	@Override
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
-		EtudiantDtoCreate dto = EtudiantConverter.convertEtudiantToEtudiantDtoCreate(service.findById(id));
+		EtudiantDto dto = convert.entiteToDto(service.findById(id));
 		ResponseDto resp = null;
 
 		if (dto != null) {
@@ -85,7 +86,7 @@ public class EtudiantController implements IEtudiantController {
 	@Override
 	@GetMapping(path = "/{name}")
 	public ResponseEntity<ResponseDto> findByName(@PathVariable(name = "name") String name) {
-		EtudiantDtoCreate dto = EtudiantConverter.convertEtudiantToEtudiantDtoCreate(service.findByName(name));
+		EtudiantDto dto = convert.entiteToDto(service.findByNom(name));
 		ResponseDto resp = null;
 
 		if (dto != null) {
@@ -99,15 +100,16 @@ public class EtudiantController implements IEtudiantController {
 	@Override
 	@GetMapping
 	public ResponseEntity<ResponseDto> findAll() {
-		List<EtudiantDtoCreate> list = service.findAll();
-
-		return ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+		List<EtudiantDto> list =	convert.listEntiteToDto(service.findAll());
+		
+		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
 	@Override
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
-		boolean result = service.delete(id);
+		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
 		if (!result) {
