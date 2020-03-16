@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
+import com.fr.adaming.dto.NiveauDto;
+import com.fr.adaming.dto.NiveauDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.service.INiveauService;
 
 @RestController
 @RequestMapping(path = "/niveau")
