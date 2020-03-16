@@ -9,7 +9,5 @@ import com.fr.adaming.entity.Note;
 
 @Repository
 public interface INoteDao  extends JpaRepository<Note, Integer>{
-	
 	public List<Note> listByEtudiant(int etudiant);
-
 }

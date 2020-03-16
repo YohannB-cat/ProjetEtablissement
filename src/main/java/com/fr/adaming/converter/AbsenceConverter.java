@@ -13,7 +13,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 		if(dto==null) {
 			return null;
 		}
-		Absence entite = new Absence(0, dto.getDebut(), dto.getFin(), dto.getJustification(),dto.getDescription());
+		Absence entite = new Absence(0, dto.getDebut(), dto.getFin(), dto.getJustification(),dto.getDescription(), dto.getEtudiant());
 		return entite;
 	}
 
@@ -24,7 +24,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 		}
 		List<Absence> liste = new ArrayList<Absence>();
 		for (AbsenceDto dto : dtoliste) {
-			liste.add(new Absence(0, dto.getDebut(), dto.getFin(), dto.getJustification(),dto.getDescription()));
+			liste.add(new Absence(0, dto.getDebut(), dto.getFin(), dto.getJustification(),dto.getDescription(), dto.getEtudiant()));
 		}
 		return liste;
 	}
@@ -34,7 +34,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 		if(entite==null) {
 			return null;
 		}
-		AbsenceDto dto = new AbsenceDto(entite.getDebut(), entite.getFin(), entite.getJustification(),entite.getDescription());
+		AbsenceDto dto = new AbsenceDto(entite.getDebut(), entite.getFin(), entite.getJustification(),entite.getDescription(), entite.getEtudiant());
 		return dto;
 	}
 
@@ -45,7 +45,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 		}
 		List<AbsenceDto> liste = new ArrayList<AbsenceDto>();
 		for (Absence e : entite) {
-			liste.add(new AbsenceDto(e.getDebut(), e.getFin(), e.getJustification(),e.getDescription()));
+			liste.add(new AbsenceDto(e.getDebut(), e.getFin(), e.getJustification(),e.getDescription(),e.getEtudiant()));
 		}
 		return liste;
 	}

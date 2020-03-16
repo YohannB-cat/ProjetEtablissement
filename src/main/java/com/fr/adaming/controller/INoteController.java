@@ -36,10 +36,6 @@ public interface INoteController {
 	@GetMapping (path = "id")
 	public ResponseEntity<ResponseDto> findById (@RequestParam (name = "id", required = false) int id);
 	
-	//read note by etudiant
-	@GetMapping (path = "etudiant")
-	public ResponseEntity<ResponseDto> findByEtudiant (@RequestParam (name = "etudiant", required = false) int etudiant);
-	
 	//read all
 	@GetMapping (path = "all")
 	public ResponseEntity<ResponseDto> findAll();
@@ -53,8 +49,5 @@ public interface INoteController {
 	public ResponseEntity<ResponseDto> deleteById (@PathVariable(name = "id") int id);
 
 	
-	// delete Note by etudiant
-	@DeleteMapping(path = "{etudiant}")
-	public ResponseEntity<ResponseDto> deleteByEtudiant (@PathVariable(name = "etudiant") int etudiant);
 	
 }

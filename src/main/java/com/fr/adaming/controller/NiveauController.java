@@ -78,19 +78,6 @@ public class NiveauController implements INiveauController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
-	@Override
-	@GetMapping(path = "/{name}")
-	public ResponseEntity<ResponseDto> findByNom(@PathVariable String nom) {
-		NiveauDto dto = convert.entiteToDto(service.findByNom(nom));
-		ResponseDto resp = null;
-
-		if (dto != null) {
-			resp = new ResponseDto(false, "SUCCESS", dto);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(true, "FAIL", dto);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-	}
 
 	@Override
 	@GetMapping

@@ -12,12 +12,9 @@ public interface IModuleService {
 
 	public Module findById(int id);
 
-	public Module findByNom(String nom);
-
 	public boolean update(Module module);
 
 	public boolean deleteById(int id);
-	
-	public boolean deleteByNom(String nom);
+
 
 }

@@ -10,5 +10,4 @@ import com.fr.adaming.entity.Matiere;
 public interface IMatiereDao  extends JpaRepository<Matiere, Integer>{
 	
 	public List<Matiere> listByModule(int id_module);
-
 }

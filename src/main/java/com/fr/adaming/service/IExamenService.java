@@ -13,8 +13,6 @@ public interface IExamenService{
 	public List<Examen> findAll();
 
 	public Examen findById(int id);
-	
-	public Examen findByNom(String nom);
 
 	public boolean update(Examen exam);
 

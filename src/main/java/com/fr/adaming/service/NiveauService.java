@@ -59,20 +59,6 @@ public class NiveauService implements INiveauService {
 	}
 
 	@Override
-	public Niveau findByNom(String nom) {
-		try {
-			if (nom != null) {
-				return dao.findByNom(nom);
-			} else {
-				return null;
-			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
 	public boolean update(Niveau niveau) {
 		try {
 			if (dao.existsById(niveau.getId())) {

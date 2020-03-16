@@ -72,24 +72,6 @@ public class MatiereController implements IMatiereController {
 		}
 	}
 
-	// find by nom
-	@Override
-	public ResponseEntity<ResponseDto> findByNom(String nom) {
-		MatiereDto matiere = matiereDto.entiteToDto(service.findByNom(nom));
-				
-
-		// initialisation de la reponse
-		ResponseDto resp = null;
-
-		if (matiere != null) {
-			resp = new ResponseDto(false, "SUCCESS", matiere);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		} else {
-			resp = new ResponseDto(true, "FAIL", matiere);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-		}
-	}
-
 	// find all
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
@@ -125,20 +107,6 @@ public class MatiereController implements IMatiereController {
 	@Override
 	public ResponseEntity<ResponseDto> deleteById(int id) {
 		boolean result = service.deleteById(id);
-		ResponseDto resp = null;
-
-		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(false, "FAIL", null);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-	}
-
-	// delete By Nom
-	@Override
-	public ResponseEntity<ResponseDto> deleteByNom(String nom) {
-		boolean result = service.deleteByNom(nom);
 		ResponseDto resp = null;
 
 		if (result) {

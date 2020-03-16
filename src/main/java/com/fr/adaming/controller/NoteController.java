@@ -66,22 +66,6 @@ public class NoteController implements INoteController {
 		}
 	}
 
-	// fidn By Etudiant
-	@Override
-	public ResponseEntity<ResponseDto> findByEtudiant(int etudiant) {
-		NoteDto note = noteDto.entiteToDto(service.findByEtudiant(etudiant));
-
-		// initialisation de la reponse
-		ResponseDto resp = null;
-
-		if (note != null) {
-			resp = new ResponseDto(false, "SUCCESS", note);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		} else {
-			resp = new ResponseDto(true, "FAIL", note);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-		}
-	}
 
 	// find All
 	@Override
@@ -117,20 +101,6 @@ public class NoteController implements INoteController {
 	@Override
 	public ResponseEntity<ResponseDto> deleteById(int id) {
 		boolean result = service.deleteById(id);
-		ResponseDto resp = null;
-
-		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(false, "FAIL", null);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-	}
-
-	// Delete By Etudiant
-	@Override
-	public ResponseEntity<ResponseDto> deleteByEtudiant(int etudiant) {
-		boolean result = service.deleteByEtudiant(etudiant);
 		ResponseDto resp = null;
 
 		if (result) {

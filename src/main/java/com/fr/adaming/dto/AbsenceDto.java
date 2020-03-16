@@ -2,6 +2,8 @@ package com.fr.adaming.dto;
 
 import java.time.LocalDate;
 
+import com.fr.adaming.entity.Etudiant;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,8 @@ public class AbsenceDto {
 	private String justification;
 
 	private String description;
+	
+	private Etudiant etudiant;
 
 
 }

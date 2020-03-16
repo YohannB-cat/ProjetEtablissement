@@ -14,7 +14,7 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 		if(dto==null) {
 			return null;
 		}
-		Note entite = new Note(dto.getId(), dto.getModule(),dto.getValeur(), dto.getEtudiant());
+		Note entite = new Note(dto.getId(), dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen());
 		return entite;
 	}
 
@@ -25,7 +25,7 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 		}
 		List<Note> liste = new ArrayList<Note>();
 		for (NoteDtoCreate dto : dtoliste) {
-			liste.add(new Note(dto.getId(), dto.getModule(),dto.getValeur(), dto.getEtudiant()));
+			liste.add(new Note(dto.getId(), dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen()));
 		}
 		return liste;
 	}
@@ -35,7 +35,7 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 		if(entite==null) {
 			return null;
 		}
-		NoteDtoCreate dto = new NoteDtoCreate(entite.getId(),entite.getIdEtudiant(), entite.getId_module(),entite.getValeur());
+		NoteDtoCreate dto = new NoteDtoCreate(entite.getId(), entite.getModule(), entite.getValeur(), entite.getEtudiant(), entite.getExamen());
 		return dto;
 	}
 
@@ -46,7 +46,7 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 		}
 		List<NoteDtoCreate> liste = new ArrayList<NoteDtoCreate>();
 		for (Note e : entite) {
-			liste.add(new NoteDtoCreate(e.getId(),e.getIdEtudiant(), e.getId_module(),e.getValeur()));
+			liste.add(new NoteDtoCreate(e.getId(),e.getModule(), e.getValeur(), e.getEtudiant(), e.getExamen()));
 		}
 		return liste;
 	}
