@@ -1,5 +1,5 @@
 package com.fr.adaming.dto;
 
-public class AbsanceDto {
+public class AbsenceDtoCreate {
 
 }

@@ -27,10 +27,10 @@ public interface IAbsanceController {
 	private IAbsanceService service;
 
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@Valid @RequestBody AbsanceDto dto);
+	public ResponseEntity<ResponseDto> create(@Valid @RequestBody AbsenceDto dto);
 
 	@PutMapping
-	public ResponseEntity<ResponseDto> update(@Valid @RequestBody AbsanceDtoCreate dto);
+	public ResponseEntity<ResponseDto> update(@Valid @RequestBody AbsenceDtoCreate dto);
 
 	@GetMapping(path = "/{id}")
 	public void findById(@PathVariable int id);
