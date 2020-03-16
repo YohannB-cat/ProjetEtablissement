@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.fr.adaming.dao.IClasseDao;
 import com.fr.adaming.entity.Classe;
 
-@Service ("classeservie")
+@Service ("classeservice")
 public class ClasseService implements IClasseService{
 	
 	@Autowired
