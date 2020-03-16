@@ -11,8 +11,6 @@ public interface INiveauService {
 	public List<Niveau> findAll();
 
 	public Niveau findById(int id);
-	
-	public Niveau findByNom(String nom);
 
 	public boolean update(Niveau niveau);
 

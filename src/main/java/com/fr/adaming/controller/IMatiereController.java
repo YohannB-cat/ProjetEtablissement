@@ -25,8 +25,6 @@ import com.fr.adaming.service.IModuleService;
 @RequestMapping(path = "matiere/")
 public interface IMatiereController {
 	
-
-
 	
 	// create matiere
 	@PostMapping
@@ -35,10 +33,6 @@ public interface IMatiereController {
 	// read matiere by id
 	@GetMapping (path = "id")
 	public ResponseEntity<ResponseDto> findById(@RequestParam (name = "id", required = false) int id);
-
-	// read matiere by nom
-	@GetMapping (path = "nom")
-	public ResponseEntity<ResponseDto> findByNom(@RequestParam (name = "nom", required = false) String nom);
 	
 	// read all
 	@GetMapping (path = "all")
@@ -52,7 +46,5 @@ public interface IMatiereController {
 	@DeleteMapping (path = "{id}")
 	public ResponseEntity<ResponseDto> deleteById (@PathVariable(name = "id") int id);
 	
-	//delete matiere by nom
-	@DeleteMapping (path = "{nom}")
-	public ResponseEntity<ResponseDto> deleteByNom (@PathVariable(name = "nom") String nom);
+
 }

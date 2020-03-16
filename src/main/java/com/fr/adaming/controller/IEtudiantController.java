@@ -25,9 +25,6 @@ public interface IEtudiantController {
 
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable int id);
-	
-	@GetMapping(path = "/{name}")
-	public ResponseEntity<ResponseDto> findByName(@PathVariable String name);
 
 	@GetMapping
 	public ResponseEntity<ResponseDto> findAll();

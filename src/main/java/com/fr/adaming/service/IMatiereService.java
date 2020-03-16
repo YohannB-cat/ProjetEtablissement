@@ -12,12 +12,9 @@ public interface IMatiereService {
 
 	public Matiere findById(int id);
 
-	public Matiere findByNom(String nom);
-
 	public boolean update(Matiere matiere);
 
 	public boolean deleteById(int id);
 	
-	public boolean deleteByNom(String nom);
 
 }

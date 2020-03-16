@@ -65,23 +65,6 @@ public class ModuleController implements IModuleController {
 		}
 	}
 
-	// find By Nom
-	@Override
-	public ResponseEntity<ResponseDto> findByNom(String nom) {
-		ModuleDto module = modulDto.entiteToDto(service.findByNom(nom));
-
-		// initialisation de la reponse
-		ResponseDto resp = null;
-
-		if (module != null) {
-			resp = new ResponseDto(false, "SUCCESS", module);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		} else {
-			resp = new ResponseDto(true, "FAIL", module);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-		}
-	}
-
 	// Find All
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
@@ -114,20 +97,6 @@ public class ModuleController implements IModuleController {
 	@Override
 	public ResponseEntity<ResponseDto> deleteById(int id) {
 		boolean result = service.deleteById(id);
-		ResponseDto resp = null;
-
-		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(false, "FAIL", null);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-	}
-
-	// Delete By Nom
-	@Override
-	public ResponseEntity<ResponseDto> deleteByNom(String nom) {
-		boolean result = service.deleteByNom(nom);
 		ResponseDto resp = null;
 
 		if (result) {

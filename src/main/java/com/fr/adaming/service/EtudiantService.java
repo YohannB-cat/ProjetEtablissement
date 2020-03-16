@@ -58,14 +58,6 @@ public class EtudiantService implements IEtudiantService {
 		}
 	}
 
-	@Override
-	public Etudiant findByNom(String nom) {
-		if (nom != null) {
-			return dao.findByNom(nom);
-		} else {
-			return null;
-		}
-	}
 
 	@Override
 	public boolean update(Etudiant etudiant) {
@@ -90,24 +82,6 @@ public class EtudiantService implements IEtudiantService {
 		try {
 			if (dao.findById(id) != null && id != 0) {
 				dao.deleteById(id);
-				return true;
-			} else {
-				return false;
-			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-			return false;
-		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
-			return false;
-		}
-	}
-
-	@Override
-	public boolean deleteByNom(String nom) {
-		try {
-			if (dao.findByNom(nom) != null && nom != null) {
-				dao.deleteByNom(nom);
 				return true;
 			} else {
 				return false;

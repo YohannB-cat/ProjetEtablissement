@@ -9,8 +9,5 @@ public interface INoteDao  extends JpaRepository<Note, Integer>{
 	
 	public void findByEtudiant(Etudiant etudiant);
 	
-	public Note findByIdEtudiant (int etudiant);
-	
-	public boolean deleteByIdEtudiant (int etudiant);
 
 }

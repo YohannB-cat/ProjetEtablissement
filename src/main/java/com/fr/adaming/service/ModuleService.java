@@ -60,15 +60,6 @@ public class ModuleService implements IModuleService{
 	}
 
 	@Override
-	public Module findByNom(String nom) {
-		if (nom != null) {
-			return dao.findByNom(nom);
-		} else {
-			return null;
-		}
-	}
-
-	@Override
 	public boolean update(Module module) {
 		try {
 			if (dao.existsById(module.getId())) {
@@ -103,23 +94,4 @@ public class ModuleService implements IModuleService{
 			return false;
 		}
 	}
-
-	@Override
-	public boolean deleteByNom(String nom) {
-		try {
-			if (dao.findByNom(nom) != null && nom != null) {
-				dao.deleteByNom(nom);
-				return true;
-			} else {
-				return false;
-			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-			return false;
-		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
-			return false;
-		}
-	}
-
 }

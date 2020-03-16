@@ -83,20 +83,6 @@ public class EtudiantController implements IEtudiantController {
 	}
 
 	@Override
-	@GetMapping(path = "/{name}")
-	public ResponseEntity<ResponseDto> findByName(@PathVariable(name = "name") String name) {
-		EtudiantDto dto = convert.entiteToDto(service.findByNom(name));
-		ResponseDto resp = null;
-
-		if (dto != null) {
-			resp = new ResponseDto(false, "SUCCESS", dto);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(true, "FAIL", dto);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-	}
-
-	@Override
 	@GetMapping
 	public ResponseEntity<ResponseDto> findAll() {
 		List<EtudiantDto> list = convert.listEntiteToDto(service.findAll());

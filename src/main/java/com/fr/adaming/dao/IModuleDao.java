@@ -6,9 +6,6 @@ import com.fr.adaming.entity.Module;
 
 public interface IModuleDao extends JpaRepository<Module, Integer>{
 	
-	public Module findByNom(String nom);
-	
-	public void deleteByNom(String nom);
 	
 	
 

@@ -60,15 +60,6 @@ public class ExamenService implements IExamenService {
 	}
 
 	@Override
-	public Examen findByNom(String nom) {
-		if (nom != null) {
-			return dao.findByNom(nom);
-		} else {
-			return null;
-		}
-	}
-
-	@Override
 	public boolean update(Examen exam) {
 		try {
 			if (dao.existsById(exam.getId())) {

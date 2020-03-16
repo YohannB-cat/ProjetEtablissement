@@ -40,7 +40,7 @@ public class ExamenControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/examen").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/examen/").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
@@ -49,9 +49,7 @@ public class ExamenControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("coefficient", requestDto.getCoefficient());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("type", requestDto.getType());
 	
-
-		
-
 	}
+	
 
 }

@@ -6,6 +6,6 @@ import com.fr.adaming.entity.Niveau;
 
 public interface INiveauDao extends JpaRepository<Niveau, Integer>{
 	
-	public Niveau findByNom(String nom);
+
 
 }

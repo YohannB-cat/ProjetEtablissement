@@ -38,9 +38,6 @@ public interface IModuleController {
 	@GetMapping (path = "id")
 	public ResponseEntity<ResponseDto> findById (@RequestParam (name = "id", required = false) int id);
 	
-	//read module by nom
-	@GetMapping (path = "nom")
-	public ResponseEntity<ResponseDto> findByNom (@RequestParam (name = "nom", required = false) String nom);
 	
 	//read all
 	@GetMapping (path = "all")
@@ -54,9 +51,6 @@ public interface IModuleController {
 	@DeleteMapping (path = "{id}")
 	public ResponseEntity<ResponseDto> deleteById (@PathVariable(name = "id") int id);
 	
-	//delete module by nom
-	@DeleteMapping (path = "{nom}")
-	public ResponseEntity<ResponseDto> deleteByNom (@PathVariable(name = "nom") String nom);
 	
 
 }

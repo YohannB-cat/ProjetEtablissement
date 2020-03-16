@@ -60,15 +60,6 @@ public class NoteService implements INoteService {
 	}
 
 	@Override
-	public Note findByEtudiant(int etudiant) {
-		if (etudiant != 0) {
-			return dao.findByIdEtudiant(etudiant);
-		} else {
-			return null;
-		}
-	}
-
-	@Override
 	public boolean update(Note note) {
 		try {
 			if (dao.existsById(note.getId())) {
@@ -103,22 +94,4 @@ public class NoteService implements INoteService {
 			return false;
 		}
 	}
-
-	@Override
-	public boolean deleteByEtudiant(int etudiant) {
-		try {
-			if (dao.findByIdEtudiant(etudiant) != null && etudiant != 0) {
-				return dao.deleteByIdEtudiant(etudiant);
-			} else {
-				return false;
-			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-			return false;
-		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
-			return false;
-		}
-	}
-
 }

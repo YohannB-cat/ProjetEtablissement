@@ -26,9 +26,6 @@ public interface INiveauController {
 
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable int id);
-	
-	@GetMapping(path = "/{name}")
-	public ResponseEntity<ResponseDto> findByNom(@PathVariable String nom);
 
 	@GetMapping
 	public ResponseEntity<ResponseDto> findAll();

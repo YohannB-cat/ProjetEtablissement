@@ -12,12 +12,10 @@ public interface INoteService {
 
 	public Note findById(int id);
 
-	public Note findByEtudiant(int etudiant);
 
 	public boolean update(Note note);
 
 	public boolean deleteById(int id);
-	
-	public boolean deleteByEtudiant(int etudiant);
+
 
 }

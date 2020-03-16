@@ -58,15 +58,6 @@ public class MatiereService implements IMatiereService {
 	}
 
 	@Override
-	public Matiere findByNom(String nom) {
-		if (nom != null) {
-			return dao.findByNom(nom);
-		} else {
-			return null;
-		}
-	}
-
-	@Override
 	public boolean update(Matiere matiere) {
 		try {
 			if (dao.existsById(matiere.getId())) {
@@ -90,23 +81,6 @@ public class MatiereService implements IMatiereService {
 			if (dao.findById(id) != null && id != 0) {
 				dao.deleteById(id);
 				return true;
-			} else {
-				return false;
-			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-			return false;
-		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
-			return false;
-		}
-	}
-
-	@Override
-	public boolean deleteByNom(String nom) {
-		try {
-			if (dao.findByNom(nom) != null && nom != null) {
-				return dao.deleteByNom(nom);
 			} else {
 				return false;
 			}
