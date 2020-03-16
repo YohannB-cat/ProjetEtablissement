@@ -61,7 +61,7 @@ public class EtudiantController implements IEtudiantController {
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody EtudiantDtoCreate dto) {
 		boolean result = service.update(EtudiantConverter.convertEtudiantDtoCreateToEtudiant(dto));
-		DtoResponse resp = null;
+		ResponseDto resp = null;
 
 		if (!result) {
 			resp = new ResponseDto(true, "SUCCESS", null);
