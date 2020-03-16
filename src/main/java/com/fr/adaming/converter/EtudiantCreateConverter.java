@@ -10,6 +10,9 @@ public class EtudiantCreateConverter implements IConverter<Etudiant, EtudiantDto
 
 	@Override
 	public Etudiant dtoToEntite(EtudiantDtoCreate dto) {
+		if(dto==null) {
+			return null;
+		}
 		Etudiant entite = new Etudiant(dto.getId(), dto.getNom(), dto.getPrenom(), dto.getAdresse(), dto.getVille(),
 				dto.getEmail(), dto.getCodePostal(), dto.getCni(), dto.getTelephone(), dto.isSexe(), dto.isEnEtude());
 		return entite;
@@ -17,6 +20,9 @@ public class EtudiantCreateConverter implements IConverter<Etudiant, EtudiantDto
 
 	@Override
 	public List<Etudiant> listDtoToEntite(List<EtudiantDtoCreate> dtoliste) {
+		if(dtoliste==null) {
+			return null;
+		}
 		List<Etudiant> liste = new ArrayList<Etudiant>();
 		for (EtudiantDtoCreate dto : dtoliste) {
 			liste.add(new Etudiant(dto.getId(), dto.getNom(), dto.getPrenom(), dto.getAdresse(), dto.getVille(), dto.getEmail(),
@@ -27,6 +33,9 @@ public class EtudiantCreateConverter implements IConverter<Etudiant, EtudiantDto
 
 	@Override
 	public EtudiantDtoCreate entiteToDto(Etudiant entite) {
+		if(entite==null) {
+			return null;
+		}
 		EtudiantDtoCreate dto = new EtudiantDtoCreate(entite.getId(),entite.getNom(), entite.getPrenom(), entite.getAdresse(),
 				entite.getCodePostale(), entite.getVille(), entite.isSexe(), entite.getCni(), entite.getTelephone(),
 				entite.getEmail(), entite.isEnEtude());
@@ -35,6 +44,9 @@ public class EtudiantCreateConverter implements IConverter<Etudiant, EtudiantDto
 
 	@Override
 	public List<EtudiantDtoCreate> listEntiteToDto(List<Etudiant> entite) {
+		if(entite==null) {
+			return null;
+		}
 		List<EtudiantDtoCreate> liste = new ArrayList<EtudiantDtoCreate>();
 		for (Etudiant e : entite) {
 			liste.add(new EtudiantDtoCreate(e.getId(),e.getNom(), e.getPrenom(), e.getAdresse(), e.getCodePostale(), e.getVille(),
