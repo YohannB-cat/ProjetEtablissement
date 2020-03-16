@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.stereotype.Service;
 
 import com.fr.adaming.Dao.IModuleDao;
 import com.fr.adaming.entity.Module;
 
+@Service ("moduleservice")
 public class ModuleService implements IModuleService{
 	
 	@Autowired
