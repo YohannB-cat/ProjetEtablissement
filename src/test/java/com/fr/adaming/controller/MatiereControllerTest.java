@@ -53,8 +53,37 @@ public class MatiereControllerTest {
 
 	@Test
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+		int id = 5;
+		// convrtir le DTO en Json
+		String dtoAsJson = mapper.writeValueAsString(id);
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(post("http://localhost:8080/matiere/id").contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
+				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		MatiereDtoCreate responseDto = mapper.readValue(responseAsStrig, MatiereDtoCreate.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+	}
+
+	@Test
+	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(post("http://localhost:8080/matiere/all").contentType(MediaType.APPLICATION_JSON_VALUE))
+						.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		MatiereDto responseDto = mapper.readValue(responseAsStrig, MatiereDto.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+	}
+	
+	@Test
+	public void testUpdateMatiereWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		MatiereDtoCreate requestDto = new MatiereDtoCreate();
-		requestDto.setId(5);
+		requestDto.setNom("math");
 
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
@@ -67,9 +96,25 @@ public class MatiereControllerTest {
 		// convertir la reponse JSON en DTO
 		MatiereDtoCreate responseDto = mapper.readValue(responseAsStrig, MatiereDtoCreate.class);
 
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("id",requestDto.getId());
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 	
+	@Test
+	public void testDeleteByIdWithController_shouldWork () throws UnsupportedEncodingException, Exception {
+		int id = 5;
+		// convrtir le DTO en Json
+		String dtoAsJson = mapper.writeValueAsString(id);
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(post("http://localhost:8080/matiere/{"+id+"}").contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
+				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		MatiereDtoCreate responseDto = mapper.readValue(responseAsStrig, MatiereDtoCreate.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+	}
 
 }
