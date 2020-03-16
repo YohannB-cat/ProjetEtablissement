@@ -10,12 +10,18 @@ public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCre
 
 	@Override
 	public Absence dtoToEntite(AbsenceDtoCreate dto) {
+		if(dto==null) {
+			return null;
+		}
 		Absence entite = new Absence(dto.getId(), dto.getDebut(), dto.getFin(), dto.getJustification(),dto.getDescription());
 		return entite;
 	}
 
 	@Override
 	public List<Absence> listDtoToEntite(List<AbsenceDtoCreate> dtoliste) {
+		if(dtoliste==null) {
+			return null;
+		}
 		List<Absence> liste = new ArrayList<Absence>();
 		for (AbsenceDtoCreate dto : dtoliste) {
 			liste.add(new Absence(dto.getId(), dto.getDebut(), dto.getFin(), dto.getJustification(),dto.getDescription()));
@@ -25,12 +31,18 @@ public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCre
 
 	@Override
 	public AbsenceDtoCreate entiteToDto(Absence entite) {
+		if(entite==null) {
+			return null;
+		}
 		AbsenceDtoCreate dto = new AbsenceDtoCreate(entite.getId(),entite.getDebut(), entite.getFin(), entite.getJustification(),entite.getDescription());
 		return dto;
 	}
 
 	@Override
 	public List<AbsenceDtoCreate> listEntiteToDto(List<Absence> entite) {
+		if(entite==null) {
+			return null;
+		}
 		List<AbsenceDtoCreate> liste = new ArrayList<AbsenceDtoCreate>();
 		for (Absence e : entite) {
 			liste.add(new AbsenceDtoCreate(e.getId(),e.getDebut(), e.getFin(), e.getJustification(),e.getDescription()));
