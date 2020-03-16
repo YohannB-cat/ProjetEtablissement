@@ -18,13 +18,11 @@ import com.fr.adaming.dto.ClasseDto;
 import com.fr.adaming.dto.ClasseDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
-@RestController
+
 @RequestMapping(path = "/classe")
 public interface IClasseController {
 	
-	@Autowired
-	@Qualifier("classeservice")
-	private IClasseService service;
+
 
 	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody ClasseDto dto);

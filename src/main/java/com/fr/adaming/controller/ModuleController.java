@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.converter.ModuleConverter;
 import com.fr.adaming.dto.ModuleDto;
@@ -14,13 +16,15 @@ import com.fr.adaming.dto.ModuleDto;
 import com.fr.adaming.dto.ModuleDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.Module;
+import com.fr.adaming.service.IExamenService;
 import com.fr.adaming.service.IModuleService;
 
+@RestController
 public class ModuleController implements IModuleController{
 	
 	@Autowired
-	@Qualifier("servicemodule")
-	private IModuleService service;
+	@Qualifier("modulenservice")
+	private IExamenService service;
 
 	//create
 	@Override

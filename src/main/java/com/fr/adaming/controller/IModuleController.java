@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +21,14 @@ import com.fr.adaming.dto.MatiereDtoCreate;
 import com.fr.adaming.dto.ModuleDto;
 import com.fr.adaming.dto.ModuleDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.service.IModuleService;
 
 @RequestMapping (path = "module/")
 public interface IModuleController {
+	
+
+	
+	
 	
 	//create module
 	@PostMapping

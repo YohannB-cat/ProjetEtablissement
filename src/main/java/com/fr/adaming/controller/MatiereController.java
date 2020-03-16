@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.converter.ExamenConverter;
 import com.fr.adaming.converter.MatiereConverter;
@@ -21,10 +22,11 @@ import com.fr.adaming.entity.Examen;
 import com.fr.adaming.entity.Matiere;
 import com.fr.adaming.service.IMatiereService;
 
+@RestController
 public class MatiereController implements IMatiereController {
 
 	@Autowired
-	@Qualifier("servicematiere")
+	@Qualifier("matiereservice")
 	private IMatiereService service;
 
 	// create matiere
