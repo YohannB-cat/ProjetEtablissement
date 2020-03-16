@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,5 +30,8 @@ public class Absence {
 	private String justification;
 	@Column(length = 200)
 	private String description;
+	
+	@OneToOne
+	private Etudiant etudiant;
 
 }

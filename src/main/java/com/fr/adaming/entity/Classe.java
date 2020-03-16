@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +25,8 @@ public class Classe {
 	private int id;
 	@Column(length = 30)
 	private String nom;
-	@Column
+	@OneToMany
+	@JoinColumn
 	private List<Etudiant> etudiants;
 
 }

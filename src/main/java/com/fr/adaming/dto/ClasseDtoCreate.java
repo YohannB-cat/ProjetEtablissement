@@ -2,6 +2,8 @@ package com.fr.adaming.dto;
 
 import java.util.List;
 
+import com.fr.adaming.entity.Etudiant;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

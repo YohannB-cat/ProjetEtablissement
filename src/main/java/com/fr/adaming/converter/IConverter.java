@@ -2,10 +2,13 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public interface IConverter<Entite, Dto> {
 	
-	public Entite EntiteToDto(Dto dto);
-	public List<Entite> ListEntiteToDto(Dto dto);
-	public Dto DtoToEntite(Entite entite);
-	public List<Dto> ListDtoToEntite(Entite entite);
+	public Entite dtoToEntite(Dto dto);
+	public List<Entite> listDtoToEntite(List<Dto> liste);
+	public Dto entiteToDto(Entite entite);
+	public List<Dto> listEntiteToDto(List<Entite> liste);
 }

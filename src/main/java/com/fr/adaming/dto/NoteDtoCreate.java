@@ -1,5 +1,9 @@
 package com.fr.adaming.dto;
 
+import com.fr.adaming.entity.Etudiant;
+import com.fr.adaming.entity.Examen;
+import com.fr.adaming.entity.Module;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,13 +11,17 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class NoteDtoCreate {
 	
+	
 	private int id;
-	
-	private int etudiant;
-	
-	private int module;
-	
+
+	private Module module;
+
 	private float valeur;
+
+	private Etudiant etudiant;
+
+	private Examen examen;
+
 
 }
 

@@ -1,5 +1,7 @@
 package com.fr.adaming.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,31 +17,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.entity.Etudiant;
+import com.fr.adaming.service.IEtudiantService;
 
 @RestController
 @RequestMapping(path = "/etudiant")
 public class EtudiantController implements IEtudiantController {
 
 	@Autowired
-	@Qualifier("serviceetudiant")
-	private IServiceEtudiant service;
+	@Qualifier("etudiantservice")
+	private IEtudiantService service;
+	
+	private IConverter<Etudiant, EtudiantDto> convert;
+	private IConverter<Etudiant, EtudiantDtoCreate> convertCreate;
 
 	// Methode create
 	@Override
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto){
-		// Conversion du dto en etu, enregistrement, reconversion en dto, stockage dans etu
-		EtudiantDto etu = 
-		EtudiantConverter.convertEtudiantToEtudiantDto()
-		service.create(EtudiantConverter.convertEtudiantDtoToEtudiant(dto)));
+	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDtoCreate dto){
+		EtudiantDtoCreate etu = 
+		convertCreate.entiteToDto(
+		service.create(convertCreate.dtoToEntite(dto)));
 		
-		//initialisation de la reponse
 		ResponseDto resp = null;
 		
-		//Attribution de la réponse en fonction du retour DB et de la conposition de l'objet
 		if (etu != null) {
 			resp = new ResponseDto(false, "SUCCESS", etu);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -52,30 +57,52 @@ public class EtudiantController implements IEtudiantController {
 	@Override
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody EtudiantDtoCreate dto) {
-		
+		boolean result = service.update(convertCreate.dtoToEntite(dto));
+		ResponseDto resp = null;
+
+		if (!result) {
+			resp = new ResponseDto(true, "SUCCESS", null);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(false, "FAIL", null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 	@Override
 	@GetMapping(path = "/{id}")
-	public void findById(@PathVariable int id) {
+	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
+		EtudiantDto dto = convert.entiteToDto(service.findById(id));
+		ResponseDto resp = null;
 
-	}
-	
-	@Override
-	@GetMapping(path = "/{name}")
-	public void findByName(@PathVariable String name) {
-
+		if (dto != null) {
+			resp = new ResponseDto(false, "SUCCESS", dto);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(true, "FAIL", dto);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 	@Override
 	@GetMapping
-	public void findAll() {
-
+	public ResponseEntity<ResponseDto> findAll() {
+		List<EtudiantDto> list = convert.listEntiteToDto(service.findAll());
+		
+		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
+	@Override
 	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id) {
+	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
+		boolean result = service.deleteById(id);
+		ResponseDto resp = null;
 
+		if (!result) {
+			resp = new ResponseDto(true, "SUCCESS", null);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(false, "FAIL", null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 }
