@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.ManyToAny;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +27,7 @@ public class Classe {
 	private int id;
 	@Column(length = 30)
 	private String nom;
+	@OneToMany
 	@Column
 	private List<Etudiant> etudiants;
 

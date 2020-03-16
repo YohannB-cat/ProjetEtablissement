@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;
 import com.fr.adaming.dto.NoteDto;
+import com.fr.adaming.dto.NoteDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
 
@@ -25,7 +26,7 @@ public interface INoteController {
 
 	//create note
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@RequestBody @Valid ExamenDtoCreate dto);
+	public ResponseEntity<ResponseDto> create(@RequestBody @Valid NoteDtoCreate dto);
 	
 	//read note by id
 	@GetMapping (path = "id")
@@ -45,11 +46,11 @@ public interface INoteController {
 	
 	// delete Note by ID
 	@DeleteMapping(path = "{id}")
-	public ResponseEntity<ResponseDto> deleteNoteById (@PathVariable(name = "id") int id);
+	public ResponseEntity<ResponseDto> deleteById (@PathVariable(name = "id") int id);
 
 	
 	// delete Note by etudiant
 	@DeleteMapping(path = "{etudiant}")
-	public ResponseEntity<ResponseDto> deleteNoteByEtudiant (@PathVariable(name = "etudiant") int etudiant);
+	public ResponseEntity<ResponseDto> deleteByEtudiant (@PathVariable(name = "etudiant") int etudiant);
 	
 }

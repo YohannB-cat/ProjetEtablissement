@@ -22,14 +22,10 @@ import com.fr.adaming.dto.ResponseDto;
 @RestController
 @RequestMapping(path = "/etudiant")
 public interface IEtudiantController {
-
-<<<<<<< HEAD
-
-=======
+	
 	@Autowired
 	@Qualifier("etudiantservice")
 	private IEtudiantService service;
->>>>>>> f55f28d15a8d089e611b7da2abe73826545b0ce7
 
 	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto);
@@ -38,14 +34,14 @@ public interface IEtudiantController {
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody EtudiantDtoCreate dto);
 
 	@GetMapping(path = "/{id}")
-	public void findById(@PathVariable int id);
+	public ResponseEntity<ResponseDto> findById(@PathVariable int id);
 	
 	@GetMapping(path = "/{name}")
-	public void findByName(@PathVariable String name);
+	public ResponseEntity<ResponseDto> findByName(@PathVariable String name);
 
 	@GetMapping
-	public void findAll();
+	public ResponseEntity<ResponseDto> findAll();
 
 	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id);
+	public ResponseEntity<ResponseDto> delete(@PathVariable int id);
 }

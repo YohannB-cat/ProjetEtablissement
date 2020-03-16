@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fr.adaming.dto.EtudiantDto;
-import com.fr.adaming.dto.EtudiantDtoCreate;
+import com.fr.adaming.dto.AbsenceDto;
+import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
 @RestController
 @RequestMapping(path = "/absances")
-public interface IAbsanceController {
+public interface IAbsenceController {
 	
 	@Autowired
-	@Qualifier("absancesservice")
-	private IAbsanceService service;
+	@Qualifier("absencesservice")
+	private IAbsenceService service;
 
 	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody AbsenceDto dto);
@@ -33,12 +33,12 @@ public interface IAbsanceController {
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody AbsenceDtoCreate dto);
 
 	@GetMapping(path = "/{id}")
-	public void findById(@PathVariable int id);
+	public ResponseEntity<ResponseDto> findById(@PathVariable int id);
 
 	@GetMapping
-	public void findAll();
+	public ResponseEntity<ResponseDto> findAll();
 
 	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id);
+	public ResponseEntity<ResponseDto> delete(@PathVariable int id);
 
 }
