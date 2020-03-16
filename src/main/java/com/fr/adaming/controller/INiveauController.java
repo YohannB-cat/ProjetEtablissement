@@ -33,15 +33,15 @@ public interface INiveauController {
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody NiveauDtoCreate dto);
 
 	@GetMapping(path = "/{id}")
-	public void findById(@PathVariable int id);
+	public ResponseEntity<ResponseDto> findById(@PathVariable int id);
 	
 	@GetMapping(path = "/{name}")
-	public void findByName(@PathVariable String name);
+	public ResponseEntity<ResponseDto> findByName(@PathVariable String name);
 
 	@GetMapping
-	public void findAll();
+	public ResponseEntity<ResponseDto> findAll();
 
 	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id);
+	public ResponseEntity<ResponseDto> delete(@PathVariable int id);
 
 }

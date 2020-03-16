@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fr.adaming.dto.EtudiantDto;
-import com.fr.adaming.dto.EtudiantDtoCreate;
+import com.fr.adaming.dto.ClasseDto;
+import com.fr.adaming.dto.ClasseDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
 @RestController
@@ -33,15 +33,15 @@ public interface IClasseController {
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody ClasseDtoCreate dto);
 
 	@GetMapping(path = "/{id}")
-	public void findById(@PathVariable int id);
+	public ResponseEntity<ResponseDto> findById(@PathVariable int id);
 	
 	@GetMapping(path = "/{name}")
-	public void findByName(@PathVariable String name);
+	public ResponseEntity<ResponseDto> findByName(@PathVariable String name);
 
 	@GetMapping
-	public void findAll();
+	public ResponseEntity<ResponseDto> findAll();
 
 	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id);
+	public ResponseEntity<ResponseDto> delete(@PathVariable int id);
 
 }

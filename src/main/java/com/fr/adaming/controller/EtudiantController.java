@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fr.adaming.converter.ConverterChat;
 import com.fr.adaming.converter.EtudiantConverter;
-import com.fr.adaming.dto.DtoChat;
-import com.fr.adaming.dto.DtoResponse;
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
@@ -31,7 +28,7 @@ import com.fr.adaming.service.IEtudiantService;
 public class EtudiantController implements IEtudiantController {
 
 	@Autowired
-	@Qualifier("serviceetudiant")
+	@Qualifier("etudiantservice")
 	private IEtudiantService service;
 
 	// Methode create
@@ -40,7 +37,7 @@ public class EtudiantController implements IEtudiantController {
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto){
 		// Conversion du dto en etu, enregistrement, reconversion en dto, stockage dans etu
 		EtudiantDto etu = 
-		EtudiantConverter.convertEtudiantToEtudiantDto()
+		EtudiantConverter.convertEtudiantToEtudiantDto().
 		service.create(EtudiantConverter.convertEtudiantDtoToEtudiant(dto)));
 		
 		//initialisation de la reponse
@@ -104,9 +101,10 @@ public class EtudiantController implements IEtudiantController {
 	public ResponseEntity<ResponseDto> findAll() {
 		List<EtudiantDtoCreate> list = service.findAll();
 
-		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+		return ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
 	}
 
+	@Override
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
 		boolean result = service.delete(id);
