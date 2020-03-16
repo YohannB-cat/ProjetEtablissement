@@ -71,24 +71,5 @@ public class MatiereControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 	
-	@Test
-	public void testFindByNomWithController_shouldWork() throws UnsupportedEncodingException, Exception {
-		MatiereDtoCreate requestDto = new MatiereDtoCreate();
-		requestDto.setNom("math");
-
-		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(requestDto);
-
-		// test requete
-		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/nom").contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
-				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		// convertir la reponse JSON en DTO
-		MatiereDtoCreate responseDto = mapper.readValue(responseAsStrig, MatiereDtoCreate.class);
-
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("id",requestDto.getId());
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
-	}
 
 }
