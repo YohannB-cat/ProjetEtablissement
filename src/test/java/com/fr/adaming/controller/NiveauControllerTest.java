@@ -15,15 +15,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fr.adaming.dto.ClasseDto;
-import com.fr.adaming.dto.ClasseDtoCreate;
-import com.fr.adaming.dto.EtudiantDto;
-import com.fr.adaming.dto.EtudiantDtoCreate;
-import com.fr.adaming.entity.Etudiant;
+import com.fr.adaming.dto.NiveauDto;
+import com.fr.adaming.dto.NiveauDtoCreate;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EtudiantControllerTest {
+public class NiveauControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -31,28 +28,24 @@ public class EtudiantControllerTest {
 	private ObjectMapper mapper = new ObjectMapper();
 
 	@Test
-	public void testCreatingClasseWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+	public void testCreatingNiveauWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
-		EtudiantDtoCreate requestDto = new EtudiantDtoCreate();
-		requestDto.setNom("rembert");
-		requestDto.setPrenom("maxime");
-		requestDto.setVille("Annecy");
+		NiveauDtoCreate requestDto = new NiveauDtoCreate();
+		requestDto.setNom("sixième");
 
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/classe/").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/niveau/").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		EtudiantDtoCreate responseDto = mapper.readValue(responseAsStrig, EtudiantDtoCreate.class);
+		NiveauDtoCreate responseDto = mapper.readValue(responseAsStrig, NiveauDtoCreate.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("prenom", requestDto.getPrenom());
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("ville", requestDto.getVille());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
@@ -64,11 +57,11 @@ public class EtudiantControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/classe/{" + id + "}").contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
+				.perform(post("http://localhost:8080/absence/{" + id + "}")
+						.contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		EtudiantDtoCreate responseDto = mapper.readValue(responseAsStrig, EtudiantDtoCreate.class);
+		NiveauDtoCreate responseDto = mapper.readValue(responseAsStrig, NiveauDtoCreate.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
@@ -77,23 +70,18 @@ public class EtudiantControllerTest {
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/classe/all").contentType(MediaType.APPLICATION_JSON_VALUE))
+				.perform(post("http://localhost:8080/absence/all").contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		EtudiantDto responseDto = mapper.readValue(responseAsStrig, EtudiantDto.class);
+		NiveauDto responseDto = mapper.readValue(responseAsStrig, NiveauDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
 	@Test
-	public void testUpdateEtdiantWithController_shouldWork() throws UnsupportedEncodingException, Exception {
-
-		// preparer le DTO
-		EtudiantDtoCreate requestDto = new EtudiantDtoCreate();
-		requestDto.setNom("rembert");
-		requestDto.setPrenom("maxime");
-		requestDto.setVille("Annecy");
-
+	public void testUpdateNiveauWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+		NiveauDtoCreate requestDto = new NiveauDtoCreate();
+		requestDto.setNom("sixième");
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
 
@@ -103,11 +91,9 @@ public class EtudiantControllerTest {
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		EtudiantDtoCreate responseDto = mapper.readValue(responseAsStrig, EtudiantDtoCreate .class);
+		NiveauDtoCreate responseDto = mapper.readValue(responseAsStrig, NiveauDtoCreate.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("prenom", requestDto.getPrenom());
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("ville", requestDto.getVille());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
@@ -123,7 +109,7 @@ public class EtudiantControllerTest {
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		EtudiantDtoCreate responseDto = mapper.readValue(responseAsStrig, EtudiantDtoCreate.class);
+		NiveauDtoCreate responseDto = mapper.readValue(responseAsStrig, NiveauDtoCreate.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
