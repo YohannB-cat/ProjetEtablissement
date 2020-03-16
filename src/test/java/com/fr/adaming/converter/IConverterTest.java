@@ -7,19 +7,19 @@ public interface IConverterTest {
 	public void testDtoToEntiteNull_shouldReturnNull();
 	
 	
-	public void entiteToDtoValid_shouldReturnEntite();
-	public void entiteToDtoNotValid_shouldReturnNull();
-	public void entiteToDtoNull_shouldReturnNull();
+	public void testEntiteToDtoValid_shouldReturnEntite();
+	public void testEntiteToDtoNotValid_shouldReturnNull();
+	public void testEntiteToDtoNull_shouldReturnNull();
 	
 
-	public void listDtoToEntiteValid_shouldReturnEntite();
-	public void listDtoToEntiteNotValid_shouldReturnNull();
-	public void listDtoToEntiteNull_shouldReturnNull();
+	public void testListDtoToEntiteValid_shouldReturnEntite();
+	public void testListDtoToEntiteNotValid_shouldReturnNull();
+	public void testListDtoToEntiteNull_shouldReturnNull();
 	
 
-	public void listEntiteToDtoValid_shouldReturnEntite();
-	public void listEntiteToDtoNotValid_shouldReturnNull();
-	public void listEntiteToDtoNull_shouldReturnNull();
+	public void testListEntiteToDtoValid_shouldReturnEntite();
+	public void testListEntiteToDtoNotValid_shouldReturnNull();
+	public void testListEntiteToDtoNull_shouldReturnNull();
 	
 
 }

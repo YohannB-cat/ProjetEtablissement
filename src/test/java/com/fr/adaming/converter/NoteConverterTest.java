@@ -10,34 +10,28 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.fr.adaming.dto.EtudiantDto;
+import com.fr.adaming.dto.NoteDto;
 import com.fr.adaming.entity.Etudiant;
+import com.fr.adaming.entity.Examen;
+import com.fr.adaming.entity.Module;
+import com.fr.adaming.entity.Note;
 
 @SpringBootTest
-public class EtudiantConverterTest implements IConverterTest {
+public class NoteConverterTest implements IConverterTest {
 
 	@Autowired
-	public IConverter<Etudiant, EtudiantDto> convert;
+	public IConverter<Note, NoteDto> convert;
 
 	@Override
 	@Test
 	public void testDtoToEntiteValid_shouldReturnEntite() {
-		EtudiantDto dto = new EtudiantDto("nom", "prenom", "adresse", 69003, "blabla", true, 19865156, 20510620,
-				"email@ad.fr", true);
+		NoteDto dto = new NoteDto(new Module(),15.3f,new Etudiant(),new Examen());
 
-		Etudiant et = convert.dtoToEntite(dto);
+		Note abs = convert.dtoToEntite(dto);
 
-		assertTrue(et.getId()!=0);
-		assertTrue(et.getAdresse().equals("adresse"));
-		assertTrue(et.getPrenom().equals("prenom"));
-		assertTrue(et.getNom().equals("nom"));
-		assertTrue(et.getCodePostale() == 69003);
-		assertTrue(et.getVille().equals("blabla"));
-		assertTrue(et.isSexe());
-		assertTrue(et.isEnEtude());
-		assertTrue(et.getCni() == 19865156);
-		assertTrue(et.getTelephone() == 20510620);
-		assertTrue(et.getEmail().equals("email@ad.fr"));
+		assertTrue(abs.getId()!=0);
+		assertTrue(abs.getValeur()==15.3f);
+
 
 	}
 
@@ -57,20 +51,11 @@ public class EtudiantConverterTest implements IConverterTest {
 	@Override
 	@Test
 	public void testEntiteToDtoValid_shouldReturnEntite() {
-		Etudiant et = new Etudiant(0, null, null, null, null, null, 0, 0, 0, false, false);
+		Note abs = new Note(5, new Module(),18.4f, new Etudiant(),new Examen());
 
-		EtudiantDto dto = convert.entiteToDto(et);
+		NoteDto dto = convert.entiteToDto(abs);
 
-		assertTrue(dto.getAdresse().equals("adresse"));
-		assertTrue(dto.getPrenom().equals("prenom"));
-		assertTrue(dto.getNom().equals("nom"));
-		assertTrue(dto.getCodePostal() == 69003);
-		assertTrue(dto.getVille().equals("blabla"));
-		assertTrue(dto.isSexe());
-		assertTrue(dto.isEnEtude());
-		assertTrue(dto.getCni() == 19865156);
-		assertTrue(dto.getTelephone() == 20510620);
-		assertTrue(dto.getEmail().equals("email@ad.fr"));
+		assertTrue(dto.getValeur()==18.4f);
 
 	}
 
@@ -91,12 +76,10 @@ public class EtudiantConverterTest implements IConverterTest {
 	@Override
 	@Test
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
-		List<EtudiantDto> listedto = new ArrayList<EtudiantDto>();
-		EtudiantDto dto = new EtudiantDto("nom", "prenom", "adresse", 69003, "blabla", true, 19865156, 20510620,
-				"email@ad.fr", true);
+		List<NoteDto> listedto = new ArrayList<NoteDto>();
+		NoteDto dto = new NoteDto(new Module(),15.3f,new Etudiant(),new Examen());
 		
-		EtudiantDto dto2 = new EtudiantDto("nom2", "prenom2", "adresse2", 69003, "blabla", true, 19865156, 20510620,
-				"email@ad.fr", true);
+		NoteDto dto2 = new NoteDto(new Module(),15.8f,new Etudiant(),new Examen());
 		listedto.add(dto);
 		listedto.add(dto2);
 		
@@ -121,9 +104,9 @@ public class EtudiantConverterTest implements IConverterTest {
 	@Override
 	@Test
 	public void testListEntiteToDtoValid_shouldReturnEntite() {
-		List<Etudiant> liste = new ArrayList<Etudiant>();
-		Etudiant et = new Etudiant(3, null, null, null, null, null, 0, 18, 0, false, false);
-		Etudiant et2 = new Etudiant(8, null, null, null, null, null, 24, 0, 0, false, false);
+		List<Note> liste = new ArrayList<Note>();
+		Note et = new Note(5, new Module(),18.4f, new Etudiant(),new Examen());
+		Note et2 = new Note(18, new Module(),18.48f, new Etudiant(),new Examen());
 
 		liste.add(et);
 		liste.add(et2);
