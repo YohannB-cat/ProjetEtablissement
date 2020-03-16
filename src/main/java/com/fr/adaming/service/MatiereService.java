@@ -9,7 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 
-import com.fr.adaming.Dao.IMatiereDao;
+import com.fr.adaming.dao.IMatiereDao;
 import com.fr.adaming.entity.Matiere;
 
 public class MatiereService implements IMatiereService {

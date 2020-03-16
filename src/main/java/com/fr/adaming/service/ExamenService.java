@@ -10,7 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
-import com.fr.adaming.Dao.IExamenDao;
+import com.fr.adaming.dao.IExamenDao;
 import com.fr.adaming.entity.Examen;
 
 @Service ("examenservice")

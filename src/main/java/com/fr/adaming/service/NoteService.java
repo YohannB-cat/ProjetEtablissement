@@ -10,10 +10,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
-import com.fr.adaming.Dao.INoteDao;
+import com.fr.adaming.dao.INoteDao;
 import com.fr.adaming.entity.Note;
 
-@Service ("niveauservice")
+@Service ("noteservice")
 public class NoteService implements INoteService {
 
 	@Autowired

@@ -1,4 +1,4 @@
-package com.fr.adaming.Dao;
+package com.fr.adaming.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
