@@ -4,40 +4,34 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fr.adaming.dao.INiveauDao;
-import com.fr.adaming.entity.Niveau;
+import com.fr.adaming.dao.IAbsenceDao;
+import com.fr.adaming.entity.Absence;
 
-public class NiveauService implements INiveauService {
+public class AbsenceService implements IAbsenceService {
 	
 	@Autowired
-	private INiveauDao dao;
+	private IAbsenceDao dao;
 
 	@Override
-	public Niveau create(Niveau niveau) {
+	public Absence create(Absence absence) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Niveau> findAll() {
+	public List<Absence> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Niveau findById(int id) {
+	public Absence findById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Niveau findByNom(String nom) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean update(Niveau niveau) {
+	public boolean update(Absence absence) {
 		// TODO Auto-generated method stub
 		return false;
 	}
