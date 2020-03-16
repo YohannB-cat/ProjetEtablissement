@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fr.adaming.dto.ClasseDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
-@RestController
+
 @RequestMapping(path = "/classe")
 public interface IClasseController {
 

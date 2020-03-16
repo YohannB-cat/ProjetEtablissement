@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fr.adaming.dto.AbsenceDto;
 import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.service.IAbsenceService;
 
-@RestController
-@RequestMapping(path = "/absances")
+
+@RequestMapping(path = "/absence")
 public interface IAbsenceController {
 	
-	@Autowired
-	@Qualifier("absencesservice")
-	private IAbsenceService service;
+
 
 	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody AbsenceDto dto);

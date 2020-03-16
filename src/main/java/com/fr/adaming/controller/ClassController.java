@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.ClasseDto;
@@ -22,6 +24,8 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.Classe;
 import com.fr.adaming.service.IClasseService;
 
+@RestController
+@RequestMapping(path = "/classe")
 public class ClassController implements IClasseController {
 	
 	@Autowired

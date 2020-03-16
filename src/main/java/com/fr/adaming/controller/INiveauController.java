@@ -21,13 +21,11 @@ import com.fr.adaming.dto.NiveauDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.service.INiveauService;
 
-@RestController
+
 @RequestMapping(path = "/niveau")
 public interface INiveauController {
 	
-	@Autowired
-	@Qualifier("niveauservice")
-	private INiveauService service;
+
 
 	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody NiveauDto dto);
