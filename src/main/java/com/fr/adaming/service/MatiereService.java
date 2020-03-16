@@ -106,8 +106,7 @@ public class MatiereService implements IMatiereService {
 	public boolean deleteByNom(String nom) {
 		try {
 			if (dao.findByNom(nom) != null && nom != null) {
-				dao.deleteByNom(nom);
-				return true;
+				return dao.deleteByNom(nom);
 			} else {
 				return false;
 			}

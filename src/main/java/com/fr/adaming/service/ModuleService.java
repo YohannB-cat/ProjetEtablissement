@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 
+import com.fr.adaming.Dao.IModuleDao;
 import com.fr.adaming.entity.Module;
 
 public class ModuleService implements IModuleService{

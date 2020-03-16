@@ -8,10 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Note {
 	
 	@Id
@@ -24,6 +26,6 @@ public class Note {
 	private float valeur;
 	@OneToOne
 	@Column
-	private int id_etudiant;
+	private int idEtudiant;
 
 }

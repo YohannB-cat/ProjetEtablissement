@@ -60,7 +60,7 @@ public class NoteService implements INoteService {
 	@Override
 	public Note findByEtudiant(int etudiant) {
 		if (etudiant != 0) {
-			return dao.findByEtudiant(etudiant);
+			return dao.findByIdEtudiant(etudiant);
 		} else {
 			return null;
 		}
@@ -105,9 +105,8 @@ public class NoteService implements INoteService {
 	@Override
 	public boolean deleteByEtudiant(int etudiant) {
 		try {
-			if (dao.findByEtudiant(etudiant) != null && etudiant != 0) {
-				dao.deleteByEtudiant(etudiant);
-				return true;
+			if (dao.findByIdEtudiant(etudiant) != null && etudiant != 0) {
+				return dao.deleteByIdEtudiant(etudiant);
 			} else {
 				return false;
 			}

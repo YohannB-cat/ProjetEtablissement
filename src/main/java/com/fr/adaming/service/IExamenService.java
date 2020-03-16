@@ -2,9 +2,11 @@ package com.fr.adaming.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.fr.adaming.entity.Examen;
 
-public interface IExamenService {
+public interface IExamenService{
 
 	public Examen create(Examen exam);
 
