@@ -44,6 +44,6 @@ public interface IExamenController {
 	
 	//delete examen
 	@DeleteMapping (path ="{id}")
-	public  ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id);
+	public  ResponseEntity<ResponseDto> deleteById(@PathVariable(name = "id") int id);
 
 }

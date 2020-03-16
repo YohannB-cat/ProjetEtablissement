@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import com.fr.adaming.converter.EtudiantConverter;
 import com.fr.adaming.converter.ExamenConverter;
 import com.fr.adaming.dto.EtudiantDto;
+import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
@@ -27,7 +28,7 @@ public class ExamenController implements IExamenController {
 	// create
 	@Override
 	public ResponseEntity<ResponseDto> create(@Valid ExamenDtoCreate dto) {
-		ExamenDto exam = ExamenConverter.convertExamentToExamenDto().service.create(ExamenConverter.convertExamenDtoToExamen(dto)));
+		ExamenDto exam = ExamenConverter.convertExamentToExamenDtoCreate().service.create(ExamenConverter.convertExamenDtoCreateToExamen(dto)));
 		
 				//initialisation de la reponse
 				ResponseDto resp = null;
@@ -62,14 +63,20 @@ public class ExamenController implements IExamenController {
 	// find All
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<ExamenDtoCreate> list = service.findAll();
+		ResponseDto resp = null;
+		if (list != null) {
+			 resp = new ResponseDto(false, "SUCCESS", list);
+			 return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(false, "FAIL", null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 	// update
 	@Override
 	public ResponseEntity<ResponseDto> update(@Valid ExamenDto dto) {
-		boolean result = service.update(ExamenConverter.convertExamenDtoCreateToExamen(dto));
+		boolean result = service.update(ExamenConverter.convertExamenDtoToExamen(dto));
 		ResponseDto resp = null;
 
 		if (!result) {
@@ -82,9 +89,16 @@ public class ExamenController implements IExamenController {
 
 	// delete by Id
 	@Override
-	public ResponseEntity<ResponseDto> delete(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<ResponseDto> deleteById(int id) {
+		boolean result = service.deleteById(id);
+		ResponseDto resp = null;
+		
+		if (result) {
+			resp = new ResponseDto(true, "SUCCESS", null);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(false, "FAIL", null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 }
