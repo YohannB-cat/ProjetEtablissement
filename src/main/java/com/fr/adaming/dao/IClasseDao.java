@@ -7,7 +7,6 @@ import com.fr.adaming.entity.Niveau;
 
 public interface IClasseDao  extends JpaRepository<Classe, Integer>{
 	
-	public void readByNiveau(Niveau niveau);
 	
 	
 

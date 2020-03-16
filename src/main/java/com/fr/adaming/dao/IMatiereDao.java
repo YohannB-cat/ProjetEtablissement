@@ -7,6 +7,5 @@ import com.fr.adaming.entity.Module;
 
 public interface IMatiereDao  extends JpaRepository<Matiere, Integer>{
 	
-	public void findByModule(Module module);
 
 }

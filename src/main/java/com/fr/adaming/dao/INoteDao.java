@@ -7,6 +7,5 @@ import com.fr.adaming.entity.Note;
 
 public interface INoteDao  extends JpaRepository<Note, Integer>{
 	
-	public void findByEtudiant(Etudiant etudiant);
 
 }

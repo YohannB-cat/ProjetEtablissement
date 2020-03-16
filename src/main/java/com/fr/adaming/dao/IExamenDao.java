@@ -7,6 +7,5 @@ import com.fr.adaming.entity.Matiere;
 
 public interface IExamenDao  extends JpaRepository<Examen, Integer>{
 	
-	public void findByMatiere(Matiere matiere);
 
 }
