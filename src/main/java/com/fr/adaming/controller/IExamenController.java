@@ -36,7 +36,7 @@ public interface IExamenController {
 	
 	//read all examen
 	@GetMapping (path = "all")
-	public  ResponseEntity<ResponseDto> findAll(@RequestBody List<Examen> listeExamen);
+	public  ResponseEntity<ResponseDto> findAll();
 	
 	//update examen
 	@PutMapping

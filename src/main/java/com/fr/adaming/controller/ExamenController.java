@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.fr.adaming.converter.EtudiantConverter;
+import com.fr.adaming.converter.ExamenConverter;
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;
@@ -26,7 +27,7 @@ public class ExamenController implements IExamenController {
 	// create
 	@Override
 	public ResponseEntity<ResponseDto> create(@Valid ExamenDtoCreate dto) {
-		ExamenDto exam = ExamenConverter.convertExamentToExamenDto()service.create(ExamenConverter.convertExamenDtoToExamen(dto)));
+		ExamenDto exam = ExamenConverter.convertExamentToExamenDto().service.create(ExamenConverter.convertExamenDtoToExamen(dto)));
 		
 				//initialisation de la reponse
 				ResponseDto resp = null;
