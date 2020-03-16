@@ -2,8 +2,6 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
-import javax.persistence.Converter;
-
 import org.springframework.stereotype.Component;
 
 @Component
