@@ -64,7 +64,7 @@ public class MatiereController implements IMatiereController {
 	// find by nom
 	@Override
 	public ResponseEntity<ResponseDto> findByNom(String nom) {
-		Matiere matiere = service.findByName(nom);
+		Matiere matiere = service.findByNom(nom);
 
 		// initialisation de la reponse
 		ResponseDto resp = null;
@@ -81,7 +81,7 @@ public class MatiereController implements IMatiereController {
 	// find all
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		List<MatiereDtoCreate> list = service.findAll();
+		List<Matiere> list = service.findAll();
 		ResponseDto resp = null;
 		if (list != null) {
 			resp = new ResponseDto(false, "SUCCESS", list);

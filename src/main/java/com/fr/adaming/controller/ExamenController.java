@@ -63,7 +63,7 @@ public class ExamenController implements IExamenController {
 	// find All
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		List<ExamenDtoCreate> list = service.findAll();
+		List<Examen> list = service.findAll();
 		ResponseDto resp = null;
 		if (list != null) {
 			 resp = new ResponseDto(false, "SUCCESS", list);

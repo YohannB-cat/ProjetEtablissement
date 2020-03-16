@@ -59,7 +59,7 @@ ModuleDto module = ModuleConverter.convertModuleToModuleDtoCreate().service.crea
 	//find By Nom
 	@Override
 	public ResponseEntity<ResponseDto> findByNom(String nom) {
-		Module module = service.findByName(nom);
+		Module module = service.findByNom(nom);
 
 		// initialisation de la reponse
 		ResponseDto resp = null;
@@ -76,7 +76,7 @@ ModuleDto module = ModuleConverter.convertModuleToModuleDtoCreate().service.crea
 	// Find All
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		List<ModuleDtoCreate> list = service.findAll();
+		List<Module> list = service.findAll();
 		ResponseDto resp = null;
 		if (list != null) {
 			resp = new ResponseDto(false, "SUCCESS", list);
