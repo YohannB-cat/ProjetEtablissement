@@ -10,24 +10,24 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.fr.adaming.dto.EtudiantDto;
+import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.entity.Etudiant;
 
 @SpringBootTest
-public class EtudiantConverterTest implements IConverterTest {
+public class EtudiantCreateConverterTest implements IConverterTest {
 
 	@Autowired
-	public IConverter<Etudiant, EtudiantDto> convert;
+	public IConverter<Etudiant, EtudiantDtoCreate> convert;
 
 	@Override
 	@Test
 	public void testDtoToEntiteValid_shouldReturnEntite() {
-		EtudiantDto dto = new EtudiantDto("nom", "prenom", "adresse", 69003, "blabla", true, 19865156, 20510620,
+		EtudiantDtoCreate dto = new EtudiantDtoCreate(19,"nom", "prenom", "adresse", 69003, "blabla", true, 19865156, 20510620,
 				"email@ad.fr", true);
 
 		Etudiant et = convert.dtoToEntite(dto);
 
-		assertTrue(et.getId()!=0);
+		assertTrue(et.getId()==19);
 		assertTrue(et.getAdresse().equals("adresse"));
 		assertTrue(et.getPrenom().equals("prenom"));
 		assertTrue(et.getNom().equals("nom"));
@@ -57,10 +57,12 @@ public class EtudiantConverterTest implements IConverterTest {
 	@Override
 	@Test
 	public void testEntiteToDtoValid_shouldReturnEntite() {
-		Etudiant et = new Etudiant(0, null, null, null, null, null, 0, 0, 0, false, false);
+		Etudiant et = new Etudiant(2, null, null, null, null, null, 0, 0, 0, false, false);
 
-		EtudiantDto dto = convert.entiteToDto(et);
+		EtudiantDtoCreate dto = convert.entiteToDto(et);
 
+		
+		assertTrue(dto.getId()==2);
 		assertTrue(dto.getAdresse().equals("adresse"));
 		assertTrue(dto.getPrenom().equals("prenom"));
 		assertTrue(dto.getNom().equals("nom"));
@@ -91,11 +93,11 @@ public class EtudiantConverterTest implements IConverterTest {
 	@Override
 	@Test
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
-		List<EtudiantDto> listedto = new ArrayList<EtudiantDto>();
-		EtudiantDto dto = new EtudiantDto("nom", "prenom", "adresse", 69003, "blabla", true, 19865156, 20510620,
+		List<EtudiantDtoCreate> listedto = new ArrayList<EtudiantDtoCreate>();
+		EtudiantDtoCreate dto = new EtudiantDtoCreate(15, "nom", "prenom", "adresse", 69003, "blabla", true, 19865156, 20510620,
 				"email@ad.fr", true);
 		
-		EtudiantDto dto2 = new EtudiantDto("nom2", "prenom2", "adresse2", 69003, "blabla", true, 19865156, 20510620,
+		EtudiantDtoCreate dto2 = new EtudiantDtoCreate(18,"nom2", "prenom2", "adresse2", 69003, "blabla", true, 19865156, 20510620,
 				"email@ad.fr", true);
 		listedto.add(dto);
 		listedto.add(dto2);

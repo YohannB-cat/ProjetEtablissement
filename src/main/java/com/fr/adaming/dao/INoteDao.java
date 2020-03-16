@@ -1,13 +1,13 @@
 package com.fr.adaming.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-import com.fr.adaming.entity.Etudiant;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import com.fr.adaming.entity.Note;
 
+@Repository
 public interface INoteDao  extends JpaRepository<Note, Integer>{
-	
-	public void findByEtudiant(Etudiant etudiant);
-	
-
+	public List<Note> listByEtudiant(int etudiant);
 }

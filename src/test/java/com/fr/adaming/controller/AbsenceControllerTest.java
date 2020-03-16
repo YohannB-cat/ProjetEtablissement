@@ -9,45 +9,44 @@ import java.io.UnsupportedEncodingException;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fr.adaming.dto.MatiereDto;
-import com.fr.adaming.dto.MatiereDtoCreate;
+import com.fr.adaming.dto.AbsenceDto;
+import com.fr.adaming.dto.AbsenceDtoCreate;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MatiereControllerTest {
-
+public class AbsenceControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
 	private ObjectMapper mapper = new ObjectMapper();
 
 	@Test
-	public void testCreatingMatiereWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+	public void testCreatingAbsenceWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
-		MatiereDtoCreate requestDto = new MatiereDtoCreate();
-		requestDto.setNom("français");
+		AbsenceDtoCreate requestDto = new AbsenceDtoCreate();
+		requestDto.setJustification("panne de reveil");
+		requestDto.setDescription("est arrivé 2 h en retard !");
 
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/absence/").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		MatiereDtoCreate responseDto = mapper.readValue(responseAsStrig, MatiereDtoCreate.class);
+		AbsenceDtoCreate responseDto = mapper.readValue(responseAsStrig, AbsenceDtoCreate.class);
 
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("justification", requestDto.getJustification());
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("description", requestDto.getDescription());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
@@ -59,11 +58,11 @@ public class MatiereControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/id").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/absence/{"+id+"}").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		MatiereDtoCreate responseDto = mapper.readValue(responseAsStrig, MatiereDtoCreate.class);
+		AbsenceDtoCreate responseDto = mapper.readValue(responseAsStrig, AbsenceDtoCreate.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
@@ -72,31 +71,34 @@ public class MatiereControllerTest {
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/all").contentType(MediaType.APPLICATION_JSON_VALUE))
+				.perform(post("http://localhost:8080/absence/all").contentType(MediaType.APPLICATION_JSON_VALUE))
 						.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		MatiereDto responseDto = mapper.readValue(responseAsStrig, MatiereDto.class);
+		AbsenceDto responseDto = mapper.readValue(responseAsStrig, AbsenceDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 	
 	@Test
-	public void testUpdateMatiereWithController_shouldWork() throws UnsupportedEncodingException, Exception {
-		MatiereDtoCreate requestDto = new MatiereDtoCreate();
-		requestDto.setNom("math");
+	public void testUpdateAbsenceWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+		AbsenceDtoCreate requestDto = new AbsenceDtoCreate();
+		requestDto.setJustification("panne de reveil");
+		requestDto.setDescription("est arrivé 2 h en retard !");
 
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/id").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/classe/id").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		MatiereDtoCreate responseDto = mapper.readValue(responseAsStrig, MatiereDtoCreate.class);
+		AbsenceDtoCreate responseDto = mapper.readValue(responseAsStrig, AbsenceDtoCreate.class);
 
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("justification", requestDto.getJustification());
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("description", requestDto.getDescription());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 	
@@ -108,13 +110,14 @@ public class MatiereControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/{"+id+"}").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/classe/{"+id+"}").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		MatiereDtoCreate responseDto = mapper.readValue(responseAsStrig, MatiereDtoCreate.class);
+		AbsenceDtoCreate responseDto = mapper.readValue(responseAsStrig, AbsenceDtoCreate.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
+
 
 }

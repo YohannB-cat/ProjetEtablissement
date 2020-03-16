@@ -7,7 +7,4 @@ import com.fr.adaming.entity.Niveau;
 
 @Repository
 public interface INiveauDao extends JpaRepository<Niveau, Integer>{
-	
-
-
 }

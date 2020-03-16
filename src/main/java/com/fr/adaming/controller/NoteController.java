@@ -47,6 +47,7 @@ public class NoteController implements INoteController {
 		}
 		resp = new ResponseDto(true, "FAIL", note);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+
 	}
 
 	// find By Id
@@ -65,7 +66,6 @@ public class NoteController implements INoteController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
 	}
-
 
 	// find All
 	@Override
@@ -86,7 +86,7 @@ public class NoteController implements INoteController {
 	@Override
 	public ResponseEntity<ResponseDto> update(@Valid NoteDtoCreate dto) {
 		boolean result = service.update(noteCreateDto.dtoToEntite(dto));
-				
+
 		ResponseDto resp = null;
 
 		if (!result) {

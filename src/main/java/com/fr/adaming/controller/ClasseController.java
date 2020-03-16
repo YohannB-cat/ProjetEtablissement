@@ -26,7 +26,7 @@ import com.fr.adaming.service.IClasseService;
 
 @RestController
 @RequestMapping(path = "/classe")
-public class ClassController implements IClasseController {
+public class ClasseController implements IClasseController {
 	
 	@Autowired
 	@Qualifier("classeservice")
