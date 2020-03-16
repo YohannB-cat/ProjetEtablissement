@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fr.adaming.converter.EtudiantConverter;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
@@ -100,7 +99,7 @@ public class EtudiantController implements IEtudiantController {
 	@Override
 	@GetMapping
 	public ResponseEntity<ResponseDto> findAll() {
-		List<EtudiantDto> list =	convert.listEntiteToDto(service.findAll());
+		List<EtudiantDto> list = convert.listEntiteToDto(service.findAll());
 		
 		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
 		return ResponseEntity.status(HttpStatus.OK).body(resp);

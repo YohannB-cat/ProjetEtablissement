@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.converter.IConverter;
+import com.fr.adaming.dto.NiveauDto;
+import com.fr.adaming.dto.NiveauDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.entity.Niveau;
 import com.fr.adaming.service.INiveauService;
 
 @RestController
@@ -25,13 +29,16 @@ public class NiveauController implements INiveauController {
 	@Autowired
 	@Qualifier("niveauservice")
 	private INiveauService service;
+	
+	private IConverter<Niveau, NiveauDto> convert;
+	private IConverter<Niveau, NiveauDtoCreate> convertCreate;
 
 	@Override
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@Valid @RequestBody NiveauDto dto) {
-		NiveauDto etu = 
-				NiveauConverter.convertNiveauToNiveauDto().
-			service.create(NiveauConverter.convertNiveauDtoToNiveau(dto)));
+	public ResponseEntity<ResponseDto> create(@Valid @RequestBody NiveauDtoCreate dto) {
+		NiveauDtoCreate etu = 
+			convertCreate.entiteToDto(
+			service.create(convertCreate.dtoToEntite(dto)));
 				
 		ResponseDto resp = null;
 				
@@ -46,7 +53,7 @@ public class NiveauController implements INiveauController {
 	@Override
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody NiveauDtoCreate dto) {
-		boolean result = service.update(NiveauConverter.convertNiveauDtoCreateToNiveau(dto));
+		boolean result = service.update(convertCreate.dtoToEntite(dto));
 		ResponseDto resp = null;
 
 		if (!result) {
@@ -60,7 +67,7 @@ public class NiveauController implements INiveauController {
 	@Override
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable int id) {
-		NiveauDtoCreate dto = NiveauConverter.convertNiveauToNiveauDtoCreate(service.findById(id));
+		NiveauDto dto = convert.entiteToDto(service.findById(id));
 		ResponseDto resp = null;
 
 		if (dto != null) {
@@ -73,8 +80,8 @@ public class NiveauController implements INiveauController {
 
 	@Override
 	@GetMapping(path = "/{name}")
-	public ResponseEntity<ResponseDto> findByName(@PathVariable String name) {
-		NiveauDtoCreate dto = NiveauConverter.convertNiveauToNiveauDtoCreate(service.findByName(name));
+	public ResponseEntity<ResponseDto> findByNom(@PathVariable String nom) {
+		NiveauDto dto = convert.entiteToDto(service.findByNom(nom));
 		ResponseDto resp = null;
 
 		if (dto != null) {
@@ -88,15 +95,16 @@ public class NiveauController implements INiveauController {
 	@Override
 	@GetMapping
 	public ResponseEntity<ResponseDto> findAll() {
-		List<EtudiantDtoCreate> list = service.findAll();
+		List<NiveauDto> list = convert.listEntiteToDto(service.findAll());
 
-		return ResponseDto resp = new ResponseDto(false, "SUCCESS", list);		
+		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+		return ResponseEntity.status(HttpStatus.OK).body(resp);		
 	}
 
 	@Override
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable int id) {
-		boolean result = service.delete(id);
+		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
 		if (!result) {
