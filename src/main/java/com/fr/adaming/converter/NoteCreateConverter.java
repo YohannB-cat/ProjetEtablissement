@@ -10,13 +10,13 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 	
 
 	@Override
-	public Note EntiteToDto(NoteDtoCreate dto) {
+	public Note entiteToDto(NoteDtoCreate dto) {
 		Note entite = new Note(dto.getId(), dto.getModule(),dto.getValeur(), dto.getEtudiant());
 		return entite;
 	}
 
 	@Override
-	public List<Note> ListEntiteToDto(List<NoteDtoCreate> dtoliste) {
+	public List<Note> listEntiteToDto(List<NoteDtoCreate> dtoliste) {
 		List<Note> liste = new ArrayList<Note>();
 		for (NoteDtoCreate dto : dtoliste) {
 			liste.add(new Note(dto.getId(), dto.getModule(),dto.getValeur(), dto.getEtudiant()));
@@ -25,13 +25,13 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 	}
 
 	@Override
-	public NoteDtoCreate DtoToEntite(Note entite) {
+	public NoteDtoCreate dtoToEntite(Note entite) {
 		NoteDtoCreate dto = new NoteDtoCreate(entite.getId(),entite.getIdEtudiant(), entite.getId_module(),entite.getValeur());
 		return dto;
 	}
 
 	@Override
-	public List<NoteDtoCreate> ListDtoToEntite(List<Note> entite) {
+	public List<NoteDtoCreate> listDtoToEntite(List<Note> entite) {
 		List<NoteDtoCreate> liste = new ArrayList<NoteDtoCreate>();
 		for (Note e : entite) {
 			liste.add(new NoteDtoCreate(e.getId(),e.getIdEtudiant(), e.getId_module(),e.getValeur()));

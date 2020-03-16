@@ -9,13 +9,13 @@ import com.fr.adaming.entity.Niveau;
 public class NiveauCreateConverter implements IConverter<Niveau, NiveauDtoCreate> {
 
 	@Override
-	public Niveau EntiteToDto(NiveauDtoCreate dto) {
+	public Niveau entiteToDto(NiveauDtoCreate dto) {
 		Niveau entite = new Niveau(dto.getClasses(),dto.getId() , dto.getNom());
 		return entite;
 	}
 
 	@Override
-	public List<Niveau> ListEntiteToDto(List<NiveauDtoCreate> dtoliste) {
+	public List<Niveau> listEntiteToDto(List<NiveauDtoCreate> dtoliste) {
 		List<Niveau> liste = new ArrayList<Niveau>();
 		for (NiveauDtoCreate dto : dtoliste) {
 			liste.add(new Niveau(dto.getClasses(),dto.getId() , dto.getNom()));
@@ -24,13 +24,13 @@ public class NiveauCreateConverter implements IConverter<Niveau, NiveauDtoCreate
 	}
 
 	@Override
-	public NiveauDtoCreate DtoToEntite(Niveau entite) {
+	public NiveauDtoCreate dtoToEntite(Niveau entite) {
 		NiveauDtoCreate dto = new NiveauDtoCreate(entite.getClasses(),entite.getId(), entite.getNom());
 		return dto;
 	}
 
 	@Override
-	public List<NiveauDtoCreate> ListDtoToEntite(List<Niveau> entite) {
+	public List<NiveauDtoCreate> listDtoToEntite(List<Niveau> entite) {
 		List<NiveauDtoCreate> liste = new ArrayList<NiveauDtoCreate>();
 		for (Niveau e : entite) {
 			liste.add(new NiveauDtoCreate(e.getClasses(),e.getId(), e.getNom()));

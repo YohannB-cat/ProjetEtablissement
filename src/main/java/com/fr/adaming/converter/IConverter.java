@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface IConverter<Entite, Dto> {
 	
-	public Entite EntiteToDto(Dto dto);
-	public List<Entite> ListEntiteToDto(List<Dto> liste);
-	public Dto DtoToEntite(Entite entite);
-	public List<Dto> ListDtoToEntite(List<Entite> liste);
+	public Entite entiteToDto(Dto dto);
+	public List<Entite> listEntiteToDto(List<Dto> liste);
+	public Dto dtoToEntite(Entite entite);
+	public List<Dto> listDtoToEntite(List<Entite> liste);
 }
