@@ -1,5 +1,5 @@
 package com.fr.adaming.converter;
 
-public class AbsanceConverter {
+public class AbsenceConverter {
 
 }
