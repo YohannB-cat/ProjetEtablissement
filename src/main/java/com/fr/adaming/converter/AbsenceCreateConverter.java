@@ -1,5 +1,6 @@
 package com.fr.adaming.converter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCre
 		if(dto==null) {
 			return null;
 		}
-		Absence entite = new Absence(dto.getId(), dto.getDebut(), dto.getFin(), dto.getJustification(),dto.getDescription(),dto.getEtudiant());
+		Absence entite = new Absence(dto.getId(), LocalDate.parse(dto.getDebut()), LocalDate.parse(dto.getFin()), dto.getJustification(),dto.getDescription(),dto.getEtudiant());
 		return entite;
 	}
 
@@ -26,7 +27,7 @@ public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCre
 		}
 		List<Absence> liste = new ArrayList<Absence>();
 		for (AbsenceDtoCreate dto : dtoliste) {
-			liste.add(new Absence(dto.getId(), dto.getDebut(), dto.getFin(), dto.getJustification(),dto.getDescription(),dto.getEtudiant()));
+			liste.add(new Absence(dto.getId(), LocalDate.parse(dto.getDebut()), LocalDate.parse(dto.getFin()), dto.getJustification(),dto.getDescription(),dto.getEtudiant()));
 		}
 		return liste;
 	}
@@ -36,7 +37,7 @@ public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCre
 		if(entite==null) {
 			return null;
 		}
-		AbsenceDtoCreate dto = new AbsenceDtoCreate(entite.getId(),entite.getDebut(), entite.getFin(), entite.getJustification(),entite.getDescription(), entite.getEtudiant());
+		AbsenceDtoCreate dto = new AbsenceDtoCreate(entite.getId(),entite.getDebut().toString(), entite.getFin().toString(), entite.getJustification(),entite.getDescription(), entite.getEtudiant());
 		return dto;
 	}
 
@@ -47,7 +48,7 @@ public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCre
 		}
 		List<AbsenceDtoCreate> liste = new ArrayList<AbsenceDtoCreate>();
 		for (Absence e : entite) {
-			liste.add(new AbsenceDtoCreate(e.getId(),e.getDebut(), e.getFin(), e.getJustification(),e.getDescription(),e.getEtudiant()));
+			liste.add(new AbsenceDtoCreate(e.getId(),e.getDebut().toString(), e.getFin().toString(), e.getJustification(),e.getDescription(),e.getEtudiant()));
 		}
 		return liste;
 	}

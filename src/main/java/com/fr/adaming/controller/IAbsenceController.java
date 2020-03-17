@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
-
-@RequestMapping(path = "/absence")
 public interface IAbsenceController {
 
 	@PostMapping

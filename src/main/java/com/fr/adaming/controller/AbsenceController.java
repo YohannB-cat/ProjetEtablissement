@@ -25,7 +25,7 @@ import com.fr.adaming.entity.Absence;
 import com.fr.adaming.service.IAbsenceService;
 
 @RestController
-@RequestMapping(path = "/absance")
+@RequestMapping(path = "/absence")
 public class AbsenceController implements IAbsenceController {
 
 	private IConverter<Absence, AbsenceDto> convert;
