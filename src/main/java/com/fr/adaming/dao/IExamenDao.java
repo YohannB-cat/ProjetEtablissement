@@ -11,7 +11,7 @@ import com.fr.adaming.entity.Examen;
 @Repository
 public interface IExamenDao  extends JpaRepository<Examen, Integer>{
 	
-	@Query(value = "from Examen where id = (select examen_id from note where module_id=(select id_module from matiere where id= :matiere))")
+	@Query(value = "from Examen where id = (select examen_id from Note where module_id=(select id_module from Matiere where id= :matiere))")
 	public List<Examen> listByMatiere(@Param(value = "matiere") int matiere);
 	
 
