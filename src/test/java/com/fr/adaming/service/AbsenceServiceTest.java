@@ -3,6 +3,8 @@ package com.fr.adaming.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class AbsenceServiceTest {
 
 	@Test
 	@DisplayName("Création d'une Absence avec param null")
-	public void testCreatingAbsenceWithNullName_shouldReturnAbsence() {
+	public void testCreatingAbsenceWithNullParams_shouldReturnAbsence() {
 		Absence abs = new Absence(0, null, null, null, null, null);
 		assertThat(service.create(abs)).isEqualTo(abs);
 	}
@@ -38,7 +40,8 @@ public class AbsenceServiceTest {
 	@DisplayName("Création d'une Absence avec correct")
 	public void testCreatingCorrectAbsence_shouldReturnAbsence() {
 		Etudiant etu = new Etudiant();
-		Absence abs = new Absence(0, null, null, "J'aime pas les bananes", "On lui à demander de manger des bananes",
+		
+		Absence abs = new Absence(0, LocalDate.parse("2020-20-20"), LocalDate.parse("2020-02-20"), "J'aime pas les bananes", "On lui à demander de manger des bananes",
 				etu);
 		assertThat(service.create(abs)).isEqualTo(abs);
 	}

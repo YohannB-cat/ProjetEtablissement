@@ -25,7 +25,6 @@ import com.fr.adaming.entity.Absence;
 import com.fr.adaming.service.IAbsenceService;
 
 @RestController
-@RequestMapping(path = "/absence")
 public class AbsenceController implements IAbsenceController {
 
 	private IConverter<Absence, AbsenceDto> convert;
@@ -36,7 +35,6 @@ public class AbsenceController implements IAbsenceController {
 	private IAbsenceService service;
 
 	@Override
-	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody AbsenceDtoCreate dto) {
 		AbsenceDtoCreate etu = convertCreate.entiteToDto(service.create(convertCreate.dtoToEntite(dto)));
 
@@ -51,7 +49,6 @@ public class AbsenceController implements IAbsenceController {
 	}
 
 	@Override
-	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody AbsenceDtoCreate dto) {
 		boolean result = service.update(convertCreate.dtoToEntite(dto));
 		ResponseDto resp = null;
@@ -65,7 +62,6 @@ public class AbsenceController implements IAbsenceController {
 	}
 
 	@Override
-	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
 		AbsenceDto dto = convert.entiteToDto(service.findById(id));
 		ResponseDto resp = null;
@@ -79,7 +75,6 @@ public class AbsenceController implements IAbsenceController {
 	}
 
 	@Override
-	@GetMapping
 	public ResponseEntity<ResponseDto> findAll() {
 		List<AbsenceDto> list = convert.listEntiteToDto(service.findAll());
 
@@ -88,7 +83,6 @@ public class AbsenceController implements IAbsenceController {
 	}
 
 	@Override
-	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
 		boolean result = service.deleteById(id);
 		ResponseDto resp = null;

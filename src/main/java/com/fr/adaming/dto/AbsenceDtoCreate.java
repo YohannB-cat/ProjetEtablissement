@@ -1,7 +1,5 @@
 package com.fr.adaming.dto;
 
-import java.time.LocalDate;
-
 import com.fr.adaming.entity.Etudiant;
 
 import lombok.AllArgsConstructor;
@@ -13,9 +11,9 @@ public class AbsenceDtoCreate {
 	
 	private int id;
 	
-	private LocalDate debut;
+	private String debut;
 
-	private LocalDate fin;
+	private String fin;
 
 	private String justification;
 
