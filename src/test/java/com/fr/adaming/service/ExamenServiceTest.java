@@ -29,14 +29,14 @@ public class ExamenServiceTest {
 	@Test
 	@DisplayName("Création d'un Examen avec param null")
 	public void testCreatingExamenWithNullName_shouldReturnNiveau() {
-		Examen exam = new Examen(0, null, null, 0);
+		Examen exam = new Examen(0, null, null, 0D);
 		assertThat(service.create(exam)).isEqualTo(exam);
 	}
 
 	@Test
 	@DisplayName("Création d'un Examen avec correct")
 	public void testCreatingCorrectExamen_shouldReturnNiveau() {
-		Examen exam = new Examen(0, null, "DS", 3);
+		Examen exam = new Examen(0, null, "DS", 3D);
 		assertThat(service.create(exam)).isEqualTo(exam);
 	}
 
@@ -69,7 +69,7 @@ public class ExamenServiceTest {
 	@Test
 	@DisplayName("Recherche d'un Examen par id")
 	public void testFindById_shouldReturnNiveau() {
-		Examen exam = new Examen(1, null, "DS", 3);
+		Examen exam = new Examen(1, null, "DS", 3D);
 		assertThat(service.findById(1)).isEqualTo(exam);
 	}
 
@@ -84,7 +84,7 @@ public class ExamenServiceTest {
 	@Test
 	@DisplayName("Update d'un Examen inexistant dans la bd")
 	public void testUpdateInexistantExamen_shouldReturnFalse() {
-		Examen exam = new Examen(1, null, "DS", 3);
+		Examen exam = new Examen(1, null, "DS", 3D);
 		assertThat(service.update(exam)).isFalse();
 	}
 
@@ -93,7 +93,7 @@ public class ExamenServiceTest {
 	@Test
 	@DisplayName("Update d'un Examen enregistrer dans la BD")
 	public void testUpdateExamenWithId_shouldReturnTrue() {
-		Examen exam = new Examen(1, null, "DM", 2);
+		Examen exam = new Examen(1, null, "DM", 2D);
 		assertThat(service.update(exam)).isTrue();
 	}
 

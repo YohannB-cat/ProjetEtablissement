@@ -31,30 +31,28 @@ public class EtudiantController implements IEtudiantController {
 	@Autowired
 	@Qualifier("etudiantservice")
 	private IEtudiantService service;
-	
+
 	@Autowired
 	private IConverter<Etudiant, EtudiantDto> convert;
-	
+
 	@Autowired
 	private IConverter<Etudiant, EtudiantDtoCreate> convertCreate;
 
 	// Methode create
 	@Override
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDtoCreate dto){
-		EtudiantDtoCreate etu = 
-		convertCreate.entiteToDto(
-		service.create(convertCreate.dtoToEntite(dto)));
-		
+	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto) {
+		EtudiantDtoCreate etu = convertCreate.entiteToDto(service.create(convert.dtoToEntite(dto)));
+
 		ResponseDto resp = null;
-		
+
 		if (etu != null) {
 			resp = new ResponseDto(false, "SUCCESS", etu);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, "FAIL", etu);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-		
+
 	}
 
 	// update
@@ -65,14 +63,14 @@ public class EtudiantController implements IEtudiantController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(false, "SUCCESS", null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(true, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
-	//read
+	// read
 	@Override
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
@@ -91,12 +89,12 @@ public class EtudiantController implements IEtudiantController {
 	@GetMapping(path = "/all")
 	public ResponseEntity<ResponseDto> findAll() {
 		List<EtudiantDto> list = convert.listEntiteToDto(service.findAll());
-		
+
 		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
-	//delete
+	// delete
 	@Override
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
@@ -111,7 +109,5 @@ public class EtudiantController implements IEtudiantController {
 		resp = new ResponseDto(false, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
-	
-	
 
 }

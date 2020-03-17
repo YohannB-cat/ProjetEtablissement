@@ -25,7 +25,7 @@ public class Note {
 	@JoinColumn
 	private Module module;
 	@Column
-	private float valeur;
+	private Float valeur;
 	@ManyToOne
 	@JoinColumn
 	private Etudiant etudiant;

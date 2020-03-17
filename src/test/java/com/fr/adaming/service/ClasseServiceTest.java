@@ -76,33 +76,46 @@ public class ClasseServiceTest {
 		assertThat(service.findAll()).isNull();
 	}
 
-	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (2, 'Terminal2b', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Valide ! (pb avec etudiant)
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (2, 'Terminal2b', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 classes")
 	public void testGetList_shouldReturnList() {
 		assertThat(service.findAll()).hasSize(2);
+		Classe retour = service.findAll().get(0);
+		assertThat(retour).hasFieldOrPropertyWithValue("id", 1);
+		assertThat(retour).hasFieldOrPropertyWithValue("nom", "Session2020");
+		//assertThat(retour).hasFieldOrPropertyWithValue("etudiants", null);
 	}
 
 	// Test findById
+	// Valide !
 	@Test
 	@DisplayName("Recherche d'une classe par id non existant")
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
 
-	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Valide !
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche d'une classe par id")
 	public void testFindById_shouldReturnEtudiant() {
-		Classe cla = new Classe(0, "Session2020", null);
-		assertThat(service.findById(1)).isEqualTo(cla);
+		Classe retour = service.findById(1);
+		assertThat(retour).hasFieldOrPropertyWithValue("id", 1);
+		assertThat(retour).hasFieldOrPropertyWithValue("nom", "Session2020");
 	}
 
 	// Test update
+	// Valide !
 	@Test
 	@DisplayName("Update d'une classe null")
 	public void testUpdateNullClasse_shouldReturnFalse() {
@@ -110,6 +123,7 @@ public class ClasseServiceTest {
 		assertThat(service.update(cla)).isFalse();
 	}
 
+	// Valide !
 	@Test
 	@DisplayName("Update d'une classe inexistant dans la bd")
 	public void testUpdateInexistantClasse_shouldReturnFalse() {
@@ -117,18 +131,24 @@ public class ClasseServiceTest {
 		assertThat(service.update(cla)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Valide !
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un niveau enregistrer dans la BD")
 	public void testUpdateNiveauWithId_shouldReturnTrue() {
-		Classe cla = new Classe(0, "Terminal2b", null);
+		Classe cla = new Classe(1, "Terminal2b", null);
 		assertThat(service.update(cla)).isTrue();
 	}
 
 	// Test deleteById
-	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Valide !
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
@@ -136,8 +156,11 @@ public class ClasseServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Valide !
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {
