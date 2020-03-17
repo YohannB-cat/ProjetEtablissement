@@ -19,17 +19,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Niveau {
+
 	@OneToMany
 	@JoinColumn
 	private List<Classe> classes;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(length=15)
+
+	@Column(length = 15)
 	private String nom;
-	
-	
 
 }
