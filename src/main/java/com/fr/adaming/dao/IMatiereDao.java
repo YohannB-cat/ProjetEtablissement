@@ -11,6 +11,6 @@ import com.fr.adaming.entity.Matiere;
 public interface IMatiereDao  extends JpaRepository<Matiere, Integer>{
 	
 	@Query(value = "FROM Matiere WHERE id_module =:idModule")
-	public List<Matiere> findMatiereById_Module (int idModule);
+	public List<Matiere> findMatiereByIdModule (int idModule);
 	
 }
