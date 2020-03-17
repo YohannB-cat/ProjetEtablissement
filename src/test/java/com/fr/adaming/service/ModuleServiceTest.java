@@ -32,14 +32,16 @@ public class ModuleServiceTest {
 
 	@Test
 	@DisplayName("Création d'un Module avec param null")
-	public void testCreatingModuleWithNullName_shouldReturnNiveau() {
+	@Sql(statements = "DELETE FROM Matiere WHERE nom =null",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreatingModuleWithNullName_shouldReturnModule() {
 		Module m = new Module(0, null, null);
 		assertThat(service.create(m)).isEqualTo(m);
 	}
 
 	@Test
 	@DisplayName("Création d'un Module avec correct")
-	public void testCreatingCorrectModule_shouldReturnNiveau() {
+	@Sql(statements = "DELETE FROM Matiere WHERE nom ='matiere'",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreatingCorrectModule_shouldReturnModule() {
 		Matiere mat = new Matiere();
 		List<Matiere> list = new ArrayList<Matiere>();
 		list.add(mat);
@@ -77,9 +79,9 @@ public class ModuleServiceTest {
 	@DisplayName("Recherche de Module par id")
 	public void testFindById_shouldReturnNiveau() {
 		Module m = new Module(1, "JAVA", null);
-		assertThat(service.findById(1)).isEqualTo(m);
+		assertThat(service.findById(m.getId())).isEqualTo(m);
 	}
-
+ 
 	// Test update
 	@Test
 	@DisplayName("Update d'un Module null")
@@ -98,7 +100,7 @@ public class ModuleServiceTest {
 		assertThat(service.update(m)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Module (id, nom, matiere) VALUES (1, 'JAVA', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module (id, nom, idModule) VALUES (1, 'JAVA', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Module WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un Module enregistrer dans la BD")
@@ -111,7 +113,7 @@ public class ModuleServiceTest {
 	}
 
 	// Test deleteById
-	@Sql(statements = "INSERT INTO Module (id, nom, matiere) VALUES (1, 'JAVA', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module (id, nom, idModu) VALUES (1, 'JAVA', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Module WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")

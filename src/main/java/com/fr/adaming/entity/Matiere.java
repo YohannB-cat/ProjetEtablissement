@@ -21,5 +21,11 @@ public class Matiere {
 	@Column(length = 40)
 	private String nom;
 	
+	
+	public Matiere(String nom) {
+		super();
+		this.nom = nom;
+	}
+	
 
 }
