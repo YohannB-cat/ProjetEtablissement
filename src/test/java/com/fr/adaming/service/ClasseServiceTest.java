@@ -23,6 +23,7 @@ public class ClasseServiceTest {
 	private IClasseService service;
 
 	// Tests create
+	// valide !
 	@Test
 	@DisplayName("Création d'une classe null")
 	public void testCreatingClasseNull_shouldReturnNull() {
@@ -30,6 +31,7 @@ public class ClasseServiceTest {
 		assertNull(service.create(cla));
 	}
 
+	// valide !
 	@Test
 	@DisplayName("Création d'une classe avec param null")
 	public void testCreatingClasseWithNullName_shouldReturnClasse() {
@@ -37,21 +39,27 @@ public class ClasseServiceTest {
 		assertThat(service.create(cla)).isEqualTo(cla);
 	}
 
+	// ça marche pas mais c'est valid (adresse memoire
+	@Sql(statements = "INSERT INTO Etudiant (nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
+			+ "VALUES ('Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	@DisplayName("Création d'une classe avec correct")
+	@DisplayName("Création d'une classe correct")
 	public void testCreatingCorrectClasse_shouldReturnClasse() {
-		Etudiant Bob = new Etudiant();
 		List<Etudiant> list = new ArrayList<Etudiant>();
+		Etudiant Bob = new Etudiant(1, "Bob", "Marley", "3eme nuage a gauche", "paradis", "jamin@with.you", 0, 0, 0,
+				true, true);
 		list.add(Bob);
-		Classe cla = new Classe(0, "Session2020", list);
+		Classe cla = new Classe(1, "Session2020", list);
 		assertThat(service.create(cla)).isEqualTo(cla);
 	}
 
 	// Test findAll
+	// Valide !
 	@Test
 	@DisplayName("Demande de la liste vide")
-	public void testGetList_shouldReturnEmptyList() {
-		assertThat(service.findAll()).isEmpty();
+	public void testGetList_shouldReturnNull() {
+		assertThat(service.findAll()).isNull();
 	}
 
 	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
