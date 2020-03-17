@@ -25,6 +25,6 @@ public class Module {
 	@Column(length = 30)
 	private String nom;
 	@OneToMany
-	@JoinColumn
+	@JoinColumn (name = "idModule")
 	private List<Matiere> idModule;
 }

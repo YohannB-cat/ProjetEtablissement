@@ -21,7 +21,7 @@ import com.fr.adaming.service.IModuleService;
 public class ModuleController implements IModuleController {
 
 	@Autowired
-	@Qualifier("modulenservice")
+	@Qualifier("moduleservice")
 	private IModuleService service;
 
 	@Autowired
