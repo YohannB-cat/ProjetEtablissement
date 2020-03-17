@@ -29,7 +29,7 @@ public interface IAbsenceController {
 	@GetMapping(path = "/all")
 	public ResponseEntity<ResponseDto> findAll();
 
-	@DeleteMapping
+	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id);
 
 }
