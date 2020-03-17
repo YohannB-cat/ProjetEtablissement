@@ -52,8 +52,8 @@ public class EtudiantServiceTest {
 			+ "VALUES ('Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Etudiant (nom, prenom, adresse, ville, email, codePostale, cni, telephone, sexe, enEtude) "
 			+ "VALUES ('Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Etudiant WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 chats")
 	public void testGetList_shouldReturnList() {
@@ -67,8 +67,9 @@ public class EtudiantServiceTest {
 		assertThat(service.findById(1)).isNull();
 	}
 
-	@Sql(statements = "INSERT INTO chat (empreinte, name) VALUES ('patte', 'Peluche')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE name = 'Peluche'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Etudiant (nom, prenom, adresse, ville, email, codePostale, cni, telephone, sexe, enEtude) "
+			+ "VALUES ('Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Etudiant WHERE name = 'Peluche'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche d'etudiant par id")
 	public void testFindById_shouldReturnEtudiant() {
@@ -95,7 +96,7 @@ public class EtudiantServiceTest {
 
 	@Sql(statements = "INSERT INTO Etudiant (nom, prenom, adresse, ville, email, codePostale, cni, telephone, sexe, enEtude) "
 			+ "VALUES ('Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un etudiant enregistrer dans la BD")
 	public void testUpdateEtudiantWithId_shouldReturnTrue() {
@@ -107,7 +108,7 @@ public class EtudiantServiceTest {
 	// Test deleteById
 	@Sql(statements = "INSERT INTO Etudiant (nom, prenom, adresse, ville, email, codePostale, cni, telephone, sexe, enEtude) "
 			+ "VALUES ('Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
@@ -117,7 +118,7 @@ public class EtudiantServiceTest {
 
 	@Sql(statements = "INSERT INTO Etudiant (nom, prenom, adresse, ville, email, codePostale, cni, telephone, sexe, enEtude) "
 			+ "VALUES ('Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {

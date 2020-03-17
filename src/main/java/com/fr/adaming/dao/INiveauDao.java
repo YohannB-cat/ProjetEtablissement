@@ -13,7 +13,7 @@ import com.fr.adaming.entity.Niveau;
 @Repository
 public interface INiveauDao extends JpaRepository<Niveau, Integer> {
 	
-	@Query(value = "FROM Classe WHERE classes_id :idNiveau")
+	@Query(value = "FROM Classe WHERE classes_id = :idNiveau")
 	public List<Classe> findListClasseByIdNiveau(@Param(value = "idNiveau") int idNiveau);
 	
 }

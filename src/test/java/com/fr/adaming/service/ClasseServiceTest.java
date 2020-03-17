@@ -54,10 +54,10 @@ public class ClasseServiceTest {
 		assertThat(service.findAll()).isEmpty();
 	}
 
-	@Sql(statements = "INSERT INTO Classe (id, nom, etudiants) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Classe (id, nom, etudiants) VALUES (2, 'Terminal2b', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (2, 'Terminal2b', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 classes")
 	public void testGetList_shouldReturnList() {
@@ -71,8 +71,8 @@ public class ClasseServiceTest {
 		assertThat(service.findById(1)).isNull();
 	}
 
-	@Sql(statements = "INSERT INTO Classe (id, nom, etudiants) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche d'une classe par id")
 	public void testFindById_shouldReturnEtudiant() {
@@ -95,8 +95,8 @@ public class ClasseServiceTest {
 		assertThat(service.update(cla)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Classe (id, nom, etudiants) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un niveau enregistrer dans la BD")
 	public void testUpdateNiveauWithId_shouldReturnTrue() {
@@ -105,8 +105,8 @@ public class ClasseServiceTest {
 	}
 
 	// Test deleteById
-	@Sql(statements = "INSERT INTO Classe (id, nom, etudiants) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
@@ -114,8 +114,8 @@ public class ClasseServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Classe (id, nom, etudiants) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, classes_id) VALUES (1, 'Session2020', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {

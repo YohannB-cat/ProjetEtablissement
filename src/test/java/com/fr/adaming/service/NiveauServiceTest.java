@@ -58,8 +58,8 @@ public class NiveauServiceTest {
 
 	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 1, 'Maternel')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 2, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 niveaux")
 	public void testGetList_shouldReturnList() {
@@ -74,7 +74,7 @@ public class NiveauServiceTest {
 	}
 
 	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche de niveau par id")
 	public void testFindById_shouldReturnNiveau() {
@@ -108,7 +108,7 @@ public class NiveauServiceTest {
 	}
 
 	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un niveau enregistrer dans la BD")
 	public void testUpdateNiveauWithId_shouldReturnTrue() {
@@ -123,7 +123,7 @@ public class NiveauServiceTest {
 
 	// Test deleteById
 	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
@@ -132,7 +132,7 @@ public class NiveauServiceTest {
 	}
 
 	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {
