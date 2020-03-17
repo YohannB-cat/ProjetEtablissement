@@ -23,6 +23,7 @@ public class NiveauServiceTest {
 	private INiveauService service;
 
 	// Tests create
+	// Valide !
 	@Test
 	@DisplayName("Création d'un niveau null")
 	public void testCreatingNiveauNull_shouldReturnNull() {
@@ -30,6 +31,7 @@ public class NiveauServiceTest {
 		assertNull(service.create(niv));
 	}
 
+	// Valide !
 	@Test
 	@DisplayName("Création d'un niveau avec param null")
 	public void testCreatingNiveauWithNullName_shouldReturnNiveau() {
@@ -37,6 +39,7 @@ public class NiveauServiceTest {
 		assertThat(service.create(niv)).isEqualTo(niv);
 	}
 
+	// Valide !
 	@Test
 	@DisplayName("Création d'un niveau avec correct")
 	public void testCreatingCorrectNiveau_shouldReturnNiveau() {
@@ -50,44 +53,49 @@ public class NiveauServiceTest {
 	}
 
 	// Test findAll
+	// Valide !
 	@Test
 	@DisplayName("Demande de la liste vide")
-	public void testGetList_shouldReturnEmptyList() {
-		assertThat(service.findAll()).isEmpty();
+	public void testGetList_shouldReturnNull() {
+		assertThat(service.findAll()).isNull();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 1, 'Maternel')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 2, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Valide !
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'Maternel')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (2, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 niveaux")
 	public void testGetList_shouldReturnList() {
-		assertThat(service.findAll()).hasSize(2);
+		List<Niveau> retour = service.findAll();
+		assertThat(retour).hasSize(2);
+		assertThat(retour.get(0).getId()).isEqualTo(1);
+		assertThat(retour.get(0).getNom()).isEqualTo("Maternel");
 	}
 
 	// Test findById
+	// Valide !
 	@Test
 	@DisplayName("Recherche de niveau par id non existant")
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Valide ! (pb list)
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche de niveau par id")
 	public void testFindById_shouldReturnNiveau() {
-		Classe term1 = new Classe();
-		Classe term2 = new Classe();
-		List<Classe> list = new ArrayList<Classe>();
-		list.add(term1);
-		list.add(term2);
-		Niveau niv = new Niveau(list, 0, "Bof");
-		assertThat(service.findById(1)).isEqualTo(niv);
+		Niveau retour = service.findById(1);
+		assertThat(retour.getId()).isEqualTo(1);
+		assertThat(retour.getNom()).isEqualTo("Primaire");
+		//assertThat(retour.getClasses()).isEmpty();
 	}
 
 	// Test update
+	// Valide !
 	@Test
 	@DisplayName("Update d'un niveau null")
 	public void testUpdateNullNiveau_shouldReturnFalse() {
@@ -95,6 +103,7 @@ public class NiveauServiceTest {
 		assertThat(service.update(niv)).isFalse();
 	}
 
+	// Valide !
 	@Test
 	@DisplayName("Update d'un niveau inexistant dans la bd")
 	public void testUpdateInexistantNiveau_shouldReturnFalse() {
@@ -107,22 +116,19 @@ public class NiveauServiceTest {
 		assertThat(service.update(niv)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Valide !
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un niveau enregistrer dans la BD")
 	public void testUpdateNiveauWithId_shouldReturnTrue() {
-		Classe term1 = new Classe();
-		Classe term2 = new Classe();
-		List<Classe> list = new ArrayList<Classe>();
-		list.add(term1);
-		list.add(term2);
-		Niveau niv = new Niveau(list, 0, "Bof");
+		Niveau niv = new Niveau(null, 1, "Bof");
 		assertThat(service.update(niv)).isTrue();
 	}
 
 	// Test deleteById
-	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Valide !
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
@@ -131,7 +137,8 @@ public class NiveauServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (classes, id, nom) VALUES (null, 1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// VAlide !
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
