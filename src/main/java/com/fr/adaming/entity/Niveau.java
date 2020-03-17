@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class Niveau {
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn
+	@JoinColumn(name = "id_niveau")
 	private List<Classe> classes;
 
 	@Id
