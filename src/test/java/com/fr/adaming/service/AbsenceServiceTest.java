@@ -55,8 +55,8 @@ public class AbsenceServiceTest {
 
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (1, null, null,'J\'aime pas les bananes', 'On lui à demander de manger des bananes', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (2, null, null,'Je suis généreux en bananes', 'Je voulais donner des bananes à un collegue', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Absence WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 niveaux")
 	public void testGetList_shouldReturnList() {
@@ -71,7 +71,7 @@ public class AbsenceServiceTest {
 	}
 
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (1, null, null,'J\'aime pas les bananes', 'On lui à demander de manger des bananes', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche d'Absence par id")
 	public void testFindById_shouldReturnEtudiant() {
@@ -99,7 +99,7 @@ public class AbsenceServiceTest {
 	}
 
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (1, null, null,'J\'aime pas les bananes', 'On lui à demander de manger des bananes', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'une Absence enregistrer dans la BD")
 	public void testUpdateAbsenceWithId_shouldReturnTrue() {
@@ -110,7 +110,7 @@ public class AbsenceServiceTest {
 
 	// Test deleteById
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (1, null, null,'J\'aime pas les bananes', 'On lui à demander de manger des bananes', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
@@ -119,7 +119,7 @@ public class AbsenceServiceTest {
 	}
 
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (1, null, null,'J\'aime pas les bananes', 'On lui à demander de manger des bananes', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {

@@ -49,8 +49,8 @@ public class ExamenServiceTest {
 
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (1, null, 'DS', 3)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (2, null, 'DM', 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Examen WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Examen WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 niveaux")
 	public void testGetList_shouldReturnList() {
@@ -65,7 +65,7 @@ public class ExamenServiceTest {
 	}
 
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (1, null, 'DS', 3)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Examen WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche d'un Examen par id")
 	public void testFindById_shouldReturnNiveau() {
@@ -89,7 +89,7 @@ public class ExamenServiceTest {
 	}
 
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (1, null, 'DS', 3)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Examen WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un Examen enregistrer dans la BD")
 	public void testUpdateExamenWithId_shouldReturnTrue() {
@@ -99,7 +99,7 @@ public class ExamenServiceTest {
 
 	// Test deleteById
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (1, null, 'DS', 3)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Examen WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
@@ -108,7 +108,7 @@ public class ExamenServiceTest {
 	}
 
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (1, null, 'DS', 3)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Examen WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {
