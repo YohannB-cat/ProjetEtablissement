@@ -12,6 +12,6 @@ import com.fr.adaming.entity.Note;
 @Repository
 public interface INoteDao  extends JpaRepository<Note, Integer>{
 	
-	@Query(value = "from Note where etudiant_id = :etudiant")
+	@Query(value = "from Note where etudiant = :etudiant")
 	public List<Note> listByEtudiant(@Param(value = "etudiant") int etudiant);
 }
