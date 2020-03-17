@@ -29,9 +29,7 @@ public class NoteService implements INoteService {
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			return null;
-		}
-
-		catch (ConstraintViolationException er) {
+		}catch (ConstraintViolationException er) {
 			er.printStackTrace();
 			return null;
 		}

@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fr.adaming.converter.ExamenConverter;
-import com.fr.adaming.converter.ExamenCreateConverter;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;

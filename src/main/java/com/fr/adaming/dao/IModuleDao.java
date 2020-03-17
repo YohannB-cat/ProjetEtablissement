@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.fr.adaming.entity.Module;
 
 @Repository
-public interface IModuleDao extends JpaRepository<Module, Integer>{
+public interface IModuleDao extends JpaRepository<Module, Integer> {
 	
 	
 	
