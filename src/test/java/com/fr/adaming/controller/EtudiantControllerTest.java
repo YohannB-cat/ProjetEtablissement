@@ -179,7 +179,7 @@ public class EtudiantControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(delete("http://localhost:8080/classe/" + id + "").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(delete("http://localhost:8080/etudiant/" + id + "").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
@@ -196,7 +196,7 @@ public class EtudiantControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(delete("http://localhost:8080/classe/" + id ).contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(delete("http://localhost:8080/etudiant/" + id ).contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
