@@ -41,11 +41,10 @@ public class ModuleServiceTest {
 		assertThat(service.create(m)).isEqualTo(m);
 	}
 
-	// NE MARCHE PAS PB d'égalité entre objet
 	@Test
 	@DisplayName("Création d'un Module avec correct")
-	@Sql(statements = "DELETE FROM Module WHERE nom ='JAVA4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Matiere WHERE nom ='Matiere4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module WHERE nom ='JAVA4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingCorrectModule_shouldReturnModule() {
 		Matiere mat = new Matiere();
 		mat.setNom("Matiere4Test");
@@ -86,7 +85,6 @@ public class ModuleServiceTest {
 		assertThat(service.findById(1)).isNull();
 	}
 
-	// pb colum doesn't count match value at row 1
 	@Sql(statements = "INSERT INTO Module VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Module WHERE nom = 'JAVA'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -117,17 +115,19 @@ public class ModuleServiceTest {
 		Module m = new Module(1, "JAVA", list);
 		assertThat(service.update(m)).isFalse();
 	}
-
+	
+	
+	//PROBLEMMMMMMEE
 	// pb colum doesn'tcount match value at row 1
-	@Sql(statements = "INSERT INTO Module  VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module (nom)  VALUES ('JAVA4TEST')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module WHERE nom = 'JAVA4TEST'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un Module enregistrer dans la BD")
 	public void testUpdateModuleWithId_shouldReturnTrue() {
 		Matiere mat = new Matiere();
 		List<Matiere> list = new ArrayList<Matiere>();
 		list.add(mat);
-		Module m = new Module(1, "JPA", list);
+		Module m = new Module("JPA", list);
 		assertThat(service.update(m)).isTrue();
 	}
 

@@ -10,4 +10,11 @@ public class MatiereDtoCreate {
 	private int id;
 	
 	private String nom;
+
+	public MatiereDtoCreate(String nom) {
+		super();
+		this.nom = nom;
+	}
+	
+	
 }

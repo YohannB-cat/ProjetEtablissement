@@ -36,7 +36,7 @@ public class ModuleCreateConverter implements IConverter<Module, ModuleDtoCreate
 		if(entite==null) {
 			return null;
 		}
-		ModuleDtoCreate dto = new ModuleDtoCreate(entite.getId(),entite.getNom(), entite.getIdModule());
+		ModuleDtoCreate dto = new ModuleDtoCreate(entite.getId(),entite.getNom(), entite.getMatieres());
 		return dto;
 	}
 
@@ -47,7 +47,7 @@ public class ModuleCreateConverter implements IConverter<Module, ModuleDtoCreate
 		}
 		List<ModuleDtoCreate> liste = new ArrayList<ModuleDtoCreate>();
 		for (Module e : entite) {
-			liste.add(new ModuleDtoCreate(e.getId(),e.getNom(), e.getIdModule()));
+			liste.add(new ModuleDtoCreate(e.getId(),e.getNom(), e.getMatieres()));
 		}
 		return liste;
 	}

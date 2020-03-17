@@ -31,7 +31,7 @@ public interface IMatiereController {
 	public ResponseEntity<ResponseDto> create(@RequestBody @Valid MatiereDtoCreate dto);
 
 	// read matiere by id
-	@GetMapping (path = "id")
+	@GetMapping (path = "{id}")
 	public ResponseEntity<ResponseDto> findById(@RequestParam (name = "id", required = false) int id);
 	
 	// read all

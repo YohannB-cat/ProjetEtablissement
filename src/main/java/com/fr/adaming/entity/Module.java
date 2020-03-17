@@ -27,4 +27,14 @@ public class Module {
 	@OneToMany
 	@JoinColumn(name = "module_id")
 	private List<Matiere> matieres;
+	
+	
+	
+	public Module(String nom, List<Matiere> matieres) {
+		super();
+		this.nom = nom;
+		this.matieres = matieres;
+	}
+	
+	
 }
