@@ -5,13 +5,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.converter.IConverter;
-import com.fr.adaming.converter.NoteConverter;
 import com.fr.adaming.dto.NoteDto;
 import com.fr.adaming.dto.NoteDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
@@ -22,7 +20,7 @@ import com.fr.adaming.service.INoteService;
 public class NoteController implements INoteController {
 
 	@Autowired
-	@Qualifier("noteservice")
+//	@Qualifier("noteservice")
 	private INoteService service;
 
 	@Autowired
@@ -61,10 +59,10 @@ public class NoteController implements INoteController {
 		if (note != null) {
 			resp = new ResponseDto(false, "SUCCESS", note);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		} else {
-			resp = new ResponseDto(true, "FAIL", note);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
+		resp = new ResponseDto(true, "FAIL", note);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		
 	}
 
 	// find All
@@ -109,6 +107,19 @@ public class NoteController implements INoteController {
 		}
 		resp = new ResponseDto(false, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+	}
+	
+	@Override
+	public ResponseEntity<ResponseDto> listByEtudiant(int id_etudiant){
+		ResponseDto resp = null;
+		List<Note> listNote = service.listByEtudiant(id_etudiant);
+		if (listNote != null) {
+			resp = new ResponseDto(false, "SUCCESS", listNote);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(false, "FAIL", null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		
 	}
 
 }

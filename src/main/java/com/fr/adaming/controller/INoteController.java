@@ -1,8 +1,5 @@
 package com.fr.adaming.controller;
 
-
-import javax.validation.Valid;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +18,7 @@ import com.fr.adaming.dto.ResponseDto;
 public interface INoteController {
 	//create note
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@RequestBody @Valid NoteDtoCreate dto);
+	public ResponseEntity<ResponseDto> create(@RequestBody NoteDtoCreate dto);
 	
 	//read note by id
 	@GetMapping (path = "id")
@@ -33,11 +30,15 @@ public interface INoteController {
 	
 	//update
 	@PutMapping
-	public ResponseEntity<ResponseDto> update (@RequestBody @Valid NoteDtoCreate dto);
+	public ResponseEntity<ResponseDto> update (@RequestBody NoteDtoCreate dto);
 	
 	// delete Note by ID
 	@DeleteMapping(path = "{id}")
 	public ResponseEntity<ResponseDto> deleteById (@PathVariable(name = "id") int id);
+	
+	// Afficher la liste des notes par etudiant
+	@GetMapping(path = "etudiant")
+	public ResponseEntity<ResponseDto> listByEtudiant(@RequestParam(name = "id") int id_etudiant);
 
 	
 	

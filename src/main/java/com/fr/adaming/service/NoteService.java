@@ -10,22 +10,26 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
+import com.fr.adaming.dao.IEtudiantDao;
 import com.fr.adaming.dao.INoteDao;
 import com.fr.adaming.entity.Note;
 
-@Service ("noteservice")
+@Service //("noteservice")
 public class NoteService implements INoteService {
 
 	@Autowired
-	private INoteDao dao;
+	private INoteDao noteDao;
+	
+	@Autowired
+	private IEtudiantDao etudiantDao;
 
 	@Override
 	public Note create(Note note) {
 		try {
-			if (note == null || dao.existsById(note.getId())) {
+			if (note == null || noteDao.existsById(note.getId())) {
 				return null;
 			}
-			return dao.save(note);
+			return noteDao.save(note);
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			return null;
@@ -37,17 +41,17 @@ public class NoteService implements INoteService {
 
 	@Override
 	public List<Note> findAll() {
-		if (dao.findAll().isEmpty()) {
+		if (noteDao.findAll().isEmpty()) {
 			return null;
 		}
-		return dao.findAll();
+		return noteDao.findAll();
 	}
 
 	@Override
 	public Note findById(int id) {
 		try {
 			if (id != 0) {
-				return dao.findById(id).orElse(null);
+				return noteDao.findById(id).orElse(null);
 			} else {
 				return null;
 			}
@@ -60,8 +64,8 @@ public class NoteService implements INoteService {
 	@Override
 	public boolean update(Note note) {
 		try {
-			if (dao.existsById(note.getId())) {
-				dao.save(note);
+			if (noteDao.existsById(note.getId())) {
+				noteDao.save(note);
 				return true;
 			} else {
 				return false;
@@ -78,8 +82,8 @@ public class NoteService implements INoteService {
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (dao.findById(id) != null && id != 0) {
-				dao.deleteById(id);
+			if (noteDao.findById(id) != null && id != 0) {
+				noteDao.deleteById(id);
 				return true;
 			} else {
 				return false;
@@ -93,8 +97,18 @@ public class NoteService implements INoteService {
 		}
 	}
 	
+	@Override
 	public List<Note> listByEtudiant(int id_etudiant){
-		List<Note> listNote = dao.listByEtudiant(id_etudiant);
+		List<Note> listNote =null;
+		try {
+			if (etudiantDao.findById(id_etudiant) != null && id_etudiant != 0) {
+				 listNote = noteDao.listByEtudiant(id_etudiant);
+			}
+		}catch (InvalidDataAccessApiUsageException e) {
+			e.printStackTrace();
+		} catch (EmptyResultDataAccessException er) {
+			er.printStackTrace();
+		}
 		return listNote;
 	}
 }
