@@ -11,6 +11,7 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dao.IExamenDao;
+import com.fr.adaming.dao.IMatiereDao;
 import com.fr.adaming.entity.Examen;
 
 @Service ("examenservice")
@@ -18,6 +19,9 @@ public class ExamenService implements IExamenService {
 	
 	@Autowired
 	private IExamenDao dao;
+	
+	@Autowired
+	private IMatiereDao matiereDao;
 
 	@Override
 	public Examen create(Examen exam) {
@@ -93,6 +97,21 @@ public class ExamenService implements IExamenService {
 			er.printStackTrace();
 			return false;
 		}
+	}
+	
+	@Override
+	public List<Examen> listByMatiere(int idMatiere){
+		List<Examen> list =null;
+		try {
+			if (matiereDao.findById(idMatiere) != null && idMatiere != 0) {
+				 list = dao.listByMatiere(idMatiere);
+			}
+		}catch (InvalidDataAccessApiUsageException e) {
+			e.printStackTrace();
+		} catch (EmptyResultDataAccessException er) {
+			er.printStackTrace();
+		}
+		return list;
 	}
 
 }

@@ -1,11 +1,8 @@
 package com.fr.adaming.controller;
 
-import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
-import com.fr.adaming.entity.Examen;
-import com.fr.adaming.service.IExamenService;
-import com.fr.adaming.service.IModuleService;
 
 
 @RequestMapping (path ="examen/")
@@ -50,5 +42,9 @@ public interface IExamenController {
 	//delete examen
 	@DeleteMapping (path ="{id}")
 	public  ResponseEntity<ResponseDto> deleteById(@PathVariable(name = "id") int id);
+	
+	// Afficher la liste des examens par matiere
+	@GetMapping(path = "matiere")
+	public ResponseEntity<ResponseDto> listByMatiere(@RequestParam(name = "id") int idMatiere);
 
 }

@@ -111,5 +111,18 @@ public class ExamenController implements IExamenController {
 		resp = new ResponseDto(false, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
+	
+	@Override
+	public ResponseEntity<ResponseDto> listByMatiere(int idMatiere){
+		ResponseDto resp = null;
+		List<Examen> list = service.listByMatiere(idMatiere);
+		if (list != null) {
+			resp = new ResponseDto(false, "SUCCESS", list);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(false, "FAIL", null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		
+	}
 
 }
