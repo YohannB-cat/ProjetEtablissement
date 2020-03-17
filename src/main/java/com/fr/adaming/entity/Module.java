@@ -26,5 +26,6 @@ public class Module {
 	private String nom;
 	@OneToMany
 	@JoinColumn(name="idModule")
+	@Column (name="idModule")
 	private List<Matiere> matiere;
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-@Component
+
 public interface IConverter<Entite, Dto> {
 	
 	public Entite dtoToEntite(Dto dto);

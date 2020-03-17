@@ -14,17 +14,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fr.adaming.dto.ExamenDto;
-import com.fr.adaming.dto.ExamenDtoCreate;
-import com.fr.adaming.dto.MatiereDto;
-import com.fr.adaming.dto.MatiereDtoCreate;
-import com.fr.adaming.entity.Examen;
+import com.fr.adaming.dto.NiveauDto;
+import com.fr.adaming.dto.NiveauDtoCreate;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ExamenControllerTest {
+public class NiveauControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -32,28 +28,25 @@ public class ExamenControllerTest {
 	private ObjectMapper mapper = new ObjectMapper();
 
 	@Test
-	public void testCreatingExamenWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+	public void testCreatingNiveauWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
-		ExamenDtoCreate requestDto = new ExamenDtoCreate();
-		requestDto.setCoefficient(2.5d);
-		requestDto.setType("DS");
+		NiveauDtoCreate requestDto = new NiveauDtoCreate();
+		requestDto.setNom("sixième");
 
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/examen/").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/niveau/").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ExamenDtoCreate responseDto = mapper.readValue(responseAsStrig, ExamenDtoCreate.class);
+		NiveauDtoCreate responseDto = mapper.readValue(responseAsStrig, NiveauDtoCreate.class);
 
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("coefficient", requestDto.getCoefficient());
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("type", requestDto.getType());
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
-
 	}
 
 	@Test
@@ -64,11 +57,11 @@ public class ExamenControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/examen/id").contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
+				.perform(post("http://localhost:8080/absence/{" + id + "}")
+						.contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ExamenDtoCreate responseDto = mapper.readValue(responseAsStrig, ExamenDtoCreate.class);
+		NiveauDtoCreate responseDto = mapper.readValue(responseAsStrig, NiveauDtoCreate.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
@@ -77,33 +70,30 @@ public class ExamenControllerTest {
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/examen/all").contentType(MediaType.APPLICATION_JSON_VALUE))
+				.perform(post("http://localhost:8080/absence/all").contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ExamenDto responseDto = mapper.readValue(responseAsStrig, ExamenDto.class);
+		NiveauDto responseDto = mapper.readValue(responseAsStrig, NiveauDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
 	@Test
-	public void testUpdateExamenWithController_shouldWork() throws UnsupportedEncodingException, Exception {
-		ExamenDtoCreate requestDto = new ExamenDtoCreate();
-		requestDto.setCoefficient(2.5d);
-		requestDto.setType("DS");
-
+	public void testUpdateNiveauWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+		NiveauDtoCreate requestDto = new NiveauDtoCreate();
+		requestDto.setNom("sixième");
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/examen/").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/classe/id").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ExamenDtoCreate responseDto = mapper.readValue(responseAsStrig, ExamenDtoCreate.class);
+		NiveauDtoCreate responseDto = mapper.readValue(responseAsStrig, NiveauDtoCreate.class);
 
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("coefficient", requestDto.getCoefficient());
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("type", requestDto.getType());
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
@@ -115,11 +105,11 @@ public class ExamenControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/examen/{" + id + "}")
-						.contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))
+				.perform(post("http://localhost:8080/classe/{" + id + "}").contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ExamenDtoCreate responseDto = mapper.readValue(responseAsStrig, ExamenDtoCreate.class);
+		NiveauDtoCreate responseDto = mapper.readValue(responseAsStrig, NiveauDtoCreate.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}

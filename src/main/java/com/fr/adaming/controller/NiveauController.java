@@ -66,7 +66,7 @@ public class NiveauController implements INiveauController {
 
 	@Override
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto> findById(@PathVariable int id) {
+	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
 		NiveauDto dto = convert.entiteToDto(service.findById(id));
 		ResponseDto resp = null;
 
@@ -90,7 +90,7 @@ public class NiveauController implements INiveauController {
 
 	@Override
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto> delete(@PathVariable int id) {
+	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
 		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 

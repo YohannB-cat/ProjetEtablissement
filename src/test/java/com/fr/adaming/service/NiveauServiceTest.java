@@ -32,14 +32,14 @@ public class NiveauServiceTest {
 
 	@Test
 	@DisplayName("Création d'un niveau avec param null")
-	public void testCreatingNiveauWithNullName_shouldReturnEtudiant() {
+	public void testCreatingNiveauWithNullName_shouldReturnNiveau() {
 		Niveau niv = new Niveau(null, 0, null);
 		assertThat(service.create(niv)).isEqualTo(niv);
 	}
 
 	@Test
 	@DisplayName("Création d'un niveau avec correct")
-	public void testCreatingCorrectNiveau_shouldReturnEtudiant() {
+	public void testCreatingCorrectNiveau_shouldReturnNiveau() {
 		Classe term1 = new Classe();
 		Classe term2 = new Classe();
 		List<Classe> list = new ArrayList<Classe>();
@@ -61,7 +61,7 @@ public class NiveauServiceTest {
 	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM chat WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	@DisplayName("Demande de la liste de 2 chats")
+	@DisplayName("Demande de la liste de 2 niveaux")
 	public void testGetList_shouldReturnList() {
 		assertThat(service.findAll()).hasSize(2);
 	}
@@ -77,7 +77,7 @@ public class NiveauServiceTest {
 	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche de niveau par id")
-	public void testFindById_shouldReturnEtudiant() {
+	public void testFindById_shouldReturnNiveau() {
 		Classe term1 = new Classe();
 		Classe term2 = new Classe();
 		List<Classe> list = new ArrayList<Classe>();

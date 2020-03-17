@@ -26,7 +26,7 @@ import com.fr.adaming.service.IClasseService;
 
 @RestController
 @RequestMapping(path = "/classe")
-public class ClassController implements IClasseController {
+public class ClasseController implements IClasseController {
 	
 	@Autowired
 	@Qualifier("classeservice")
@@ -91,7 +91,7 @@ public class ClassController implements IClasseController {
 
 	@Override
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto> delete(int id) {
+	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
 		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
@@ -102,5 +102,4 @@ public class ClassController implements IClasseController {
 		resp = new ResponseDto(false, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
-
 }
