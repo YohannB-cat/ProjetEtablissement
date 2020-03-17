@@ -6,52 +6,98 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.fr.adaming.dto.AbsenceDto;
 import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.entity.Absence;
+
 @Component
 public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCreate> {
 
 	@Override
 	public Absence dtoToEntite(AbsenceDtoCreate dto) {
-		if(dto==null) {
+		try {
+			if (dto == null) {
+				return null;
+			} else {
+				Absence entite;
+				if (dto.getEtudiant() == null) {
+					entite = new Absence(dto.getId(), LocalDate.parse(dto.getDebut()), LocalDate.parse(dto.getFin()),
+							dto.getJustification(), dto.getDescription());
+					entite.setEtudiant(null);
+				} else {
+					entite = new Absence(dto.getId(), LocalDate.parse(dto.getDebut()), LocalDate.parse(dto.getFin()),
+							dto.getJustification(), dto.getDescription(), dto.getEtudiant());
+				}
+				return entite;
+			}
+		} catch (NullPointerException e) {
 			return null;
 		}
-		Absence entite = new Absence(dto.getId(), LocalDate.parse(dto.getDebut()), LocalDate.parse(dto.getFin()), dto.getJustification(),dto.getDescription(),dto.getEtudiant());
-		return entite;
 	}
 
 	@Override
 	public List<Absence> listDtoToEntite(List<AbsenceDtoCreate> dtoliste) {
-		if(dtoliste==null) {
+		try {
+			if (dtoliste == null) {
+				return null;
+			}
+			List<Absence> liste = new ArrayList<Absence>();
+			for (AbsenceDtoCreate dto : dtoliste) {
+				if (dto.getEtudiant() != null) {
+					liste.add(new Absence(LocalDate.parse(dto.getDebut()), LocalDate.parse(dto.getFin()),
+							dto.getJustification(), dto.getDescription(), dto.getEtudiant()));
+				} else {
+					Absence etuNull = new Absence(LocalDate.parse(dto.getDebut()), LocalDate.parse(dto.getFin()),
+							dto.getJustification(), dto.getDescription());
+					etuNull.setEtudiant(null);
+					liste.add(etuNull);
+				}
+			}
+			return liste;
+		} catch (NullPointerException e) {
 			return null;
 		}
-		List<Absence> liste = new ArrayList<Absence>();
-		for (AbsenceDtoCreate dto : dtoliste) {
-			liste.add(new Absence(dto.getId(), LocalDate.parse(dto.getDebut()), LocalDate.parse(dto.getFin()), dto.getJustification(),dto.getDescription(),dto.getEtudiant()));
-		}
-		return liste;
 	}
 
 	@Override
 	public AbsenceDtoCreate entiteToDto(Absence entite) {
-		if(entite==null) {
+		try {
+			if (entite == null) {
+				return null;
+			}
+			AbsenceDtoCreate dto = new AbsenceDtoCreate(entite.getId(), entite.getDebut().toString(),
+					entite.getFin().toString(), entite.getJustification(), entite.getDescription(),
+					entite.getEtudiant());
+			return dto;
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 			return null;
 		}
-		AbsenceDtoCreate dto = new AbsenceDtoCreate(entite.getId(),entite.getDebut().toString(), entite.getFin().toString(), entite.getJustification(),entite.getDescription(), entite.getEtudiant());
-		return dto;
 	}
 
 	@Override
 	public List<AbsenceDtoCreate> listEntiteToDto(List<Absence> entite) {
-		if(entite==null) {
+		try {
+			if (entite == null) {
+				List<AbsenceDtoCreate> listeNulle = new ArrayList<AbsenceDtoCreate>();
+				return listeNulle;
+			}
+			List<AbsenceDtoCreate> liste = new ArrayList<AbsenceDtoCreate>();
+			for (Absence e : entite) {
+				if (e.getEtudiant() != null) {
+					liste.add(new AbsenceDtoCreate(e.getId(), e.getDebut().toString(), e.getFin().toString(),
+							e.getJustification(), e.getDescription(), e.getEtudiant()));
+				} else {
+					AbsenceDtoCreate dto = new AbsenceDtoCreate(e.getId(), e.getDebut().toString(),
+							e.getFin().toString(), e.getJustification(), e.getDescription());
+					dto.setEtudiant(null);
+					liste.add(dto);
+				}
+			}
+			return liste;
+		} catch (NullPointerException e) {
 			return null;
 		}
-		List<AbsenceDtoCreate> liste = new ArrayList<AbsenceDtoCreate>();
-		for (Absence e : entite) {
-			liste.add(new AbsenceDtoCreate(e.getId(),e.getDebut().toString(), e.getFin().toString(), e.getJustification(),e.getDescription(),e.getEtudiant()));
-		}
-		return liste;
-	}
-	
 
+	}
 }

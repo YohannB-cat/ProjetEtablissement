@@ -22,9 +22,9 @@ public class Absence {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column
+	@Column(nullable = false)
 	private LocalDate debut;
-	@Column
+	@Column(nullable = false)
 	private LocalDate fin;
 	@Column(length = 200)
 	private String justification;
@@ -34,4 +34,39 @@ public class Absence {
 	@ManyToOne
 	private Etudiant etudiant;
 
+	public Absence(LocalDate debut, LocalDate fin, String justification, String description, Etudiant etudiant) {
+		super();
+		this.debut = debut;
+		this.fin = fin;
+		this.justification = justification;
+		this.description = description;
+		this.etudiant = etudiant;
+	}
+
+	public Absence(LocalDate debut, LocalDate fin, String justification, String description) {
+		super();
+		this.debut = debut;
+		this.fin = fin;
+		this.justification = justification;
+		this.description = description;
+	}
+
+	public Absence(int id, LocalDate debut, LocalDate fin, String justification, String description) {
+		super();
+		this.id = id;
+		this.debut = debut;
+		this.fin = fin;
+		this.justification = justification;
+		this.description = description;
+	}
+
+	public Absence(int id, LocalDate debut, LocalDate fin) {
+		super();
+		this.id = id;
+		this.debut = debut;
+		this.fin = fin;
+	}
+	
+	
+	
 }

@@ -2,6 +2,8 @@ package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 
@@ -33,34 +35,46 @@ public class AbsenceServiceTest {
 	@DisplayName("Création d'une Absence avec param null")
 	public void testCreatingAbsenceWithNullParams_shouldReturnAbsence() {
 		Absence abs = new Absence(0, null, null, null, null, null);
-		assertThat(service.create(abs)).isEqualTo(abs);
+		assertNull(service.create(abs));
 	}
 
 	@Test
-	@DisplayName("Création d'une Absence avec correct")
+	@Sql(statements = "insert into Etudiant (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from Etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@DisplayName("Création d'une Absence correcte")
 	public void testCreatingCorrectAbsence_shouldReturnAbsence() {
 		Etudiant etu = new Etudiant();
-		
-		Absence abs = new Absence(0, LocalDate.parse("2020-20-20"), LocalDate.parse("2020-02-20"), "J'aime pas les bananes", "On lui à demander de manger des bananes",
+		etu.setId(1);
+		Absence abs = new Absence(0, LocalDate.parse("2020-02-20"), LocalDate.parse("2020-02-20"), "J'aime pas les bananes", "On lui à demander de manger des bananes",
 				etu);
-		assertThat(service.create(abs)).isEqualTo(abs);
+		assertEquals(abs, service.create(abs));
 	}
+	
+	@Test
+	@Sql(statements = "delete from Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@DisplayName("Création d'une Absence correcte sans étudiant")
+	public void testCreatingCorrectAbsenceSansEtudiant_shouldReturnAbsence() {		
+		Absence abs = new Absence(0, LocalDate.parse("2020-02-20"), LocalDate.parse("2020-02-20"), "J'aime pas les bananes", "On lui à demander de manger des bananes");
+		assertEquals(abs, service.create(abs));
+	}
+	
 
 	// Test findAll
 	@Test
 	@DisplayName("Demande de la liste vide")
 	public void testGetList_shouldReturnEmptyList() {
-		assertThat(service.findAll()).isEmpty();
+		assertNull(service.findAll());
 	}
 
-	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (1, null, null,'J\'aime pas les bananes', 'On lui à demander de manger des bananes', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (2, null, null,'Je suis généreux en bananes', 'Je voulais donner des bananes à un collegue', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (1, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (2, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 niveaux")
 	public void testGetList_shouldReturnList() {
-		assertThat(service.findAll()).hasSize(2);
+		assertTrue(service.findAll().size() == 2);
 	}
 
 	// Test findById
@@ -70,14 +84,12 @@ public class AbsenceServiceTest {
 		assertThat(service.findById(1)).isNull();
 	}
 
-	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (1, null, null,'J\'aime pas les bananes', 'On lui à demander de manger des bananes', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (1, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche d'Absence par id")
-	public void testFindById_shouldReturnEtudiant() {
-		Etudiant etu = new Etudiant();
-		Absence abs = new Absence(0, null, null, "J'aime pas les bananes", "On lui à demander de manger des bananes",
-				etu);
+	public void testFindById_shouldReturnAbsence() {
+		Absence abs = new Absence(1, LocalDate.parse("2020-02-20"), LocalDate.parse("2020-02-20"));
 		assertThat(service.findById(1)).isEqualTo(abs);
 	}
 
@@ -93,23 +105,22 @@ public class AbsenceServiceTest {
 	@DisplayName("Update d'une Absence inexistant dans la bd")
 	public void testUpdateInexistantAbsence_shouldReturnFalse() {
 		Etudiant etu = new Etudiant();
-		Absence abs = new Absence(0, null, null, "J'aime pas les bananes", "On lui à demander de manger des bananes",
+		Absence abs = new Absence(0, LocalDate.parse("2020-02-20"), LocalDate.parse("2020-02-20"), "J'aime pas les bananes", "On lui à demander de manger des bananes",
 				etu);
 		assertThat(service.update(abs)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (1, null, null,'J\'aime pas les bananes', 'On lui à demander de manger des bananes', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (1, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'une Absence enregistrer dans la BD")
 	public void testUpdateAbsenceWithId_shouldReturnTrue() {
-		Etudiant etu = new Etudiant();
-		Absence abs = new Absence(0, null, null, "J'aime les bananes", "Il y avait une promo de bananes", etu);
+		Absence abs = new Absence(1, LocalDate.parse("2020-02-20"), LocalDate.parse("2020-02-20"));
 		assertThat(service.update(abs)).isTrue();
 	}
 
 	// Test deleteById
-	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (1, null, null,'J\'aime pas les bananes', 'On lui à demander de manger des bananes', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (1, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
@@ -118,7 +129,7 @@ public class AbsenceServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Absence (id, debut, fin, justification, description, etudiant) VALUES (1, null, null,'J\'aime pas les bananes', 'On lui à demander de manger des bananes', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (1, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")

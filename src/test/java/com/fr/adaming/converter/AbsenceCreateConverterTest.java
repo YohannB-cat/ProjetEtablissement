@@ -1,8 +1,11 @@
 package com.fr.adaming.converter;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,128 +13,202 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.fr.adaming.dto.AbsenceDto;
 import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.entity.Absence;
+import com.fr.adaming.entity.Etudiant;
 
 @SpringBootTest
-public class AbsenceCreateConverterTest implements IConverterTest {
+public class AbsenceCreateConverterTest {
 
 	@Autowired
 	public IConverter<Absence, AbsenceDtoCreate> convert;
 
-	@Override
 	@Test
-	public void testDtoToEntiteValid_shouldReturnEntite() {
-		AbsenceDtoCreate dto = new AbsenceDtoCreate(4,null,null,"justif","desc",null);
+	public void testDtoToEntiteValid_shouldReturnEntite() {		
+		Etudiant etu = new Etudiant();
+		AbsenceDtoCreate dto = new AbsenceDtoCreate(4, "2020-02-20", "2020-02-20","justif","desc", etu);
+		String date = "2020-02-20";
+		LocalDate localDate = LocalDate.parse(date);
 
 		Absence abs = convert.dtoToEntite(dto);
 
-		assertTrue(abs.getId()==4);
-		assertTrue(abs.getDebut().equals(null));
-		assertTrue(abs.getFin().equals(null));
-		assertTrue(abs.getEtudiant().equals(null));
+		assertNotNull(abs);
+		assertEquals(4, abs.getId());
+		assertEquals(localDate, abs.getDebut());
+		assertTrue(abs.getFin().equals(localDate));
+		assertTrue(abs.getEtudiant().equals(etu));
 		assertTrue(abs.getJustification().equals("justif"));
 		assertTrue(abs.getDescription().equals("desc"));
-
 	}
-
-	@Override
+	
 	@Test
-	public void testDtoToEntiteNotValid_shouldReturnNull() {
-		// TODO : pas de contrainte pour le moment
+	public void testDtoToEntiteValidSansEtudiant_shouldReturnEntite() {		
+		AbsenceDtoCreate dto = new AbsenceDtoCreate(5, "2020-02-20", "2020-02-20","justif","desc");
+		String date = "2020-02-20";
+		LocalDate localDate = LocalDate.parse(date);
+
+		Absence abs = convert.dtoToEntite(dto);
+
+		assertNotNull(abs);
+		assertEquals(5, abs.getId());
+		assertEquals(localDate, abs.getDebut());
+		assertTrue(abs.getFin().equals(localDate));
+		assertNull(abs.getEtudiant());
+		assertTrue(abs.getJustification().equals("justif"));
+		assertTrue(abs.getDescription().equals("desc"));
 	}
 
-	@Override
+	@Test
+	public void testDtoToEntiteInvalidSansDates_shouldReturnNull() {
+		AbsenceDtoCreate dto = new AbsenceDtoCreate();
+		assertNull(convert.dtoToEntite(dto));
+	}
+
 	@Test
 	public void testDtoToEntiteNull_shouldReturnNull() {
 		assertNull(convert.dtoToEntite(null));
 
 	}
 
-	@Override
 	@Test
 	public void testEntiteToDtoValid_shouldReturnEntite() {
-		Absence abs = new Absence(4,null,null,"justif","desc",null);
+		Etudiant etu = new Etudiant();
+		String date = "2020-02-20";
+		LocalDate lDate = LocalDate.parse(date);
+		Absence abs = new Absence(4, lDate, lDate,"justif","desc", etu);
 
 		AbsenceDtoCreate dto = convert.entiteToDto(abs);
 
-		assertTrue(abs.getId()==4);
-		assertTrue(dto.getDebut().equals(null));
-		assertTrue(dto.getFin().equals(null));
-		assertTrue(dto.getEtudiant().equals(null));
+		assertNotNull(dto);
+		assertTrue(abs.getId() == 4);
+		assertTrue(dto.getDebut().equals(date));
+		assertTrue(dto.getFin().equals(date));
+		assertTrue(dto.getEtudiant().equals(etu));
 		assertTrue(dto.getJustification().equals("justif"));
 		assertTrue(dto.getDescription().equals("desc"));
-
 	}
 
-	@Override
 	@Test
-	public void testEntiteToDtoNotValid_shouldReturnNull() {
-		// TODO Auto-generated method stub
+	public void testEntiteToDtoValidSansEtudiant_shouldReturnEntite() {
+		String date = "2020-02-20";
+		LocalDate lDate = LocalDate.parse(date);
+		Absence abs = new Absence(4, lDate, lDate,"justif","desc", null);
 
+		AbsenceDtoCreate dto = convert.entiteToDto(abs);
+
+		assertNotNull(dto);
+		assertTrue(abs.getId() == 4);
+		assertTrue(dto.getDebut().equals(date));
+		assertTrue(dto.getFin().equals(date));
+		assertNull(dto.getEtudiant());
+		assertTrue(dto.getJustification().equals("justif"));
+		assertTrue(dto.getDescription().equals("desc"));
 	}
+	
+	@Test
+	public void testEntiteToDtoInvalidSansDates_shouldReturnEntite() {
+		Absence abs = new Absence();
+		assertNull(convert.entiteToDto(abs));
+	}	
 
-	@Override
 	@Test
 	public void testEntiteToDtoNull_shouldReturnNull() {
 		assertNull(convert.entiteToDto(null));
-
 	}
 
-	@Override
 	@Test
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
-		List<AbsenceDtoCreate> listedto = new ArrayList<AbsenceDtoCreate>();
-		AbsenceDtoCreate dto = new AbsenceDtoCreate(20, null,null,"justif","desc",null);
+		List<AbsenceDtoCreate> listeDto = new ArrayList<AbsenceDtoCreate>();
+		Etudiant etu = new Etudiant();
+		AbsenceDtoCreate dto = new AbsenceDtoCreate(10, "2020-02-20", "2020-02-20", null, null, etu);
+		AbsenceDtoCreate dto2 = new AbsenceDtoCreate(12, "2020-02-20", "2020-02-20", "justif", null, etu);
 		
-		AbsenceDtoCreate dto2 = new AbsenceDtoCreate(22, null,null,"justif2","desc2",null);
-		listedto.add(dto);
-		listedto.add(dto2);
+		listeDto.add(dto);
+		listeDto.add(dto2);
 		
-		assertTrue((convert.listDtoToEntite(listedto).size()==2));
-
+		assertTrue((convert.listDtoToEntite(listeDto).size()==2));
 	}
-
-	@Override
+	
 	@Test
-	public void testListDtoToEntiteNotValid_shouldReturnNull() {
-		// TODO Auto-generated method stub
-
+	public void testListDtoToEntiteValidSansEtudiant_shouldReturnEntite() {
+		List<AbsenceDtoCreate> listeDto = new ArrayList<AbsenceDtoCreate>();
+		AbsenceDtoCreate dto = new AbsenceDtoCreate(10, "2020-02-20", "2020-02-20", null, null, null);
+		AbsenceDtoCreate dto2 = new AbsenceDtoCreate(12, "2020-02-20", "2020-02-20", "justif", null, null);
+		
+		listeDto.add(dto);
+		listeDto.add(dto2);
+		
+		assertTrue((convert.listDtoToEntite(listeDto).size()==2));
+	}
+	
+	@Test
+	public void testListDtoToEntiteInvalidSansDates_shouldReturnEntite() {
+		List<AbsenceDtoCreate> listeDto = new ArrayList<AbsenceDtoCreate>();
+		AbsenceDtoCreate dto = new AbsenceDtoCreate(10, null, null, null, null, null);
+		AbsenceDtoCreate dto2 = new AbsenceDtoCreate();
+		
+		listeDto.add(dto);
+		listeDto.add(dto2);
+		
+		assertNull((convert.listDtoToEntite(listeDto)));
 	}
 
-	@Override
 	@Test
 	public void testListDtoToEntiteNull_shouldReturnNull() {
 		assertNull(convert.listDtoToEntite(null));
 
 	}
 
-	@Override
 	@Test
 	public void testListEntiteToDtoValid_shouldReturnEntite() {
 		List<Absence> liste = new ArrayList<Absence>();
-		Absence et = new Absence(4,null,null,"justif","desc",null);
-		Absence et2 = new Absence(4,null,null,"justif","desc",null);
+		String date = "2020-02-20";
+		LocalDate lDate = LocalDate.parse(date);
+		Etudiant etu = new Etudiant();
+		Absence et = new Absence(4, lDate, lDate,"justif","desc", etu);
+		Absence et2 = new Absence(5, lDate, lDate,"justif","desc", etu);
 
 		liste.add(et);
 		liste.add(et2);
 		
-		assertTrue((convert.listEntiteToDto(liste).size()==2));
-
+		List<AbsenceDtoCreate> listeReturned = convert.listEntiteToDto(liste);
+		
+		assertTrue(listeReturned.size() > 1);
 	}
-
-	@Override
+	
 	@Test
-	public void testListEntiteToDtoNotValid_shouldReturnNull() {
-		// TODO Auto-generated method stub
+	public void testListEntiteToDtoValidSansEtudiant_shouldReturnEntite() {
+		List<Absence> liste = new ArrayList<Absence>();
+		String date = "2020-02-20";
+		LocalDate lDate = LocalDate.parse(date);
+		Absence et = new Absence(4, lDate, lDate,"justif","desc", null);
+		Absence et2 = new Absence(5, lDate, lDate,"justif","desc", null);
 
+		liste.add(et);
+		liste.add(et2);
+		
+		List<AbsenceDtoCreate> listeReturned = convert.listEntiteToDto(liste);
+		
+		assertTrue(listeReturned.size() > 1);
 	}
 
-	@Override
+	@Test
+	public void testListEntiteToDtoInvalidSansDates_shouldReturnEntite() {
+		List<Absence> liste = new ArrayList<Absence>();
+		Absence et = new Absence(4, null, null,"justif","desc", null);
+		Absence et2 = new Absence();
+
+		liste.add(et);
+		liste.add(et2);
+		
+		assertNull(convert.listEntiteToDto(liste));
+	}
+
+
 	@Test
 	public void testListEntiteToDtoNull_shouldReturnNull() {
-		assertNull(convert.listEntiteToDto(null));
-
+		assertTrue(convert.listEntiteToDto(null).isEmpty());
 	}
 
 }
