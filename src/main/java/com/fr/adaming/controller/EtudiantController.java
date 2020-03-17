@@ -32,7 +32,10 @@ public class EtudiantController implements IEtudiantController {
 	@Qualifier("etudiantservice")
 	private IEtudiantService service;
 	
+	@Autowired
 	private IConverter<Etudiant, EtudiantDto> convert;
+	
+	@Autowired
 	private IConverter<Etudiant, EtudiantDtoCreate> convertCreate;
 
 	// Methode create
@@ -104,5 +107,7 @@ public class EtudiantController implements IEtudiantController {
 		resp = new ResponseDto(false, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
+	
+	
 
 }
