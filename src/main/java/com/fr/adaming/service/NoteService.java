@@ -92,4 +92,9 @@ public class NoteService implements INoteService {
 			return false;
 		}
 	}
+	
+	public List<Note> listByEtudiant(int id_etudiant){
+		List<Note> listNote = dao.listByEtudiant(id_etudiant);
+		return listNote;
+	}
 }
