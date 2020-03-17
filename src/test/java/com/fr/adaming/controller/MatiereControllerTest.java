@@ -1,12 +1,16 @@
 package com.fr.adaming.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.UnsupportedEncodingException;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
@@ -30,6 +34,7 @@ public class MatiereControllerTest {
 	private ObjectMapper mapper = new ObjectMapper();
 
 	@Test
+	@DisplayName ("Creation matiere")
 	public void testCreatingMatiereWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
@@ -52,6 +57,7 @@ public class MatiereControllerTest {
 	}
 
 	@Test
+	@DisplayName ("Find one matiere")
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
@@ -59,7 +65,7 @@ public class MatiereControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/id").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(get("http://localhost:8080/matiere/id").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
@@ -69,10 +75,11 @@ public class MatiereControllerTest {
 	}
 
 	@Test
+	@DisplayName ("Find all matiere")
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/all").contentType(MediaType.APPLICATION_JSON_VALUE))
+				.perform(get("http://localhost:8080/matiere/all").contentType(MediaType.APPLICATION_JSON_VALUE))
 						.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		MatiereDto responseDto = mapper.readValue(responseAsStrig, MatiereDto.class);
@@ -81,6 +88,7 @@ public class MatiereControllerTest {
 	}
 	
 	@Test
+	@DisplayName ("Update matiere")
 	public void testUpdateMatiereWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		MatiereDtoCreate requestDto = new MatiereDtoCreate();
 		requestDto.setNom("math");
@@ -90,7 +98,7 @@ public class MatiereControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(put("http://localhost:8080/matiere/").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
@@ -101,6 +109,7 @@ public class MatiereControllerTest {
 	}
 	
 	@Test
+	@DisplayName ("Delete matiere")
 	public void testDeleteByIdWithController_shouldWork () throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
@@ -108,7 +117,7 @@ public class MatiereControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/{"+id+"}").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(delete("http://localhost:8080/matiere/{"+id+"}").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO

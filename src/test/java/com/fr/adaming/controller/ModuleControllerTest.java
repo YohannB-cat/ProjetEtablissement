@@ -1,7 +1,10 @@
 package com.fr.adaming.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -9,6 +12,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,6 +35,7 @@ public class ModuleControllerTest {
 	private ObjectMapper mapper = new ObjectMapper();
 
 	@Test
+	@DisplayName ("Creation matiere")
 	public void testCreatingModuleWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
@@ -61,6 +66,7 @@ public class ModuleControllerTest {
 	}
 
 	@Test
+	@DisplayName ("Find one matiere")
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
@@ -68,7 +74,7 @@ public class ModuleControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/module/id").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(get("http://localhost:8080/module/id").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
@@ -78,10 +84,11 @@ public class ModuleControllerTest {
 	}
 
 	@Test
+	@DisplayName ("Find all matiere")
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/module/all").contentType(MediaType.APPLICATION_JSON_VALUE))
+				.perform(get("http://localhost:8080/module/all").contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ModuleDto responseDto = mapper.readValue(responseAsStrig, ModuleDto.class);
@@ -90,6 +97,7 @@ public class ModuleControllerTest {
 	}
 
 	@Test
+	@DisplayName ("Update matiere")
 	public void testUpdateModuleWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		
 		//preparer le dto
@@ -107,7 +115,7 @@ public class ModuleControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/module/id").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(put("http://localhost:8080/module/id").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
@@ -119,6 +127,7 @@ public class ModuleControllerTest {
 	}
 
 	@Test
+	@DisplayName ("Delete matiere")
 	public void testDeleteByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
@@ -126,7 +135,7 @@ public class ModuleControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/module/{"+id+"}").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(delete("http://localhost:8080/module/{"+id+"}").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
