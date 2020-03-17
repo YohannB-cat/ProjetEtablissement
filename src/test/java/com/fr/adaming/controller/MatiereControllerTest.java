@@ -90,7 +90,7 @@ public class MatiereControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/matiere/id").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/matiere/").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
