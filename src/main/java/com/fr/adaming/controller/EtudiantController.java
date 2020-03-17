@@ -57,13 +57,14 @@ public class EtudiantController implements IEtudiantController {
 		
 	}
 
+	// update
 	@Override
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody EtudiantDtoCreate dto) {
 		boolean result = service.update(convertCreate.dtoToEntite(dto));
 		ResponseDto resp = null;
 
-		if (!result) {
+		if (result) {
 			resp = new ResponseDto(true, "SUCCESS", null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
@@ -71,6 +72,7 @@ public class EtudiantController implements IEtudiantController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
+	//read
 	@Override
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
@@ -86,7 +88,7 @@ public class EtudiantController implements IEtudiantController {
 	}
 
 	@Override
-	@GetMapping
+	@GetMapping(path = "/all")
 	public ResponseEntity<ResponseDto> findAll() {
 		List<EtudiantDto> list = convert.listEntiteToDto(service.findAll());
 		
@@ -94,13 +96,14 @@ public class EtudiantController implements IEtudiantController {
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
+	//delete
 	@Override
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
 		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
-		if (!result) {
+		if (result) {
 			resp = new ResponseDto(true, "SUCCESS", null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
