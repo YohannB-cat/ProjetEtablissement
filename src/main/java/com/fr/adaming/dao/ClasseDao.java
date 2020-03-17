@@ -12,7 +12,7 @@ import com.fr.adaming.entity.Classe;
 
 public class ClasseDao {
 	private Session s = new Configuration().configure().buildSessionFactory().openSession();
-
+	
 	public List<Classe> listByNiveau(int id_niveau){
 		String hql = "from Classe where classe_id =:idNiveau";
 		Query<Object> query = s.createQuery(hql,Object.class);
