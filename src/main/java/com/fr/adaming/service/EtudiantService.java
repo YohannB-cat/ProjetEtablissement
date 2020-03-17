@@ -80,7 +80,7 @@ public class EtudiantService implements IEtudiantService {
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (dao.findById(id) != null && id != 0) {
+			if (dao.existsById(id) && id != 0) {
 				dao.deleteById(id);
 				return true;
 			} else {
@@ -91,6 +91,10 @@ public class EtudiantService implements IEtudiantService {
 			return false;
 		} catch (EmptyResultDataAccessException er) {
 			er.printStackTrace();
+			return false;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
 			return false;
 		}
 	}

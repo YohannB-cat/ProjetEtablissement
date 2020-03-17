@@ -27,8 +27,7 @@ public class EtudiantCreateConverter implements IConverter<Etudiant, EtudiantDto
 		}
 		List<Etudiant> liste = new ArrayList<Etudiant>();
 		for (EtudiantDtoCreate dto : dtoliste) {
-			liste.add(new Etudiant(dto.getId(), dto.getNom(), dto.getPrenom(), dto.getAdresse(), dto.getVille(), dto.getEmail(),
-					dto.getCodePostal(), dto.getCni(), dto.getTelephone(), dto.isSexe(), dto.isEnEtude()));
+			liste.add(dtoToEntite(dto));
 		}
 		return liste;
 	}
@@ -51,8 +50,7 @@ public class EtudiantCreateConverter implements IConverter<Etudiant, EtudiantDto
 		}
 		List<EtudiantDtoCreate> liste = new ArrayList<EtudiantDtoCreate>();
 		for (Etudiant e : entite) {
-			liste.add(new EtudiantDtoCreate(e.getId(),e.getNom(), e.getPrenom(), e.getAdresse(), e.getCodePostale(), e.getVille(),
-					e.isSexe(), e.getCni(), e.getTelephone(), e.getEmail(), e.isEnEtude()));
+			liste.add(entiteToDto(e));
 		}
 		return liste;
 	}

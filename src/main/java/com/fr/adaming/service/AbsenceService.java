@@ -39,10 +39,14 @@ public class AbsenceService implements IAbsenceService {
 
 	@Override
 	public List<Absence> findAll() {
+		try {
 		if (dao.findAll().isEmpty()) {
 			return null;
 		}
 		return dao.findAll();
+		} catch (NullPointerException npe) {
+			return null;
+		}
 	}
 
 	@Override
