@@ -2,6 +2,7 @@ package com.fr.adaming.service;
 
 import java.util.List;
 
+import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Niveau;
 
 public interface INiveauService {
@@ -15,5 +16,7 @@ public interface INiveauService {
 	public boolean update(Niveau niveau);
 
 	public boolean deleteById(int id);
+	
+	public List<Classe> findListClasseByIdNiveau(int idNiveau);
 
 }

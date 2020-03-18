@@ -97,7 +97,7 @@ public class NiveauService implements INiveauService {
 		}
 	}
 
-	
+	@Override
 	public List<Classe> findListClasseByIdNiveau(int idNiveau) {
 		try {
 			if(dao.findById(idNiveau) != null && idNiveau!=0) {
