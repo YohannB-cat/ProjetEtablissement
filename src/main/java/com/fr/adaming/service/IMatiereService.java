@@ -12,9 +12,11 @@ public interface IMatiereService {
 
 	public Matiere findById(int id);
 
-	public boolean update(Matiere matiere);
+	public Boolean update(Matiere matiere);
 
 	public boolean deleteById(int id);
+	
+	public List<Matiere> findMatiereByIdModule (Integer matieres);
 	
 
 }

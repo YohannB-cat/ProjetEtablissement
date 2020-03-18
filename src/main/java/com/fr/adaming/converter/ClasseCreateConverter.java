@@ -3,9 +3,11 @@ package com.fr.adaming.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.fr.adaming.dto.ClasseDtoCreate;
 import com.fr.adaming.entity.Classe;
-
+@Component
 public class ClasseCreateConverter implements IConverter<Classe, ClasseDtoCreate> {
 
 	@Override

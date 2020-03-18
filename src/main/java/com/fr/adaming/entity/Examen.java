@@ -25,7 +25,7 @@ public class Examen {
 	private LocalDate date;
 	@Column(length = 20)
 	private String type;
-	@Column	
-	private double coefficient;
+	@Column
+	private Double coefficient;
 
 }

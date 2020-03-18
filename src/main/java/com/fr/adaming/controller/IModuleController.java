@@ -35,8 +35,8 @@ public interface IModuleController {
 	public ResponseEntity<ResponseDto> create(@RequestBody @Valid ModuleDtoCreate dto);
 	
 	//read module by id
-	@GetMapping (path = "id")
-	public ResponseEntity<ResponseDto> findById (@RequestParam (name = "id", required = false) int id);
+	@GetMapping (path = "{id}")
+	public ResponseEntity<ResponseDto> findById (@PathVariable(name = "id", required = false) int id);
 	
 	
 	//read all

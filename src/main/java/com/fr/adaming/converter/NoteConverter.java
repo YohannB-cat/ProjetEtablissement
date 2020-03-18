@@ -3,9 +3,11 @@ package com.fr.adaming.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.fr.adaming.dto.NoteDto;
 import com.fr.adaming.entity.Note;
-
+@Component
 public class NoteConverter implements IConverter<Note, NoteDto> {
 	
 

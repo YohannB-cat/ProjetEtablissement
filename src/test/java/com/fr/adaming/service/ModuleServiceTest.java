@@ -1,6 +1,7 @@
 package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class ModuleServiceTest {
 
 	@Autowired
 	private IModuleService service;
+	@Autowired
+	private IMatiereService matService;
 
 	// Tests create
 	@Test
@@ -32,32 +35,43 @@ public class ModuleServiceTest {
 
 	@Test
 	@DisplayName("Création d'un Module avec param null")
-	public void testCreatingModuleWithNullName_shouldReturnNiveau() {
+	@Sql(statements = "DELETE FROM Matiere WHERE nom =null", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreatingModuleWithNullName_shouldReturnModule() {
 		Module m = new Module(0, null, null);
 		assertThat(service.create(m)).isEqualTo(m);
 	}
 
 	@Test
 	@DisplayName("Création d'un Module avec correct")
-	public void testCreatingCorrectModule_shouldReturnNiveau() {
+	@Sql(statements = "DELETE FROM Matiere WHERE nom ='Matiere4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module WHERE nom ='JAVA4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreatingCorrectModule_shouldReturnModule() {
 		Matiere mat = new Matiere();
+		mat.setNom("Matiere4Test");
+
 		List<Matiere> list = new ArrayList<Matiere>();
 		list.add(mat);
-		Module m = new Module(1, "JAVA", list);
-		assertThat(service.create(m)).isEqualTo(m);
+		matService.create(mat);
+		Module m = new Module(1, "JAVA4Test", list);
+		Module mcreate = service.create(m);
+
+		assertThat(mcreate).hasFieldOrPropertyWithValue("id", m.getId());
+		assertThat(mcreate).hasFieldOrPropertyWithValue("nom", m.getNom());
+		assertThat(mcreate.getMatieres()).asList().hasSize(1);
+		assertThat(mcreate.getMatieres().get(0)).hasFieldOrPropertyWithValue("nom", "Matiere4Test");
 	}
 
 	// Test findAll
 	@Test
 	@DisplayName("Demande de la liste vide")
-	public void testGetList_shouldReturnEmptyList() {
-		assertThat(service.findAll()).isEmpty();
+	public void testGetList_shouldReturnNull() {
+		assertThat(service.findAll()).isNull();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (id, nom, matiere) VALUES (1, 'JAVA', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Niveau (id, nom, matiere) VALUES (2, 'Spring', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module  VALUES (null, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module VALUES (null, 'Spring')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module WHERE nom = 'JAVA'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module WHERE nom = 'SPRING'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 niveaux")
 	public void testGetList_shouldReturnList() {
@@ -71,13 +85,17 @@ public class ModuleServiceTest {
 		assertThat(service.findById(1)).isNull();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (id, nom, matiere) VALUES (1, 'JAVA', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module WHERE nom = 'JAVA'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche de Module par id")
-	public void testFindById_shouldReturnNiveau() {
-		Module m = new Module(1, "JAVA", null);
-		assertThat(service.findById(1)).isEqualTo(m);
+	public void testFindById_shouldReturnModule() {
+		Module m = new Module(0, "JAVA", null);
+		Module mFind = service.findById(m.getId());
+		assertThat(mFind).hasFieldOrPropertyWithValue("id", m.getId());
+		assertThat(mFind).hasFieldOrPropertyWithValue("nom", m.getNom());
+		assertThat(mFind.getMatieres()).isNull();
+		
 	}
 
 	// Test update
@@ -97,22 +115,25 @@ public class ModuleServiceTest {
 		Module m = new Module(1, "JAVA", list);
 		assertThat(service.update(m)).isFalse();
 	}
-
-	@Sql(statements = "INSERT INTO Niveau (id, nom, matiere) VALUES (1, 'JAVA', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	
+	
+	//PROBLEMMMMMMEE
+	// pb colum doesn'tcount match value at row 1
+	@Sql(statements = "INSERT INTO Module (nom)  VALUES ('JAVA4TEST')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module WHERE nom = 'JAVA4TEST'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un Module enregistrer dans la BD")
 	public void testUpdateModuleWithId_shouldReturnTrue() {
 		Matiere mat = new Matiere();
 		List<Matiere> list = new ArrayList<Matiere>();
 		list.add(mat);
-		Module m = new Module(1, "JPA", list);
+		Module m = new Module("JPA", list);
 		assertThat(service.update(m)).isTrue();
 	}
 
 	// Test deleteById
-	@Sql(statements = "INSERT INTO Niveau (id, nom, matiere) VALUES (1, 'JAVA', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
@@ -120,8 +141,8 @@ public class ModuleServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (id, nom, matiere) VALUES (1, 'JAVA', null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {

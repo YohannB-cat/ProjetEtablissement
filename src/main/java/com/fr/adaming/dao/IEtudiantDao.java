@@ -6,8 +6,7 @@ import com.fr.adaming.entity.Etudiant;
 
 public interface IEtudiantDao extends JpaRepository<Etudiant, Integer> {
 	
-//	public Etudiant findById(int id);
-	
+
 
 
 }

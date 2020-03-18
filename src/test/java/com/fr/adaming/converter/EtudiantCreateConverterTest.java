@@ -1,5 +1,6 @@
 package com.fr.adaming.converter;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -14,12 +15,12 @@ import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.entity.Etudiant;
 
 @SpringBootTest
-public class EtudiantCreateConverterTest implements IConverterTest {
+public class EtudiantCreateConverterTest{
 
 	@Autowired
 	public IConverter<Etudiant, EtudiantDtoCreate> convert;
 
-	@Override
+
 	@Test
 	public void testDtoToEntiteValid_shouldReturnEntite() {
 		EtudiantDtoCreate dto = new EtudiantDtoCreate(19,"nom", "prenom", "adresse", 69003, "blabla", true, 19865156, 20510620,
@@ -41,56 +42,79 @@ public class EtudiantCreateConverterTest implements IConverterTest {
 
 	}
 
-	@Override
 	@Test
-	public void testDtoToEntiteNotValid_shouldReturnNull() {
-		// TODO : pas de contrainte pour le moment
+	public void testDtoToEntiteNotValid_shouldReturnEntite() {
+		EtudiantDtoCreate dto = new EtudiantDtoCreate(0,null, null, null, 0, null, false, 0, 0,null, false);
+
+		Etudiant et = convert.dtoToEntite(dto);
+
+		assertTrue(et.getId()==0);
+		assertTrue(et.getCodePostale() == 0);
+		assertFalse(et.isSexe());
+		assertFalse(et.isEnEtude());
+		assertTrue(et.getCni() == 0);
+		assertTrue(et.getTelephone() == 0);
+		assertNull(et.getAdresse());
+		assertNull(et.getEmail());
+		assertNull(et.getNom());
+		assertNull(et.getPrenom());
+		assertNull(et.getVille());
 	}
 
-	@Override
 	@Test
 	public void testDtoToEntiteNull_shouldReturnNull() {
 		assertNull(convert.dtoToEntite(null));
 
 	}
 
-	@Override
 	@Test
 	public void testEntiteToDtoValid_shouldReturnEntite() {
-		Etudiant et = new Etudiant(2, null, null, null, null, null, 0, 0, 0, false, false);
+		Etudiant et = new Etudiant(1,"nom","prenom","adresse","ville","email",69003,123,06,true,true);
 
 		EtudiantDtoCreate dto = convert.entiteToDto(et);
 
 		
-		assertTrue(dto.getId()==2);
+		assertTrue(dto.getId()==1);
 		assertTrue(dto.getAdresse().equals("adresse"));
 		assertTrue(dto.getPrenom().equals("prenom"));
 		assertTrue(dto.getNom().equals("nom"));
 		assertTrue(dto.getCodePostal() == 69003);
-		assertTrue(dto.getVille().equals("blabla"));
+		assertTrue(dto.getVille().equals("ville"));
 		assertTrue(dto.isSexe());
 		assertTrue(dto.isEnEtude());
-		assertTrue(dto.getCni() == 19865156);
-		assertTrue(dto.getTelephone() == 20510620);
-		assertTrue(dto.getEmail().equals("email@ad.fr"));
+		assertTrue(dto.getCni() == 123);
+		assertTrue(dto.getTelephone() == 06);
+		assertTrue(dto.getEmail().equals("email"));
 
 	}
 
-	@Override
 	@Test
-	public void testEntiteToDtoNotValid_shouldReturnNull() {
-		// TODO Auto-generated method stub
+	public void testEntiteToDtoNotValid_shouldReturnEntite() {
+		Etudiant et = new Etudiant(0, null, null, null, null, null, 0, 0, 0, false, false);
+
+		EtudiantDtoCreate dto = convert.entiteToDto(et);
+
+		
+		assertTrue(dto.getId()==0);
+		assertTrue(dto.getCodePostal() == 0);
+		assertFalse(dto.isSexe());
+		assertFalse(dto.isEnEtude());
+		assertTrue(dto.getCni() == 0);
+		assertTrue(dto.getTelephone() == 0);
+		assertNull(dto.getAdresse());
+		assertNull(dto.getEmail());
+		assertNull(dto.getNom());
+		assertNull(dto.getPrenom());
+		assertNull(dto.getVille());
 
 	}
 
-	@Override
 	@Test
 	public void testEntiteToDtoNull_shouldReturnNull() {
 		assertNull(convert.entiteToDto(null));
 
 	}
 
-	@Override
 	@Test
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
 		List<EtudiantDtoCreate> listedto = new ArrayList<EtudiantDtoCreate>();
@@ -106,21 +130,24 @@ public class EtudiantCreateConverterTest implements IConverterTest {
 
 	}
 
-	@Override
 	@Test
-	public void testListDtoToEntiteNotValid_shouldReturnNull() {
-		// TODO Auto-generated method stub
+	public void testListDtoToEntiteObjectNull_shouldReturnListObjectNull() {
+		List<EtudiantDtoCreate> listedto = new ArrayList<EtudiantDtoCreate>();
+		listedto.add(null);
+		listedto.add(null);
+		assertTrue(((convert.listDtoToEntite(listedto)).size()==2));
+		assertNull(convert.listDtoToEntite(listedto).get(0));
+		assertNull(convert.listDtoToEntite(listedto).get(1));
+		
 
 	}
 
-	@Override
 	@Test
 	public void testListDtoToEntiteNull_shouldReturnNull() {
 		assertNull(convert.listDtoToEntite(null));
 
 	}
 
-	@Override
 	@Test
 	public void testListEntiteToDtoValid_shouldReturnEntite() {
 		List<Etudiant> liste = new ArrayList<Etudiant>();
@@ -134,14 +161,17 @@ public class EtudiantCreateConverterTest implements IConverterTest {
 
 	}
 
-	@Override
 	@Test
-	public void testListEntiteToDtoNotValid_shouldReturnNull() {
-		// TODO Auto-generated method stub
+	public void testListEntiteToDtoObjectNull_shouldReturnListObjectNull() {
+		List<Etudiant> liste = new ArrayList<Etudiant>();
+		liste.add(null);
+		liste.add(null);
+		assertTrue((convert.listEntiteToDto(liste).size()==2));
+		assertNull(convert.listEntiteToDto(liste).get(0));
+		assertNull(convert.listEntiteToDto(liste).get(1));
 
 	}
 
-	@Override
 	@Test
 	public void testListEntiteToDtoNull_shouldReturnNull() {
 		assertNull(convert.listEntiteToDto(null));

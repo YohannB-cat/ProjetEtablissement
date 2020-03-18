@@ -17,9 +17,17 @@ import lombok.NoArgsConstructor;
 public class Matiere {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	@Column(length = 40)
 	private String nom;
+	
+	
+	public Matiere(String nom) {
+		super();
+		this.nom = nom;
+	}
+	
+	
 	
 
 }

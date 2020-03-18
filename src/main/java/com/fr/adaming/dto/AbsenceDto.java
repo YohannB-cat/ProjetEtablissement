@@ -1,6 +1,6 @@
 package com.fr.adaming.dto;
 
-import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
 
 import com.fr.adaming.entity.Etudiant;
 
@@ -11,9 +11,11 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class AbsenceDto {
 	
-	private LocalDate debut;
+	@NotNull
+	private String debut;
 
-	private LocalDate fin;
+	@NotNull
+	private String fin;
 
 	private String justification;
 
@@ -21,5 +23,13 @@ public class AbsenceDto {
 	
 	private Etudiant etudiant;
 
+	public AbsenceDto(@NotNull String debut, @NotNull String fin, String justification, String description) {
+		super();
+		this.debut = debut;
+		this.fin = fin;
+		this.justification = justification;
+		this.description = description;
+	}
 
+	
 }

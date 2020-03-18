@@ -15,6 +15,13 @@ public class ModuleDtoCreate {
 	private String nom;
 	
 	private List<Matiere> matiere;
+
+	public ModuleDtoCreate(String nom) {
+		super();
+		this.nom = nom;
+	}
+	
+	
 	
 
 }

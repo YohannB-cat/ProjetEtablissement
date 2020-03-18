@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
-
 @RequestMapping(path = "/absence")
 public interface IAbsenceController {
 
@@ -24,10 +23,10 @@ public interface IAbsenceController {
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody AbsenceDtoCreate dto);
 
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/one/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id);
 
-	@GetMapping
+	@GetMapping(path = "/all")
 	public ResponseEntity<ResponseDto> findAll();
 
 	@DeleteMapping(path = "/{id}")

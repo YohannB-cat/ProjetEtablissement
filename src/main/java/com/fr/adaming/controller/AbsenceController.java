@@ -25,10 +25,12 @@ import com.fr.adaming.entity.Absence;
 import com.fr.adaming.service.IAbsenceService;
 
 @RestController
-@RequestMapping(path = "/absance")
 public class AbsenceController implements IAbsenceController {
 
+	@Autowired
 	private IConverter<Absence, AbsenceDto> convert;
+	
+	@Autowired
 	private IConverter<Absence, AbsenceDtoCreate> convertCreate;
 
 	@Autowired
@@ -36,27 +38,25 @@ public class AbsenceController implements IAbsenceController {
 	private IAbsenceService service;
 
 	@Override
-	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody AbsenceDtoCreate dto) {
-		AbsenceDtoCreate etu = convertCreate.entiteToDto(service.create(convertCreate.dtoToEntite(dto)));
+		AbsenceDtoCreate abs = convertCreate.entiteToDto(service.create(convertCreate.dtoToEntite(dto)));
 
 		ResponseDto resp = null;
 
-		if (etu != null) {
-			resp = new ResponseDto(false, "SUCCESS", etu);
+		if (abs != null) {
+			resp = new ResponseDto(false, "SUCCESS", abs);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(true, "FAIL", etu);
+		resp = new ResponseDto(true, "FAIL", abs);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 	@Override
-	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody AbsenceDtoCreate dto) {
 		boolean result = service.update(convertCreate.dtoToEntite(dto));
 		ResponseDto resp = null;
 
-		if (!result) {
+		if (result) {
 			resp = new ResponseDto(true, "SUCCESS", null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
@@ -65,7 +65,6 @@ public class AbsenceController implements IAbsenceController {
 	}
 
 	@Override
-	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
 		AbsenceDto dto = convert.entiteToDto(service.findById(id));
 		ResponseDto resp = null;
@@ -79,7 +78,6 @@ public class AbsenceController implements IAbsenceController {
 	}
 
 	@Override
-	@GetMapping
 	public ResponseEntity<ResponseDto> findAll() {
 		List<AbsenceDto> list = convert.listEntiteToDto(service.findAll());
 
@@ -88,12 +86,11 @@ public class AbsenceController implements IAbsenceController {
 	}
 
 	@Override
-	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
 		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
-		if (!result) {
+		if (result) {
 			resp = new ResponseDto(true, "SUCCESS", null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}

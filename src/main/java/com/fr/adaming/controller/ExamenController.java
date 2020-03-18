@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fr.adaming.converter.ExamenConverter;
-import com.fr.adaming.converter.ExamenCreateConverter;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;
@@ -53,10 +51,8 @@ public class ExamenController implements IExamenController {
 
 	// find
 	@Override
-	public ResponseEntity<ResponseDto> findById(int id) {
+	public ResponseEntity<ResponseDto> findById(Integer id) {
 		ExamenDto exam = examDto.entiteToDto(service.findById(id));
-				
-		
 		//initialisation de la reponse
 		ResponseDto resp = null;
 		
@@ -112,6 +108,19 @@ public class ExamenController implements IExamenController {
 		}
 		resp = new ResponseDto(false, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+	}
+	
+	@Override
+	public ResponseEntity<ResponseDto> listByMatiere(int idMatiere){
+		ResponseDto resp = null;
+		List<Examen> list = service.listByMatiere(idMatiere);
+		if (list != null) {
+			resp = new ResponseDto(false, "SUCCESS", list);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(false, "FAIL", null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		
 	}
 
 }

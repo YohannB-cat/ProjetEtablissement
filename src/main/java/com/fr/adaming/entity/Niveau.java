@@ -2,6 +2,7 @@ package com.fr.adaming.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,17 +20,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Niveau {
-	@OneToMany
-	@JoinColumn
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_niveau")
 	private List<Classe> classes;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(length=15)
+
+	@Column(length = 15)
 	private String nom;
-	
-	
 
 }

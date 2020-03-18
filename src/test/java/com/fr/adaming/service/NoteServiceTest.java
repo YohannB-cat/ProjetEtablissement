@@ -1,7 +1,7 @@
 package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ public class NoteServiceTest {
 	@Test
 	@DisplayName("Création d'une Note avec param null")
 	public void testCreatingNoteWithNullName_shouldReturnNiveau() {
-		Note n = new Note(0, null, 0, null, null);
+		Note n = new Note(0, null, 0f, null, null);
 		assertThat(service.create(n)).isEqualTo(n);
 	}
 
@@ -42,7 +42,7 @@ public class NoteServiceTest {
 		Module m = new Module();
 		Etudiant et = new Etudiant();
 		Examen ex = new Examen();
-		Note n = new Note(0, m, 12, et, ex);
+		Note n = new Note(0, m, 12f, et, ex);
 		assertThat(service.create(n)).isEqualTo(n);
 	}
 
@@ -53,10 +53,10 @@ public class NoteServiceTest {
 		assertThat(service.findAll()).isEmpty();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (id, module, valeur, etudiant, examen) VALUES (1, null, 12, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Niveau (id, module, valeur, etudiant, examen) VALUES (2, null, 14, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Note (id, module, valeur, etudiant, examen) VALUES (1, null, 12, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Note (id, module, valeur, etudiant, examen) VALUES (2, null, 14, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Note WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Note WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 niveaux")
 	public void testGetList_shouldReturnList() {
@@ -70,12 +70,12 @@ public class NoteServiceTest {
 		assertThat(service.findById(1)).isNull();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (id, module, valeur, etudiant, examen) VALUES (1, null, 12, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Note (id, module, valeur, etudiant, examen) VALUES (1, null, 12, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Note WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche de Note par id")
 	public void testFindById_shouldReturnNiveau() {
-		Note n = new Note(0, null, 12, null, null);
+		Note n = new Note(0, null, 12f, null, null);
 		assertThat(service.findById(1)).isEqualTo(n);
 	}
 
@@ -93,25 +93,25 @@ public class NoteServiceTest {
 		Module m = new Module();
 		Etudiant et = new Etudiant();
 		Examen ex = new Examen();
-		Note n = new Note(0, m, 12, et, ex);
+		Note n = new Note(0, m, 12f, et, ex);
 		assertThat(service.update(n)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (id, module, valeur, etudiant, examen) VALUES (1, null, 12, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Note (id, module, valeur, etudiant, examen) VALUES (1, null, 12, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Note WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'une Note enregistrer dans la BD")
 	public void testUpdateNoteWithId_shouldReturnTrue() {
 		Module m = new Module();
 		Etudiant et = new Etudiant();
 		Examen ex = new Examen();
-		Note n = new Note(1, m, 14, et, ex);
+		Note n = new Note(1, m, 14f, et, ex);
 		assertThat(service.update(n)).isTrue();
 	}
 
 	// Test deleteById
-	@Sql(statements = "INSERT INTO Niveau (id, module, valeur, etudiant, examen) VALUES (1, null, 12, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Note (id, module, valeur, etudiant, examen) VALUES (1, null, 12, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Note WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
@@ -119,13 +119,15 @@ public class NoteServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Niveau (id, module, valeur, etudiant, examen) VALUES (1, null, 12, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM chat WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Note (id, module, valeur, etudiant, examen) VALUES (1, null, 12, null, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Note WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {
 		Integer id = 1;
 		assertThat(service.deleteById(id)).isTrue();
 	}
+	
+	
 
 }

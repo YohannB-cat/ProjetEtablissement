@@ -8,22 +8,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.stereotype.Service;
 
+import com.fr.adaming.controller.IModuleController;
 import com.fr.adaming.dao.IMatiereDao;
+import com.fr.adaming.dao.IModuleDao;
 import com.fr.adaming.entity.Matiere;
+import com.fr.adaming.entity.Module;
 
+@Service ("matiereservice")
 public class MatiereService implements IMatiereService {
 
 	@Autowired
-	private IMatiereDao dao;
+	private IMatiereDao matDao;
+	
+	@Autowired
+	private IModuleDao modDao;
 
 	@Override
 	public Matiere create(Matiere matiere) {
 		try {
-			if (matiere == null || dao.existsById(matiere.getId())) {
+			if (matiere == null || matDao.existsById(matiere.getId())) {
 				return null;
 			}
-			return dao.save(matiere);
+			return matDao.save(matiere);
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			return null;
@@ -37,17 +45,17 @@ public class MatiereService implements IMatiereService {
 
 	@Override
 	public List<Matiere> findAll() {
-		if (dao.findAll().isEmpty()) {
+		if (matDao.findAll().isEmpty()) {
 			return null;
 		}
-		return dao.findAll();
+		return matDao.findAll();
 	}
 
 	@Override
 	public Matiere findById(int id) {
 		try {
 			if (id != 0) {
-				return dao.findById(id).orElse(null);
+				return matDao.findById(id).orElse(null);
 			} else {
 				return null;
 			}
@@ -58,10 +66,10 @@ public class MatiereService implements IMatiereService {
 	}
 
 	@Override
-	public boolean update(Matiere matiere) {
+	public Boolean update(Matiere matiere) {
 		try {
-			if (dao.existsById(matiere.getId())) {
-				dao.save(matiere);
+			if (matDao.existsById(matiere.getId())) {
+				matDao.save(matiere);
 				return true;
 			} else {
 				return false;
@@ -78,8 +86,8 @@ public class MatiereService implements IMatiereService {
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (dao.findById(id) != null && id != 0) {
-				dao.deleteById(id);
+			if (matDao.findById(id) != null && id != 0) {
+				matDao.deleteById(id);
 				return true;
 			} else {
 				return false;
@@ -92,5 +100,19 @@ public class MatiereService implements IMatiereService {
 			return false;
 		}
 	}
+
+	@Override
+	public List<Matiere> findMatiereByIdModule(Integer matieres) {
+		List<Matiere> listeMatiere = null;
+		if (matieres != 0) {
+			listeMatiere =  matDao.findMatiereByMatieres(matieres);
+			return listeMatiere;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	
 
 }
