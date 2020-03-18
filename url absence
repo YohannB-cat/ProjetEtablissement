@@ -1,4 +1,4 @@
-Etudiant :
+Absence :
 
 Reqûetes supportées : 
 
@@ -57,7 +57,31 @@ Method : get
 URL : http://localhost:8080/absence/one/{id}
 Entrée : Dans l'url : Identifiant id (type Number) de l'absence à rechercher
 Description : Retourne l'absence avec la valeur d'id renseignée. Si l'id renseigné n'existe pas c'est une BadRequest.
-Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (de type AbsenceDto au format Json).
+	Exemple : 
+	{
+	"error": boolean,
+	"message": String,
+	"object": [
+	  {
+	"debut": String format YYYY-MM-DD,
+	"fin": String format YYYY-MM-DD,
+	"justification": String,
+	"description": String;
+	"etudiant": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": boolean
+	}
+	}
+
 Réponse non ok : Status 400, corps requête avec error (true) message ("FAIL") et objet (null au format Json)
 
 
@@ -87,7 +111,7 @@ Entrée : Dans le corps de la reqûete : un Objet AbsenceDto au format Json :
 Description : Enregistre de façon persistente une absence, avec un identifiant autogénéré par incrémentation.
 Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (de type AbsenceDtoCreate au format Json).
 	Exemple : 
-	{
+	"absenceDtoCreate": {
 	"error": Boolean,
 	"message": String,
 	"object": {
@@ -149,3 +173,6 @@ Entrée : Dans l'url : Identifiant id (type Number) de l'absence à supprimer
 Description : Supprime l'absence avec la valeur d'id renseignée, si l'id renseigné n'existe pas, c'est une BadRequest.
 Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (null au format Json).
 Réponse non ok : Status 400, corps requête avec error (true) message ("FAIL") et objet (null au format Json)
+
+Spécifications : 
+Pour les objets des classes AbsenceDto et AbsenceDtoCreate ainsi que pour les objets de la classe Absence, les attributs debut et fin ne sont pas nullable. Pour les dto, debut et fin correspondent à des String, pour absence ils correspondent à des LocalDate. La couche converter assure la transformation de ces dates. 
