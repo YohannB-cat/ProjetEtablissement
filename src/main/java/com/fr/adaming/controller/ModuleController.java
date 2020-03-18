@@ -75,7 +75,7 @@ public class ModuleController implements IModuleController {
 			resp = new ResponseDto(false, "SUCCESS", list);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(true, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -85,11 +85,11 @@ public class ModuleController implements IModuleController {
 		boolean result = service.update(modulCreateDto.dtoToEntite(dto));
 		ResponseDto resp = null;
 
-		if (!result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+		if (result) {
+			resp = new ResponseDto(true, "SUCCESS", result);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(true, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -100,10 +100,10 @@ public class ModuleController implements IModuleController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(false, "SUCCESS", null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(true, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
