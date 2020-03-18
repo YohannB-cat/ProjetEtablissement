@@ -17,6 +17,14 @@ Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS
 Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
 
 
+Method : get 
+URL : http://localhost:8080/niveau/classe/{idNiveau}
+Entrée : Dans l'url : Identifiant id (type Number) du niveau à rechercher
+Description : Retourne la liste des classes du niveau dont la valeur d'id est renseignée. Si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type ClasseDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
 Method : post 
 URL : http://localhost:8080/niveau
 Entrée : Dans le corps de la reqûete : un Objet NiveauDto au format Json : 
