@@ -5,7 +5,7 @@ Reqûetes supportées :
 Method : get 
 URL : http://localhost:8080/etudiant/all
 Description : Retourne la liste de tout les étudiants, la liste sera null s'il n'y pas d'étudiants.
-Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (liste d'objets de type EtudiantDto au format Json).
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type EtudiantDto au format Json).
 	Exemple :
 	{
 	"error": false,
@@ -37,7 +37,7 @@ Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS
 	}
 	],
 	}
-Réponse non ok : Status 400, corps requête avec error (true) message ("FAIL") et objet (null au format Json)
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
 
 
 
@@ -45,7 +45,7 @@ Method : get
 URL : http://localhost:8080/etudiant/{id}
 Entrée : Dans l'url : Identifiant id (type Number) de l'étudiant à rechercher
 Description : Retourne l'étudiant avec la valeur d'id renseignée, si l'id renseigné n'existe pas c'est une BadRequest.
-Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (EtudiantDto au format Json).
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (EtudiantDto au format Json).
 	Exemple : 
 	{
 	"error": Boolean,
@@ -64,7 +64,7 @@ Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS
 	}
 	}
 	
-Réponse non ok : Status 400, corps requête avec error (true) message ("FAIL") et objet (null au format Json)
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
 
 
 
@@ -85,7 +85,7 @@ Entrée : Dans le corps de la reqûete : un Objet EtudiantDto au format Json :
 	"enEtude": boolean
 	}
 Description : Enregistre de façon persistente un étudiant, avec un identifiant autogénéré par incrémentation.
-Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (de type EtudiantDtoCreate au format Json).
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (de type EtudiantDtoCreate au format Json).
 	Exemple : 
 	{
 	"error": Boolean,
@@ -103,7 +103,7 @@ Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS
 	"enEtude": Boolean
 	}
 	}
-Réponse non ok : Status 400, corps requête avec error (true) message ("FAIL") et objet (null au format Json)
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
 
 
 Method : put 
@@ -124,13 +124,13 @@ Entrée : Dans le corps de la reqûete : un objet EtudiantDtoCreate au format Js
 	"enEtude": Boolean
 	}
 Description : Modifie dans la base de données l'étudiant ayant l'identifiant {id} avec les autres informations fournies. S'il n'existe pas d'étudiant avec cet id, c'est une BadRequest.
-Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (null au format Json).
-Réponse non ok : Status 400, corps requête avec error (true) message ("FAIL") et objet (null au format Json)
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
 
 
 Method : delete 
 URL : http://localhost:8080/etudiant/{id}
 Entrée : Dans l'url : Identifiant id (type Number) de l'étudiant à supprimer
 Description : Supprime l'étudiant avec la valeur d'id renseignée, si l'id renseigné n'existe pas, c'est une BadRequest.
-Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (null au format Json).
-Réponse non ok : Status 400, corps requête avec error (true) message ("FAIL") et objet (null au format Json)
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)

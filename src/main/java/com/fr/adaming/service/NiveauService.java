@@ -10,7 +10,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
+import com.fr.adaming.dao.IClasseDao;
 import com.fr.adaming.dao.INiveauDao;
+import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Niveau;
 
 @Service("niveauservice")
@@ -18,6 +20,7 @@ public class NiveauService implements INiveauService {
 	
 	@Autowired
 	private INiveauDao dao;
+
 
 	@Override
 	public Niveau create(Niveau niveau) {
@@ -93,4 +96,20 @@ public class NiveauService implements INiveauService {
 			return false;
 		}
 	}
+
+	
+	public List<Classe> findListClasseByIdNiveau(int idNiveau) {
+		try {
+			if(dao.findById(idNiveau) != null && idNiveau!=0) {
+				return dao.findListClasseByIdNiveau(idNiveau);
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
 }

@@ -87,7 +87,7 @@ public class NoteController implements INoteController {
 
 		ResponseDto resp = null;
 
-		if (!result) {
+		if (result) {
 			resp = new ResponseDto(true, "SUCCESS", null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
