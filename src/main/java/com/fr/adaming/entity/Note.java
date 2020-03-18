@@ -22,15 +22,15 @@ public class Note {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	@JoinColumn(name = "module_id")
+	@JoinColumn
 	private Module module;
 	@Column
 	private Float valeur;
 	@ManyToOne
-	@JoinColumn(name = "etudiant_id")
+	@JoinColumn
 	private Etudiant etudiant;
 	@ManyToOne
-	@JoinColumn(name = "examen_id")
+	@JoinColumn
 	private Examen examen;
 
 }
