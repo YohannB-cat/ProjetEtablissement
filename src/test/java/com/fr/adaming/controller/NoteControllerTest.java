@@ -67,8 +67,7 @@ public class NoteControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/note/"+id).contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
+				.perform(get("http://localhost:8080/note/"+id))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
@@ -179,6 +178,39 @@ public class NoteControllerTest {
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
+	}
+	
+	@Sql(statements = "INSERT INTO etudiant (id, nom) values (24, 'bob')" ,executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO note (id, valeur, etudiant_id) values (5, 18,24)" ,executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM note", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testFindByIdEtudiantExistingWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+		int id = 24;
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(get("http://localhost:8080/note/etudiant/"+id))
+				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+	}
+	
+	@Test
+	public void testFindByIdEtudiantNotExistingWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
+		int id = 5;
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(get("http://localhost:8080/note/etudiant/"+id))
+				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");

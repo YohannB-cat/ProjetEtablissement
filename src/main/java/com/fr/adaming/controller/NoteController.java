@@ -2,11 +2,16 @@ package com.fr.adaming.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.converter.IConverter;
@@ -17,6 +22,7 @@ import com.fr.adaming.entity.Note;
 import com.fr.adaming.service.INoteService;
 
 @RestController
+@RequestMapping(path = "/note")
 public class NoteController implements INoteController {
 
 	@Autowired
@@ -31,7 +37,8 @@ public class NoteController implements INoteController {
 
 	// create
 	@Override
-	public ResponseEntity<ResponseDto> create(@Valid NoteDtoCreate dto) {
+	@PostMapping
+	public ResponseEntity<ResponseDto> create(@RequestBody NoteDtoCreate dto) {
 		NoteDtoCreate note = noteCreateDto.entiteToDto(service.create(noteCreateDto.dtoToEntite(dto)));
 
 		// initialisation de la reponse
@@ -50,7 +57,8 @@ public class NoteController implements INoteController {
 
 	// find By Id
 	@Override
-	public ResponseEntity<ResponseDto> findById(int id) {
+	@GetMapping (path = "/{id}")
+	public ResponseEntity<ResponseDto> findById (@PathVariable (name = "id", required = false) int id) {
 		NoteDto note = noteDto.entiteToDto(service.findById(id));
 
 		// initialisation de la reponse
@@ -67,6 +75,7 @@ public class NoteController implements INoteController {
 
 	// find All
 	@Override
+	@GetMapping (path = "/all")
 	public ResponseEntity<ResponseDto> findAll() {
 		List<NoteDto> list = noteDto.listEntiteToDto(service.findAll());
 
@@ -82,7 +91,8 @@ public class NoteController implements INoteController {
 
 	// Update
 	@Override
-	public ResponseEntity<ResponseDto> update(@Valid NoteDtoCreate dto) {
+	@PutMapping
+	public ResponseEntity<ResponseDto> update (@RequestBody NoteDtoCreate dto) {
 		boolean result = service.update(noteCreateDto.dtoToEntite(dto));
 
 		ResponseDto resp = null;
@@ -97,7 +107,8 @@ public class NoteController implements INoteController {
 
 	// delete By Id
 	@Override
-	public ResponseEntity<ResponseDto> deleteById(int id) {
+	@DeleteMapping(path = "/{id}")
+	public ResponseEntity<ResponseDto> deleteById (@PathVariable(name = "id") int id){
 		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
@@ -110,10 +121,11 @@ public class NoteController implements INoteController {
 	}
 	
 	@Override
-	public ResponseEntity<ResponseDto> listByEtudiant(int id_etudiant){
+	@GetMapping(path = "/etudiant/{id}")
+	public ResponseEntity<ResponseDto> listByEtudiant(@PathVariable(name = "id") int id_etudiant){
 		ResponseDto resp = null;
 		List<NoteDto> listNote = noteDto.listEntiteToDto(service.listByEtudiant(id_etudiant));
-		if (listNote != null) {
+		if (listNote != null && listNote.size()>0) {
 			resp = new ResponseDto(false, "SUCCESS", listNote);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}

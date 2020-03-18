@@ -14,31 +14,25 @@ import com.fr.adaming.dto.NoteDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
 
-@RequestMapping(path = "note/")
+
 public interface INoteController {
 	//create note
-	@PostMapping
-	public ResponseEntity<ResponseDto> create(@RequestBody NoteDtoCreate dto);
+	public ResponseEntity<ResponseDto> create(NoteDtoCreate dto);
 	
 	//read note by id
-	@GetMapping (path = "{id}")
-	public ResponseEntity<ResponseDto> findById (@RequestParam (name = "id", required = false) int id);
+	public ResponseEntity<ResponseDto> findById (int id);
 	
 	//read all
-	@GetMapping (path = "all")
 	public ResponseEntity<ResponseDto> findAll();
 	
 	//update
-	@PutMapping
-	public ResponseEntity<ResponseDto> update (@RequestBody NoteDtoCreate dto);
+	public ResponseEntity<ResponseDto> update ( NoteDtoCreate dto);
 	
 	// delete Note by ID
-	@DeleteMapping(path = "{id}")
-	public ResponseEntity<ResponseDto> deleteById (@PathVariable(name = "id") int id);
+	public ResponseEntity<ResponseDto> deleteById (int id);
 	
 	// Afficher la liste des notes par etudiant
-	@GetMapping(path = "etudiant")
-	public ResponseEntity<ResponseDto> listByEtudiant(@RequestParam(name = "id") int id_etudiant);
+	public ResponseEntity<ResponseDto> listByEtudiant(int id_etudiant);
 
 	
 	
