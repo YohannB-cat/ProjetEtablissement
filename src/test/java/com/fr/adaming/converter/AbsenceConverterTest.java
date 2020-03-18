@@ -126,8 +126,8 @@ public class AbsenceConverterTest {
 		
 		listeDto.add(dto);
 		listeDto.add(dto2);
-		
-		assertTrue((convert.listDtoToEntite(listeDto).size()==2));
+	
+		assertThat(convert.listDtoToEntite(listeDto)).hasSize(2).hasOnlyElementsOfType(Absence.class);
 	}
 	
 	@Test
@@ -139,7 +139,7 @@ public class AbsenceConverterTest {
 		listeDto.add(dto);
 		listeDto.add(dto2);
 		
-		assertTrue((convert.listDtoToEntite(listeDto).size()==2));
+		assertThat((convert.listDtoToEntite(listeDto))).hasSize(2).hasOnlyElementsOfType(Absence.class);
 	}
 
 	
@@ -177,7 +177,7 @@ public class AbsenceConverterTest {
 		
 		List<AbsenceDto> listeReturned = convert.listEntiteToDto(liste);
 		
-		assertTrue(listeReturned.size() > 1);
+		assertThat(listeReturned).hasSize(2).hasOnlyElementsOfType(AbsenceDto.class);
 
 	}
 	
@@ -194,7 +194,7 @@ public class AbsenceConverterTest {
 		
 		List<AbsenceDto> listeReturned = convert.listEntiteToDto(liste);
 		
-		assertTrue(listeReturned.size() > 1);
+		assertThat(listeReturned).hasSize(2).hasOnlyElementsOfType(AbsenceDto.class);
 
 	}
 	
