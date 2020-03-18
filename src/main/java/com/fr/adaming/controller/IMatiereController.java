@@ -1,11 +1,8 @@
 package com.fr.adaming.controller;
 
-import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fr.adaming.dto.MatiereDto;
 import com.fr.adaming.dto.MatiereDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
-import com.fr.adaming.service.IMatiereService;
-import com.fr.adaming.service.IModuleService;
 
 @RequestMapping(path = "matiere/")
 public interface IMatiereController {
@@ -37,6 +31,10 @@ public interface IMatiereController {
 	// read all
 	@GetMapping (path = "all")
 	public ResponseEntity<ResponseDto> findAll();
+	
+	//find liste matiere by module
+	@GetMapping (path = "bymodule/{matieres}")
+	public ResponseEntity<ResponseDto> findMatiereByMatieres (int matieres);
 	
 	// update matiere by id
 	@PutMapping

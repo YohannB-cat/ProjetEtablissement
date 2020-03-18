@@ -16,5 +16,7 @@ public interface IMatiereService {
 
 	public boolean deleteById(int id);
 	
+	public List<Matiere> findMatiereByIdModule (Integer matieres);
+	
 
 }

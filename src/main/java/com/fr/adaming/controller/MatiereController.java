@@ -86,6 +86,26 @@ public class MatiereController implements IMatiereController {
 		resp = new ResponseDto(false, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
+	
+	
+	
+	//find matiere by module
+	@Override
+	public ResponseEntity<ResponseDto> findMatiereByMatieres(int matieres) {
+		List<MatiereDto> listMatiere = matiereDto.listEntiteToDto(service.findMatiereByIdModule(matieres));
+		
+		ResponseDto resp = null;
+		
+		if (listMatiere != null) {
+			resp = new ResponseDto(false, "SUCCESS", listMatiere);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
+		resp = new ResponseDto(false, "FAIL", null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+	}
+	
+	
+	
 
 	// udpdate
 	@Override
@@ -116,5 +136,7 @@ public class MatiereController implements IMatiereController {
 		resp = new ResponseDto(false, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
+
+	
 
 }

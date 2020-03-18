@@ -15,7 +15,6 @@ import java.io.UnsupportedEncodingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -23,10 +22,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fr.adaming.dto.EtudiantDtoCreate;
-import com.fr.adaming.dto.MatiereDto;
 import com.fr.adaming.dto.MatiereDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
@@ -71,17 +67,16 @@ public class MatiereControllerTest {
 	}
 
 	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
+	// COnsider declaring it as object wrapper for the corresponding primtive type
 	@Test
 	@DisplayName("Find with Invalid Id")
 	public void testFindByIdInvalid_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(id);
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/matiere/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
+				.perform(get("http://localhost:8080/matiere/" + id).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
@@ -90,19 +85,17 @@ public class MatiereControllerTest {
 	}
 
 	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
-	@Sql(statements = "INSERT INTO Matiere  VALUES (14,'mathematique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Consider declaring it as object wrapper for the corresponding primtive type
+	@Sql(statements = "INSERT INTO Matiere  VALUES (14,'mathematique',null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Find with Invalid OK")
 	public void testFindByIdOk_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 14;
-		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(id);
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/matiere/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
+				.perform(get("http://localhost:8080/matiere/" + id).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
@@ -110,9 +103,8 @@ public class MatiereControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
-	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
-	@Sql(statements = "INSERT INTO Matiere  VALUES (14,'mathematique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Matiere  VALUES (5,'physique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Matiere  VALUES (14,'mathematique',null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Matiere  VALUES (5,'physique',null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Find all matiere")
@@ -127,9 +119,18 @@ public class MatiereControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
-	
+	// ********************************************************************************
+	// TEST FIND MATIERES BY MODULE
+
+	@Test
+	@DisplayName("")
+	public void testFindMatiereByModule_shouldReturnEmpty() {
+
+	}
+
 	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
-	@Sql(statements = "INSERT INTO Matiere  VALUES (5,'physique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	// Expecting Actual not to be null
+	@Sql(statements = "INSERT INTO Matiere  VALUES (5,'physique',null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update matiere")
@@ -158,8 +159,8 @@ public class MatiereControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
-	
 	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
+	// STATUS 405 AU LIEU DE 400
 	@Test
 	@DisplayName("Update with no existing matiere")
 	public void testUpdateWithNoexistingMAtiereController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -182,9 +183,7 @@ public class MatiereControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 
 	}
-	
-	
-	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
+
 	@Sql(statements = "INSERT INTO Matiere (id, nom) VALUES (5,'physique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -196,19 +195,17 @@ public class MatiereControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(delete("http://localhost:8080/matiere/" + id)
-						.contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))
+				.perform(delete("http://localhost:8080/matiere/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		MatiereDtoCreate responseDto = mapper.readValue(responseAsStrig, MatiereDtoCreate.class);
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-	
-	
-	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
+
 	@Test
-	@DisplayName ("Delete no existing matiere")
+	@DisplayName("Delete no existing matiere")
 	public void testDeleteByNotExistingIdWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 28;
 		// convrtir le DTO en Json
@@ -216,7 +213,7 @@ public class MatiereControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(delete("http://localhost:8080/matiere/" + id ).contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(delete("http://localhost:8080/matiere/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
