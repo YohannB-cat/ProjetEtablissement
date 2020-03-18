@@ -36,7 +36,7 @@ public interface IModuleController {
 	
 	//read module by id
 	@GetMapping (path = "{id}")
-	public ResponseEntity<ResponseDto> findById (@RequestParam (name = "id", required = false) int id);
+	public ResponseEntity<ResponseDto> findById (@PathVariable(name = "id", required = false) int id);
 	
 	
 	//read all
