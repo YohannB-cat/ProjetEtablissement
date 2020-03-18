@@ -110,16 +110,16 @@ public class MatiereController implements IMatiereController {
 	// udpdate
 	@Override
 	public ResponseEntity<ResponseDto> update(MatiereDtoCreate dto) {
-		boolean result = service.update(matiereCreateDto.dtoToEntite(dto));
+		boolean isSuccess = service.update(matiereCreateDto.dtoToEntite(dto));
 				
 				
 		ResponseDto resp = null;
 
-		if (!result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+		if (isSuccess) {
+			resp = new ResponseDto(false, "SUCCESS", isSuccess);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(true, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 

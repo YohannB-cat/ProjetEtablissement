@@ -21,20 +21,32 @@ import lombok.NoArgsConstructor;
 public class Module {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	@Column(length = 30)
 	private String nom;
 	@OneToMany
 	@JoinColumn(name = "module_id")
 	private List<Matiere> matieres;
 	
-	
-	
 	public Module(String nom, List<Matiere> matieres) {
 		super();
 		this.nom = nom;
 		this.matieres = matieres;
 	}
+
+	public Module(String nom) {
+		super();
+		this.nom = nom;
+	}
+
+	public Module(Integer id, String nom) {
+		super();
+		this.id = id;
+		this.nom = nom;
+	}
+
+
+
 	
 	
 }

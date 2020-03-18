@@ -14,6 +14,11 @@ public class ModuleDto {
 	private String nom;
 	
 	private List<Matiere> matiere;
+
+	public ModuleDto(String nom) {
+		super();
+		this.nom = nom;
+	}
 	
 
 }
