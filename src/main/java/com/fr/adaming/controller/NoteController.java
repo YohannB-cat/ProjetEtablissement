@@ -112,7 +112,7 @@ public class NoteController implements INoteController {
 	@Override
 	public ResponseEntity<ResponseDto> listByEtudiant(int id_etudiant){
 		ResponseDto resp = null;
-		List<Note> listNote = service.listByEtudiant(id_etudiant);
+		List<NoteDto> listNote = noteDto.listEntiteToDto(service.listByEtudiant(id_etudiant));
 		if (listNote != null) {
 			resp = new ResponseDto(false, "SUCCESS", listNote);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);

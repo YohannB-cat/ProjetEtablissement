@@ -42,6 +42,7 @@ public class ExamenServiceTest {
 
 	// Test findAll
 	@Test
+	@Sql(statements = "delete from Examen",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@DisplayName("Demande de la liste vide")
 	public void testGetList_shouldReturnEmptyList() {
 		assertThat(service.findAll()).isEmpty();
@@ -115,4 +116,21 @@ public class ExamenServiceTest {
 		Integer id = 1;
 		assertThat(service.deleteById(id)).isTrue();
 	}
+
+	@Sql(statements = "INSERT INTO Examen (id, type) VALUES (1, 'exam1')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Examen (id, type) VALUES (2, 'exam2')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module (id, nom) VALUES (1, 'module1')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Matiere (id, nom,module_id) VALUES (1, 'matiere1',1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Note (id, module_id,valeur,examen_id) VALUES (1, 1,12,1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Note (id, module_id,valeur,examen_id) VALUES (2, 1,13,2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Note", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Examen", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testListByMatiere_shouldReturnListOfExamen() {
+		assertThat(service.listByMatiere(1)).hasSize(2).hasOnlyElementsOfType(Examen.class);
+		
+	}
+	
 }

@@ -43,9 +43,6 @@ public class ExamenService implements IExamenService {
 
 	@Override
 	public List<Examen> findAll() {
-		if (dao.findAll().isEmpty()) {
-			return null;
-		}
 		return dao.findAll();
 	}
 

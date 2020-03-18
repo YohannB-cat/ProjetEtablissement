@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
+import com.fr.adaming.entity.Examen;
+
 @SpringBootTest
 public class ExamenDaoTest {
 	
@@ -26,7 +28,7 @@ public class ExamenDaoTest {
 	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testListByMatiere_shouldReturnListOfExamen() {
-		assertThat(dao.listByMatiere(1)).hasSize(2);
+		assertThat(dao.listByMatiere(1)).hasSize(2).hasOnlyElementsOfType(Examen.class);
 		
 	}
 
