@@ -32,7 +32,7 @@ public class NoteServiceTest {
 	@Test
 	@DisplayName("Création d'une Note avec param null")
 	public void testCreatingNoteWithNullName_shouldReturnNiveau() {
-		Note n = new Note(0, null, 0, null, null);
+		Note n = new Note(0, null, 0f, null, null);
 		assertThat(service.create(n)).isEqualTo(n);
 	}
 
@@ -42,7 +42,7 @@ public class NoteServiceTest {
 		Module m = new Module();
 		Etudiant et = new Etudiant();
 		Examen ex = new Examen();
-		Note n = new Note(0, m, 12, et, ex);
+		Note n = new Note(0, m, 12f, et, ex);
 		assertThat(service.create(n)).isEqualTo(n);
 	}
 
@@ -75,7 +75,7 @@ public class NoteServiceTest {
 	@Test
 	@DisplayName("Recherche de Note par id")
 	public void testFindById_shouldReturnNiveau() {
-		Note n = new Note(0, null, 12, null, null);
+		Note n = new Note(0, null, 12f, null, null);
 		assertThat(service.findById(1)).isEqualTo(n);
 	}
 
@@ -93,7 +93,7 @@ public class NoteServiceTest {
 		Module m = new Module();
 		Etudiant et = new Etudiant();
 		Examen ex = new Examen();
-		Note n = new Note(0, m, 12, et, ex);
+		Note n = new Note(0, m, 12f, et, ex);
 		assertThat(service.update(n)).isFalse();
 	}
 
@@ -105,7 +105,7 @@ public class NoteServiceTest {
 		Module m = new Module();
 		Etudiant et = new Etudiant();
 		Examen ex = new Examen();
-		Note n = new Note(1, m, 14, et, ex);
+		Note n = new Note(1, m, 14f, et, ex);
 		assertThat(service.update(n)).isTrue();
 	}
 
