@@ -1,6 +1,7 @@
 package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
@@ -146,4 +147,29 @@ public class NiveauServiceTest {
 		Integer id = 1;
 		assertThat(service.deleteById(id)).isTrue();
 	}
+	
+	//Valide !
+	@Test
+	@DisplayName("Liste des classes avec id 0")
+	public void testFindListClasseByIdNiveauWithId0_ShouldReturnNull() {
+		assertNull(service.findListClasseByIdNiveau(0));
+	}
+	
+	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (2, 'Terminal2b', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	@DisplayName("Liste des classes avec id valide et classes existantes")
+	public void testFindListClasseByIdNiveauValid_ShouldReturnNull() {
+		List<Classe> retour = new ArrayList<Classe>();
+		assertNotNull(retour);
+		assertThat(retour).hasSize(2);
+		assertThat(retour.get(0)).hasFieldOrPropertyWithValue("id", 1);
+		assertThat(retour.get(0)).hasFieldOrPropertyWithValue("nom", "Session2020");
+		assertThat(retour.get(0)).hasFieldOrPropertyWithValue("etudiants", null);
+	}
+	
 }
