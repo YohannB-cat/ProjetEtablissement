@@ -124,13 +124,21 @@ public class MatiereControllerTest {
 
 	@Test
 	@DisplayName("")
-	public void testFindMatiereByModule_shouldReturnEmpty() {
-
+	public void testFindMatiereByModule_shouldBeOk() {
+		
+		
 	}
 
+	
+	
+	// ********************************************************************************
+	//TEST UPDATE 
+	
+	
+	
 	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
 	// Expecting Actual not to be null
-	@Sql(statements = "INSERT INTO Matiere  VALUES (5,'physique',null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Matiere (id,nom) VALUES (5,'physique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update matiere")
@@ -160,7 +168,7 @@ public class MatiereControllerTest {
 	}
 
 	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
-	// STATUS 405 AU LIEU DE 400
+	// STATUS 405 (methode not allowed) AU LIEU DE 400 (bad request)
 	@Test
 	@DisplayName("Update with no existing matiere")
 	public void testUpdateWithNoexistingMAtiereController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -184,6 +192,10 @@ public class MatiereControllerTest {
 
 	}
 
+	// ********************************************************************************
+	//TEST DELETE
+	
+	
 	@Sql(statements = "INSERT INTO Matiere (id, nom) VALUES (5,'physique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
