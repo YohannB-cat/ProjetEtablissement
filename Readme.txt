@@ -65,7 +65,7 @@ Réalisation :
 Le référent technique a créé un projet sur Git, auquel l'équipe a été invité. 
 L'architecture a été effectuée par le référent technique.
 
-Back-End : 4 personnes se sont concentrées sur le backend
+Back-End : 5 personnes se sont concentrées sur le backend
 
 Bilan : 
 
@@ -73,7 +73,8 @@ Bilan :
 
 
 3.Organisation de l'équipe
-L'équipe s'est divisée selon les couches à réaliser : Service+Controller (2personnes) / Dto +Converters (1personne) / Entity + Dao (1personne) 
+L'équipe s'est divisée selon les couches à réaliser : Service+Controller (2personnes) / Dto +Converters (1personne) / Entity + Dao (1personne)
+Puis les personnes se sont réparties par entités afin de suivre toute la chaine de traitement. 
 Les taches ont été réparties arbitrairement.
 
 
@@ -81,6 +82,7 @@ Les taches ont été réparties arbitrairement.
 Developpeurs : 
 Flavien Gomila
 Maxime Rembert
+Isaline Millet
 
 Référent Technique :
 Yohann Bachelier
