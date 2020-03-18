@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.converter.IConverter;
+import com.fr.adaming.dto.ClasseDto;
 import com.fr.adaming.dto.NiveauDto;
 import com.fr.adaming.dto.NiveauDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Niveau;
 import com.fr.adaming.service.INiveauService;
 
@@ -34,6 +36,9 @@ public class NiveauController implements INiveauController {
 	
 	@Autowired
 	private IConverter<Niveau, NiveauDto> convert;
+	
+	@Autowired
+	private IConverter<Classe, ClasseDto> convertClasse;
 	
 	@Autowired
 	private IConverter<Niveau, NiveauDtoCreate> convertCreate;
@@ -105,5 +110,20 @@ public class NiveauController implements INiveauController {
 		}
 		resp = new ResponseDto(false, "FAIL", null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+	}
+	
+	@Override
+	@GetMapping(path = "/classe/{idNiveau}")
+	public ResponseEntity<ResponseDto> findClasseByNiveau(@PathVariable(name = "idNiveau") int id) {
+		List<ClasseDto> list = convertClasse.listEntiteToDto(service.findListClasseByIdNiveau(id));
+		if(list != null && list.size()>0) {
+
+			ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}else {
+			ResponseDto resp = new ResponseDto(true, "FAIL", null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		}
+		
 	}
 }

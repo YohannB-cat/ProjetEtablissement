@@ -51,14 +51,16 @@ public class NiveauControllerTest {
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-		
+
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
-		
+
 		String niveauString = mapper.writeValueAsString(responseDto.getObject());
 		NiveauDtoCreate niveauDtoCreate = mapper.readValue(niveauString, NiveauDtoCreate.class);
 		assertThat(niveauDtoCreate).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
 	}
 	
+
+
 	@Sql(statements = "INSERT INTO niveau (id, nom) VALUES (5, 'premiere')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -69,15 +71,15 @@ public class NiveauControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/niveau/" + id)
-						.contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))
+				.perform(get("http://localhost:8080/niveau/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-	
+
 	@Test
 	public void testFindByNotExistingIdWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
@@ -86,17 +88,15 @@ public class NiveauControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/niveau/" + id)
-						.contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))
+				.perform(get("http://localhost:8080/niveau/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-		
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
-	@Sql(statements = "DELETE FROM niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		// test requete
@@ -106,8 +106,7 @@ public class NiveauControllerTest {
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
-		
-		
+
 	}
 
 	@Sql(statements = "INSERT INTO niveau (id, nom) VALUES (156165, 'premiere')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -130,9 +129,10 @@ public class NiveauControllerTest {
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-	
+
 	@Test
-	public void testUpdateNiveauNotExistingWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
+	public void testUpdateNiveauNotExistingWithController_shouldNotWork()
+			throws UnsupportedEncodingException, Exception {
 		NiveauDtoCreate requestDto = new NiveauDtoCreate();
 		requestDto.setNom("sixième");
 		requestDto.setId(156165);
@@ -160,7 +160,7 @@ public class NiveauControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(delete("http://localhost:8080/niveau/" + id ).contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(delete("http://localhost:8080/niveau/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
@@ -168,18 +168,52 @@ public class NiveauControllerTest {
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-	
+
 	@Test
-	public void testDeleteByNotExistingIdWithController_shouldNNotWork() throws UnsupportedEncodingException, Exception {
+	public void testDeleteByNotExistingIdWithController_shouldNNotWork()
+			throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(id);
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(delete("http://localhost:8080/niveau/" + id ).contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(delete("http://localhost:8080/niveau/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
+	}
+
+	@Sql(statements = "INSERT INTO niveau (id, nom) VALUES (5, 'premiere')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO classe (id, nom, id_niveau) VALUES (3, '1D',5)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO classe (id, nom, id_niveau) VALUES (6, 'TA',5)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testFindClassByExistingIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+		int id = 5;
+		// convrtir le DTO en Json
+	
+		// test requete
+		String responseAsStrig = mockMvc.perform(get("http://localhost:8080/niveau/classe/" + id)).andDo(print())
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+	}
+	
+	@Test
+	public void testFindClassByNotExistingIdWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
+		int id = 5;
+		// convrtir le DTO en Json
+	
+		// test requete
+		String responseAsStrig = mockMvc.perform(get("http://localhost:8080/niveau/classe/" + id)).andDo(print())
+				.andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 

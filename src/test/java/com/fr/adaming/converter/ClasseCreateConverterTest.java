@@ -13,31 +13,31 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.fr.adaming.dto.NiveauDtoCreate;
+import com.fr.adaming.dto.ClasseDtoCreate;
 import com.fr.adaming.entity.Classe;
-import com.fr.adaming.entity.Niveau;
+import com.fr.adaming.entity.Etudiant;
 
 @SpringBootTest
-public class NiveauCreateConverterTest {
-
+public class ClasseCreateConverterTest {
+	
 	@Autowired
-	public IConverter<Niveau, NiveauDtoCreate> convert;
+	public IConverter<Classe, ClasseDtoCreate> convert;
 
 	// Valide !
 	@Test
 	@DisplayName("Convertion DtoToEntite correct")
 	public void testDtoToEntiteValid_shouldReturnEntite() {
-		Classe c1 = new Classe();
-		Classe c2 = new Classe();
-		List<Classe> listClasse = new ArrayList<Classe>();
-		listClasse.add(c1);
-		listClasse.add(c2);
-		NiveauDtoCreate dto = new NiveauDtoCreate(listClasse, 1, "TopOfTheTop");
+		Etudiant e1 = new Etudiant();
+		Etudiant e2 = new Etudiant();
+		List<Etudiant> listEtudiant = new ArrayList<Etudiant>();
+		listEtudiant.add(e1);
+		listEtudiant.add(e2);
+		ClasseDtoCreate dto = new ClasseDtoCreate(1, "TopOfTheTop", listEtudiant);
 
-		Niveau retour = convert.dtoToEntite(dto);
+		Classe retour = convert.dtoToEntite(dto);
 
 		assertNotNull(retour);
-		assertEquals(listClasse, retour.getClasses());
+		assertEquals(listEtudiant, retour.getEtudiants());
 		assertEquals(1, retour.getId());
 		assertEquals("TopOfTheTop", retour.getNom());
 	}
@@ -46,12 +46,12 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion DtoToEntite avec listNull")
 	public void testDtoToEntiteWithNullClasseList_shouldReturnEntite() {
-		NiveauDtoCreate dto = new NiveauDtoCreate(null, 1, "TopOfTheTop");
+		ClasseDtoCreate dto = new ClasseDtoCreate(1, "TopOfTheTop", null);
 
-		Niveau retour = convert.dtoToEntite(dto);
+		Classe retour = convert.dtoToEntite(dto);
 
 		assertNotNull(retour);
-		assertEquals(null, retour.getClasses());
+		assertEquals(null, retour.getEtudiants());
 		assertEquals(1, retour.getId());
 		assertEquals("TopOfTheTop", retour.getNom());
 	}
@@ -60,17 +60,17 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion DtoToEntite avec nomNull")
 	public void testDtoToEntiteWithNullNom_shouldReturnEntite() {
-		Classe c1 = new Classe();
-		Classe c2 = new Classe();
-		List<Classe> listClasse = new ArrayList<Classe>();
-		listClasse.add(c1);
-		listClasse.add(c2);
-		NiveauDtoCreate dto = new NiveauDtoCreate(listClasse, 1, null);
+		Etudiant e1 = new Etudiant();
+		Etudiant e2 = new Etudiant();
+		List<Etudiant> listEtudiant = new ArrayList<Etudiant>();
+		listEtudiant.add(e1);
+		listEtudiant.add(e2);
+		ClasseDtoCreate dto = new ClasseDtoCreate(1, null, listEtudiant);
 
-		Niveau retour = convert.dtoToEntite(dto);
+		Classe retour = convert.dtoToEntite(dto);
 
 		assertNotNull(retour);
-		assertEquals(listClasse, retour.getClasses());
+		assertEquals(listEtudiant, retour.getEtudiants());
 		assertEquals(1, retour.getId());
 		assertEquals(null, retour.getNom());
 	}
@@ -79,9 +79,9 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion DtoToEntite dtoNull")
 	public void testDtoToEntiteWithNullEntite_shouldReturnNull() {
-		NiveauDtoCreate dto = null;
+		ClasseDtoCreate dto = null;
 
-		Niveau retour = convert.dtoToEntite(dto);
+		Classe retour = convert.dtoToEntite(dto);
 
 		assertNull(retour);
 	}
@@ -90,17 +90,17 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion EntiteToDto correct")
 	public void testEntiteToDtoValid_shouldReturnDto() {
-		Classe c1 = new Classe();
-		Classe c2 = new Classe();
-		List<Classe> listClasse = new ArrayList<Classe>();
-		listClasse.add(c1);
-		listClasse.add(c2);
-		Niveau entite = new Niveau(listClasse, 1, "TopOfTheTop");
+		Etudiant e1 = new Etudiant();
+		Etudiant e2 = new Etudiant();
+		List<Etudiant> listEtudiant = new ArrayList<Etudiant>();
+		listEtudiant.add(e1);
+		listEtudiant.add(e2);
+		Classe entite = new Classe(1, "TopOfTheTop",listEtudiant);
 
-		NiveauDtoCreate retour = convert.entiteToDto(entite);
+		ClasseDtoCreate retour = convert.entiteToDto(entite);
 
 		assertNotNull(retour);
-		assertEquals(listClasse, retour.getClasses());
+		assertEquals(listEtudiant, retour.getListe());
 		assertEquals(1, retour.getId());
 		assertEquals("TopOfTheTop", retour.getNom());
 	}
@@ -109,12 +109,12 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion EntiteToDto avec listNull")
 	public void testEntiteToDtoWithNullClasseList_shouldReturnDto() {
-		Niveau entite = new Niveau(null, 1, "TopOfTheTop");
+		Classe entite = new Classe(1, "TopOfTheTop", null);
 
-		NiveauDtoCreate retour = convert.entiteToDto(entite);
+		ClasseDtoCreate retour = convert.entiteToDto(entite);
 
 		assertNotNull(retour);
-		assertEquals(null, retour.getClasses());
+		assertEquals(null, retour.getListe());
 		assertEquals(1, retour.getId());
 		assertEquals("TopOfTheTop", retour.getNom());
 	}
@@ -123,17 +123,17 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion EntiteToDto avec nomNull")
 	public void testEntiteToDtoWithNullNom_shouldReturnDto() {
-		Classe c1 = new Classe();
-		Classe c2 = new Classe();
-		List<Classe> listClasse = new ArrayList<Classe>();
-		listClasse.add(c1);
-		listClasse.add(c2);
-		Niveau entite = new Niveau(null, 1, "TopOfTheTop");
+		Etudiant e1 = new Etudiant();
+		Etudiant e2 = new Etudiant();
+		List<Etudiant> listEtudiant = new ArrayList<Etudiant>();
+		listEtudiant.add(e1);
+		listEtudiant.add(e2);
+		Classe entite = new Classe(1, "TopOfTheTop", null);
 
-		NiveauDtoCreate retour = convert.entiteToDto(entite);
+		ClasseDtoCreate retour = convert.entiteToDto(entite);
 
 		assertNotNull(retour);
-		assertEquals(null, retour.getClasses());
+		assertEquals(null, retour.getListe());
 		assertEquals(1, retour.getId());
 		assertEquals("TopOfTheTop", retour.getNom());
 	}
@@ -142,9 +142,9 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion EntiteToDto dtoNull")
 	public void testEntiteToDtoWithNullEntite_shouldReturnNull() {
-		Niveau entite = null;
+		Classe entite = null;
 
-		NiveauDtoCreate retour = convert.entiteToDto(entite);
+		ClasseDtoCreate retour = convert.entiteToDto(entite);
 
 		assertNull(retour);
 	}
@@ -153,22 +153,22 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite correct")
 	public void testListDtoToListEntiteValid_shouldReturnListEntite() {
-		Classe c1 = new Classe();
-		Classe c2 = new Classe();
-		List<Classe> listClasse = new ArrayList<Classe>();
-		listClasse.add(c1);
-		listClasse.add(c2);
-		NiveauDtoCreate dto1 = new NiveauDtoCreate(listClasse, 1, "TopOfTheTop");
-		NiveauDtoCreate dto2 = new NiveauDtoCreate(listClasse, 2, "Moins Top");
-		List<NiveauDtoCreate> listNiveauDtoCreate = new ArrayList<NiveauDtoCreate>();
-		listNiveauDtoCreate.add(dto1);
-		listNiveauDtoCreate.add(dto2);
+		Etudiant e1 = new Etudiant();
+		Etudiant e2 = new Etudiant();
+		List<Etudiant> listEtudiant = new ArrayList<Etudiant>();
+		listEtudiant.add(e1);
+		listEtudiant.add(e2);
+		ClasseDtoCreate dto1 = new ClasseDtoCreate(1, "TopOfTheTop", listEtudiant);
+		ClasseDtoCreate dto2 = new ClasseDtoCreate(2, "Moins Top", listEtudiant);
+		List<ClasseDtoCreate> listEtudiantDtoCreate = new ArrayList<ClasseDtoCreate>();
+		listEtudiantDtoCreate.add(dto1);
+		listEtudiantDtoCreate.add(dto2);
 
-		List<Niveau> listRetour = convert.listDtoToEntite(listNiveauDtoCreate);
+		List<Classe> listRetour = convert.listDtoToEntite(listEtudiantDtoCreate);
 
 		assertNotNull(listRetour);
 		assertThat(listRetour).hasSize(2);
-		assertThat(listRetour.get(0)).hasFieldOrPropertyWithValue("classes", listClasse);
+		assertThat(listRetour.get(0)).hasFieldOrPropertyWithValue("etudiants", listEtudiant);
 		assertThat(listRetour.get(0)).hasFieldOrPropertyWithValue("id", 1);
 		assertThat(listRetour.get(0)).hasFieldOrPropertyWithValue("nom", "TopOfTheTop");
 	}
@@ -177,9 +177,9 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite correct")
 	public void testListDtoToListEntiteWithNullList_shouldReturnNull() {
-		List<NiveauDtoCreate> listNiveauDtoCreate = null;
+		List<ClasseDtoCreate> listEtudiantDtoCreate = null;
 
-		List<Niveau> listRetour = convert.listDtoToEntite(listNiveauDtoCreate);
+		List<Classe> listRetour = convert.listDtoToEntite(listEtudiantDtoCreate);
 
 		assertNull(listRetour);
 	}
@@ -188,22 +188,22 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion listEntiteToListDto correct")
 	public void testListEntiteToListDtoValid_shouldReturnListEntite() {
-		Classe c1 = new Classe();
-		Classe c2 = new Classe();
+		Etudiant e1 = new Etudiant();
+		Etudiant e2 = new Etudiant();
+		List<Etudiant> listEtudiant = new ArrayList<Etudiant>();
+		listEtudiant.add(e1);
+		listEtudiant.add(e2);
+		Classe entite1 = new Classe(1, "TopOfTheTop", listEtudiant);
+		Classe entite2 = new Classe(2, "Moins Top", listEtudiant);
 		List<Classe> listClasse = new ArrayList<Classe>();
-		listClasse.add(c1);
-		listClasse.add(c2);
-		Niveau entite1 = new Niveau(listClasse, 1, "TopOfTheTop");
-		Niveau entite2 = new Niveau(listClasse, 2, "Moins Top");
-		List<Niveau> listNiveau = new ArrayList<Niveau>();
-		listNiveau.add(entite1);
-		listNiveau.add(entite2);
+		listClasse.add(entite1);
+		listClasse.add(entite2);
 
-		List<NiveauDtoCreate> listRetour = convert.listEntiteToDto(listNiveau);
+		List<ClasseDtoCreate> listRetour = convert.listEntiteToDto(listClasse);
 
 		assertNotNull(listRetour);
 		assertThat(listRetour).hasSize(2);
-		assertThat(listRetour.get(0)).hasFieldOrPropertyWithValue("classes", listClasse);
+		assertThat(listRetour.get(0)).hasFieldOrPropertyWithValue("liste", listEtudiant);
 		assertThat(listRetour.get(0)).hasFieldOrPropertyWithValue("id", 1);
 		assertThat(listRetour.get(0)).hasFieldOrPropertyWithValue("nom", "TopOfTheTop");
 	}
@@ -212,9 +212,9 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite null")
 	public void testListEntiteToListDtoWithNullList_shouldReturnNull() {
-		List<Niveau> listNiveau = null;
+		List<Classe> listClasse = null;
 
-		List<NiveauDtoCreate> listRetour = convert.listEntiteToDto(listNiveau);
+		List<ClasseDtoCreate> listRetour = convert.listEntiteToDto(listClasse);
 
 		assertNull(listRetour);
 	}

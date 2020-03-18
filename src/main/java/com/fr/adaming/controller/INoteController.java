@@ -21,7 +21,7 @@ public interface INoteController {
 	public ResponseEntity<ResponseDto> create(@RequestBody NoteDtoCreate dto);
 	
 	//read note by id
-	@GetMapping (path = "id")
+	@GetMapping (path = "{id}")
 	public ResponseEntity<ResponseDto> findById (@RequestParam (name = "id", required = false) int id);
 	
 	//read all

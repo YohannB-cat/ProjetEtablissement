@@ -22,4 +22,5 @@ public interface INiveauController {
 
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id);
 
+	public ResponseEntity<ResponseDto> findClasseByNiveau(@PathVariable(name = "idNiveau") int id);
 }

@@ -22,7 +22,6 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fr.adaming.dto.AbsenceDto;
 import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
