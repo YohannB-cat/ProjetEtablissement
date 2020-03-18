@@ -1,0 +1,721 @@
+DOCUMENTATION Web TO Front 
+
+**************************************************************************************************************************
+**************************************************************************************************************************
+
+Etudiant :
+
+Reqûetes supportées : 
+
+Method : get 
+URL : http://localhost:8080/etudiant/all
+Description : Retourne la liste de tout les étudiants, la liste sera null s'il n'y pas d'étudiants.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type EtudiantDto au format Json).
+	Exemple :
+	{
+	"error": false,
+	"message": "SUCCESS",
+	"object": [
+	  {
+	"nom": "Bob",
+	"prenom": "Marley",
+	"adresse": "3eme nuage a gauche",
+	"codePostal": 0,
+	"ville": "paradis",
+	"sexe": true,
+	"cni": 0,
+	"telephone": 0,
+	"email": "jamin@with.you",
+	"enEtude": true
+	},
+	  {
+	"nom": "Bob",
+	"prenom": "Marley",
+	"adresse": "3eme nuage a gauche",
+	"codePostal": 0,
+	"ville": "paradis",
+	"sexe": true,
+	"cni": 0,
+	"telephone": 0,
+	"email": "jamin@with.you",
+	"enEtude": true
+	}
+	],
+	}
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+Method : get 
+URL : http://localhost:8080/etudiant/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de l'étudiant à rechercher
+Description : Retourne l'étudiant avec la valeur d'id renseignée, si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (EtudiantDto au format Json).
+	Exemple : 
+	{
+	"error": Boolean,
+	"message": String,
+	"object": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": Boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": Boolean
+	}
+	}
+	
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+Method : post 
+URL : http://localhost:8080/etudiant
+Entrée : Dans le corps de la reqûete : un Objet EtudiantDto au format Json : 
+	Exemple :
+	"etudiantDto": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": boolean
+	}
+Description : Enregistre de façon persistente un étudiant, avec un identifiant autogénéré par incrémentation.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (de type EtudiantDtoCreate au format Json).
+	Exemple : 
+	{
+	"error": Boolean,
+	"message": String,
+	"object": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": Boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": Boolean
+	}
+	}
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : put 
+URL : http://localhost:8080/etudiant
+Entrée : Dans le corps de la reqûete : un objet EtudiantDtoCreate au format Json : 
+	Exemple :
+	"etudiantDtoCreate": {
+	"id": Number,
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": Boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": Boolean
+	}
+Description : Modifie dans la base de données l'étudiant ayant l'identifiant {id} avec les autres informations fournies. S'il n'existe pas d'étudiant avec cet id, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : delete 
+URL : http://localhost:8080/etudiant/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de l'étudiant à supprimer
+Description : Supprime l'étudiant avec la valeur d'id renseignée, si l'id renseigné n'existe pas, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+
+
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+
+
+
+
+
+Absence :
+
+Spécifications : 
+Pour les objets des classes AbsenceDto et AbsenceDtoCreate ainsi que pour les objets de la classe Absence, les attributs debut et fin ne sont pas nullable. Pour les dto, debut et fin correspondent à des String, pour absence ils correspondent à des LocalDate. La couche converter assure la transformation de ces dates. 
+
+Reqûetes supportées : 
+
+Method : get 
+URL : http://localhost:8080/absence/all
+Description : Retourne la liste de toutes les absences, la liste sera null s'il n'y pas d'absences.
+Réponse ok : Status 200, corps de reponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type AbsenceDto au format Json).
+	Exemple :
+	{
+	"error": boolean,
+	"message": String,
+	"object": [
+	  {
+	"debut": String format YYYY-MM-DD,
+	"fin": String format YYYY-MM-DD,
+	"justification": String,
+	"description": String;
+	"etudiant": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": boolean
+	}
+	},
+	  {
+	"debut": String format YYYY-MM-DD,
+	"fin": String format YYYY-MM-DD,
+	"justification": String,
+	"description": String;
+	"etudiant": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": boolean
+	}
+	}
+	],
+	}
+Réponse non ok : Status 400, corps reponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+Method : get 
+URL : http://localhost:8080/absence/one/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de l'absence à rechercher
+Description : Retourne l'absence avec la valeur d'id renseignée. Si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (de type AbsenceDto au format Json).
+	Exemple : 
+	{
+	"error": boolean,
+	"message": String,
+	"object": [
+	  {
+	"debut": String format YYYY-MM-DD,
+	"fin": String format YYYY-MM-DD,
+	"justification": String,
+	"description": String;
+	"etudiant": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": boolean
+	}
+	}
+
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+Method : post 
+URL : http://localhost:8080/absence
+Entrée : Dans le corps de la reqûete : un Objet AbsenceDto au format Json : 
+	Exemple :
+	"absenceDto": {
+	"debut": String format YYYY-MM-DD,
+	"fin": String format YYYY-MM-DD,
+	"justification": String,
+	"description": String;
+	"etudiant": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": boolean
+	}
+	}
+Description : Enregistre de façon persistente une absence, avec un identifiant autogénéré par incrémentation.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (de type AbsenceDtoCreate au format Json).
+	Exemple : 
+	"absenceDtoCreate": {
+	"error": Boolean,
+	"message": String,
+	"object": {
+	"id": Number,
+	"debut": String format YYYY-MM-DD,
+	"fin": String format YYYY-MM-DD,
+	"justification": String,
+	"description": String;
+	"etudiant": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": boolean
+	}
+	}
+	}
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : put 
+URL : http://localhost:8080/absence
+Entrée : Dans le corps de la reqûete : un objet AbsenceDtoCreate au format Json : 
+	Exemple :
+	"absenceDtoCreate": {
+	{
+	"id": Nummber,
+	"debut": String format YYYY-MM-DD,
+	"fin": String format YYYY-MM-DD,
+	"justification": String,
+	"description": String;
+	"etudiant": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": boolean
+	}
+	}
+	}
+Description : Modifie dans la base de données l'absence ayant l'identifiant {id} avec les autres informations fournies. S'il n'existe pas d'absence avec cet id, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : delete 
+URL : http://localhost:8080/absence/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de l'absence à supprimer
+Description : Supprime l'absence avec la valeur d'id renseignée, si l'id renseigné n'existe pas, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+
+
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+
+
+
+
+
+Note :
+
+Reqûetes supportées : 
+
+Method : get 
+URL : http://localhost:8080/note/all
+Description : Retourne la liste de toutes les notes, la liste sera null s'il n'y pas de notes.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type NoteDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : get 
+URL : http://localhost:8080/note/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de la note à rechercher
+Description : Retourne la note avec la valeur d'id renseignée. Si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (objet de type NoteDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : get 
+URL : http://localhost:8080/note/etudiant
+Entrée : Dans l'url : Identifiant id (type Number) de l'étudiant dont on veut connaître les notes. Description : Retourne la liste des notes pour l'étudiant dont la valeur d'id est renseignée. Si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste de NoteDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : post 
+URL : http://localhost:8080/note
+Entrée : Dans le corps de la reqûete : un Objet NoteDto au format Json : 
+Description : Enregistre de façon persistente une note, avec un identifiant autogénéré par incrémentation.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (de type NoteDtoCreate au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : put 
+URL : http://localhost:8080/note
+Entrée : Dans le corps de la reqûete : un objet NoteDtoCreate au format Json : 
+Description : Modifie dans la base de données la note ayant l'identifiant {id} avec les autres informations fournies. S'il n'existe pas de note avec cet id, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : delete 
+URL : http://localhost:8080/note/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de la note à supprimer
+Description : Supprime la note avec la valeur d'id renseignée, si l'id renseigné n'existe pas, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+
+
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+
+
+
+
+
+Examen :
+
+Reqûetes supportées : 
+
+Method : get 
+URL : http://localhost:8080/examen/all
+Description : Retourne la liste de toutes les examens, la liste sera null s'il n'y pas d'examens.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type ExamenDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : get 
+URL : http://localhost:8080/examen/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de l'examen à rechercher
+Description : Retourne l'examen avec la valeur d'id renseignée. Si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (objet de type ExamenDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : get 
+URL : http://localhost:8080/examen/matiere
+Entrée : Dans l'url : Identifiant id (type Number) de la matière dont on veut connaître les examens. 
+Description : Retourne la liste des examens pour la matière dont la valeur d'id est renseignée. Si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste de ExamenDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : post 
+URL : http://localhost:8080/examen
+Entrée : Dans le corps de la reqûete : un Objet examenDto au format Json.
+Description : Enregistre de façon persistente un examen, avec un identifiant autogénéré par incrémentation.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (de type ExamenDtoCreate au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : put 
+URL : http://localhost:8080/examen
+Entrée : Dans le corps de la reqûete : un objet ExamenDtoCreate au format Json : 
+Description : Modifie dans la base de données l'examen ayant l'identifiant {id} avec les autres informations fournies. S'il n'existe pas d'examen avec cet id, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : delete 
+URL : http://localhost:8080/examen/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de l'examen à supprimer
+Description : Supprime l'examen avec la valeur d'id renseignée, si l'id renseigné n'existe pas, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+
+
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+
+
+
+
+
+Matieres :
+
+Reqûetes supportées : 
+
+Method : get 
+URL : http://localhost:8080/matiere/all
+Description : Retourne la liste de tout les matieres, la liste sera null s'il n'y pas de matieres.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type MatiereDto au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : get 
+URL : http://localhost:8080/matiere/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de la matiere à rechercher
+Description : Retourne la matiere avec la valeur d'id renseignée, si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+Method : get 
+URL : http://localhost:8080/matiere/bymodule/{matieres}
+Entrée : Dans l'url : L'identifiant id (type Number) du module recherché.
+Description : Retourne la liste des matieres correspondant à la valeur d'id renseignée, si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : post 
+URL : http://localhost:8080/matiere
+Entrée : Dans le corps de la reqûete : un Objet MatiereDtoCreate au format Json : 
+Description : Enregistre de façon persistente une matiere, avec un identifiant autogénéré par incrémentation.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (de type EtudiantDtoCreate au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : put 
+URL : http://localhost:8080/matiere
+Entrée : Dans le corps de la reqûete : un objet MatiereDtoCreate au format Json : 
+Description : Modifie dans la base de données la matière ayant l'identifiant {id} avec les autres informations fournies. S'il n'existe pas de matière avec cet id, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : delete 
+URL : http://localhost:8080/matiere/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de matiere à supprimer
+Description : Supprime la matière avec la valeur d'id renseignée, si l'id renseigné n'existe pas, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+
+
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+
+
+
+
+
+Module :
+
+Reqûetes supportées : 
+
+Method : get 
+URL : http://localhost:8080/module/all
+Description : Retourne la liste de tout les modules, la liste sera null s'il n'y pas de module.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type ModuleDto au format Json).
+Réponse non ok : Status 400, corps réponseavec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : get 
+URL : http://localhost:8080/module/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de la module à rechercher
+Description : Retourne le module avec la valeur d'id renseignée, si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : post 
+URL : http://localhost:8080/module
+Entrée : Dans le corps de la reqûete : un Objet ModuleDtoCreate au format Json : 
+Description : Enregistre de façon persistente un module, avec un identifiant autogénéré par incrémentation.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (de type ModuleDtoCreate au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : put 
+URL : http://localhost:8080/module
+Entrée : Dans le corps de la reqûete : un objet ModuleDtoCreate au format Json : 
+Description : Modifie dans la base de données le module ayant l'identifiant {id} avec les autres informations fournies. S'il n'existe pas de module avec cet id, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : delete 
+URL : http://localhost:8080/module/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de module à supprimer
+Description : Supprime le module avec la valeur d'id renseignée, si l'id renseigné n'existe pas, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+
+
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+
+
+
+
+
+Classe :
+
+Reqûetes supportées : 
+
+Method : get 
+URL : http://localhost:8080/classe/all
+Description : Retourne la liste de toutes les classes, la liste sera null s'il n'y pas de classes.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type ClasseDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : get 
+URL : http://localhost:8080/classe/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de la classe à rechercher
+Description : Retourne la classe avec la valeur d'id renseignée. Si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (objet de type ClasseDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : post 
+URL : http://localhost:8080/classe
+Entrée : Dans le corps de la reqûete : un Objet ClasseDto au format Json : 
+Description : Enregistre de façon persistente une classe, avec un identifiant autogénéré par incrémentation.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (de type ClasseDtoCreate au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : put 
+URL : http://localhost:8080/classe
+Entrée : Dans le corps de la reqûete : un objet ClasseDtoCreate au format Json : 
+Description : Modifie dans la base de données la classe ayant l'identifiant {id} avec les autres informations fournies. S'il n'existe pas de classe avec cet id, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : delete 
+URL : http://localhost:8080/classe/{id}
+Entrée : Dans l'url : Identifiant id (type Number) de la classe à supprimer
+Description : Supprime la classe avec la valeur d'id renseignée, si l'id renseigné n'existe pas, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+
+
+
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+**************************************************************************************************************************
+
+
+
+
+
+Niveau :
+
+Reqûetes supportées : 
+
+Method : get 
+URL : http://localhost:8080/niveau/all
+Description : Retourne la liste de tous les niveaux, la liste sera null s'il n'y pas de niveaux.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type NiveauDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : get 
+URL : http://localhost:8080/niveau/{id}
+Entrée : Dans l'url : Identifiant id (type Number) du niveau à rechercher
+Description : Retourne le niveau avec la valeur d'id renseignée. Si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (objet de type NiveauDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : get 
+URL : http://localhost:8080/niveau/classe/{idNiveau}
+Entrée : Dans l'url : Identifiant id (type Number) du niveau à rechercher
+Description : Retourne la liste des classes du niveau dont la valeur d'id est renseignée. Si l'id renseigné n'existe pas c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (liste d'objets de type ClasseDto au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : post 
+URL : http://localhost:8080/niveau
+Entrée : Dans le corps de la reqûete : un Objet NiveauDto au format Json : 
+Description : Enregistre de façon persistente un niveau, avec un identifiant autogénéré par incrémentation.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (de type NiveauDtoCreate au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : put 
+URL : http://localhost:8080/niveau
+Entrée : Dans le corps de la reqûete : un objet NiveauDtoCreate au format Json : 
+Description : Modifie dans la base de données le niveau ayant l'identifiant {id} avec les autres informations fournies. S'il n'existe pas de niveau avec cet id, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)
+
+
+Method : delete 
+URL : http://localhost:8080/niveau/{id}
+Entrée : Dans l'url : Identifiant id (type Number) du niveau à supprimer
+Description : Supprime le niveau avec la valeur d'id renseignée, si l'id renseigné n'existe pas, c'est une BadRequest.
+Réponse ok : Status 200, corps de réponse avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse non ok : Status 400, corps de réponse avec error (true) message ("FAIL") et objet (null au format Json)

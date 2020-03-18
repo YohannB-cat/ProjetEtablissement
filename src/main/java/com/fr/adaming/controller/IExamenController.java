@@ -28,8 +28,8 @@ public interface IExamenController {
 	public ResponseEntity<ResponseDto> create(@RequestBody @Valid ExamenDtoCreate dto);
 	
 	//read examen 
-	@GetMapping (path = "id")
-	public  ResponseEntity<ResponseDto> findById(@RequestParam (name = "id", required = false) int id);
+	@GetMapping (path = "{id}")
+	public  ResponseEntity<ResponseDto> findById(@RequestParam (name = "id", required = false) Integer id);
 	
 	//read all examen
 	@GetMapping (path = "all")

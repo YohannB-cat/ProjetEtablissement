@@ -56,16 +56,15 @@ public class ExamenControllerTest {
 
 	@Test
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into examen(id,type) values(1,'ds')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into examen values(1,'1994-02-03','ds',2.2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		Integer id = 1;
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(id);
-
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/examen/id").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(get("http://localhost:8080/examen/"+id).contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
@@ -87,10 +86,33 @@ public class ExamenControllerTest {
 	}
 
 	@Test
-	public void testUpdateExamenWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+	@Sql(statements = "delete from examen",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void testUpdateNonExistingExamenWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		ExamenDtoCreate requestDto = new ExamenDtoCreate();
+		requestDto.setId(2);
 		requestDto.setCoefficient(2.5d);
 		requestDto.setType("DS");
+
+		// convrtir le DTO en Json
+		String dtoAsJson = mapper.writeValueAsString(requestDto);
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(put("http://localhost:8080/examen/").contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
+				.andDo(print()).andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
+	}
+	@Test
+	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into examen(id,type) values(1,'ds')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void testUpdateExistingExamenWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+		ExamenDtoCreate requestDto = new ExamenDtoCreate();
+		requestDto.setId(1);
+		requestDto.setCoefficient(2.5d);
+		requestDto.setType("DM");
 
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
@@ -108,7 +130,7 @@ public class ExamenControllerTest {
 	@Test
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into examen(id,type) values(1,'ds')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	public void testDeleteByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
+	public void testDeleteByIdWithExistingId_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 1;
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(id);
@@ -122,6 +144,22 @@ public class ExamenControllerTest {
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
+	@Test
+	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void testDeleteByIdWithoutExistingId_shouldNotWork() throws UnsupportedEncodingException, Exception {
+		int id = 1;
+		// convrtir le DTO en Json
+		String dtoAsJson = mapper.writeValueAsString(id);
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(delete("http://localhost:8080/examen/" + id )
+						.contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))
+				.andDo(print()).andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
+	}
 	
 	@Test
 	@Sql(statements = "INSERT INTO Examen (id, type) VALUES (1, 'exam1')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -134,7 +172,7 @@ public class ExamenControllerTest {
 	@Sql(statements = "DELETE FROM Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Examen", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void testListByMatiereController_shouldWork() throws UnsupportedEncodingException, Exception {
+	public void testListByMatiereControllerWithExistingId_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 1;
 		// test requete
 				String responseAsStrig = mockMvc
@@ -144,6 +182,18 @@ public class ExamenControllerTest {
 				ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 				assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+	}	
+	@Test
+	public void testListByMatiereControllerWithoutExistingId_shouldNotWork() throws UnsupportedEncodingException, Exception {
+		int id = 10;
+		// test requete
+				String responseAsStrig = mockMvc
+						.perform(get("http://localhost:8080/examen/matiere?id="+id).contentType(MediaType.APPLICATION_JSON_VALUE))
+						.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+				// convertir la reponse JSON en DTO
+				ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+				assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
 }

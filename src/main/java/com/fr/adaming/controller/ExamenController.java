@@ -51,10 +51,8 @@ public class ExamenController implements IExamenController {
 
 	// find
 	@Override
-	public ResponseEntity<ResponseDto> findById(int id) {
+	public ResponseEntity<ResponseDto> findById(Integer id) {
 		ExamenDto exam = examDto.entiteToDto(service.findById(id));
-				
-		
 		//initialisation de la reponse
 		ResponseDto resp = null;
 		
