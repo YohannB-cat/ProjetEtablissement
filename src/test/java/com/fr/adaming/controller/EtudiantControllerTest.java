@@ -69,14 +69,13 @@ public class EtudiantControllerTest {
 
 	@Test
 	public void testFindByIdInvalid_shouldNotWork() throws UnsupportedEncodingException, Exception {
-		int id = 5;
+		int id = 58465;
 		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(id);
+
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/etudiant/" + id ).contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
+				.perform(get("http://localhost:8080/etudiant/" + id ))
 				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);

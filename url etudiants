@@ -45,7 +45,25 @@ Method : get
 URL : http://localhost:8080/etudiant/{id}
 Entrée : Dans l'url : Identifiant id (type Number) de l'étudiant à rechercher
 Description : Retourne l'étudiant avec la valeur d'id renseignée, si l'id renseigné n'existe pas c'est une BadRequest.
-Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (null au format Json).
+Réponse ok : Status 200, corps de requête avec error (false) message ("SUCCESS") et objet (EtudiantDto au format Json).
+	Exemple : 
+	{
+	"error": Boolean,
+	"message": String,
+	"object": {
+	"nom": String,
+	"prenom": String,
+	"adresse": String,
+	"codePostal": Number,
+	"ville": String,
+	"sexe": Boolean,
+	"cni": Number,
+	"telephone": Number,
+	"email": String,
+	"enEtude": Boolean
+	}
+	}
+	
 Réponse non ok : Status 400, corps requête avec error (true) message ("FAIL") et objet (null au format Json)
 
 

@@ -1,7 +1,9 @@
 package com.fr.adaming.converter;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -127,7 +129,7 @@ public class EtudiantConverterTest{
 		listedto.add(dto);
 		listedto.add(dto2);
 		
-		assertTrue((convert.listDtoToEntite(listedto).size()==2));
+		assertThat(convert.listDtoToEntite(listedto)).hasSize(2).hasOnlyElementsOfType(Etudiant.class);
 
 	}
 
@@ -161,7 +163,7 @@ public class EtudiantConverterTest{
 		liste.add(et);
 		liste.add(et2);
 		
-		assertTrue((convert.listEntiteToDto(liste).size()==2));
+		assertThat(convert.listEntiteToDto(liste)).hasSize(2).hasOnlyElementsOfType(EtudiantDto.class);
 
 	}
 

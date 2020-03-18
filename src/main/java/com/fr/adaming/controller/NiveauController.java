@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.converter.IConverter;
@@ -24,21 +25,25 @@ import com.fr.adaming.entity.Niveau;
 import com.fr.adaming.service.INiveauService;
 
 @RestController
+@RequestMapping(path = "/niveau")
 public class NiveauController implements INiveauController {
 
 	@Autowired
 	@Qualifier("niveauservice")
 	private INiveauService service;
 	
+	@Autowired
 	private IConverter<Niveau, NiveauDto> convert;
+	
+	@Autowired
 	private IConverter<Niveau, NiveauDtoCreate> convertCreate;
 
 	@Override
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@Valid @RequestBody NiveauDtoCreate dto) {
+	public ResponseEntity<ResponseDto> create(@Valid @RequestBody NiveauDto dto) {
 		NiveauDtoCreate etu = 
 			convertCreate.entiteToDto(
-			service.create(convertCreate.dtoToEntite(dto)));
+			service.create(convert.dtoToEntite(dto)));
 				
 		ResponseDto resp = null;
 				
@@ -56,7 +61,7 @@ public class NiveauController implements INiveauController {
 		boolean result = service.update(convertCreate.dtoToEntite(dto));
 		ResponseDto resp = null;
 
-		if (!result) {
+		if (result) {
 			resp = new ResponseDto(true, "SUCCESS", null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
@@ -80,7 +85,7 @@ public class NiveauController implements INiveauController {
 
 
 	@Override
-	@GetMapping
+	@GetMapping(path = "/all")
 	public ResponseEntity<ResponseDto> findAll() {
 		List<NiveauDto> list = convert.listEntiteToDto(service.findAll());
 
@@ -94,7 +99,7 @@ public class NiveauController implements INiveauController {
 		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
-		if (!result) {
+		if (result) {
 			resp = new ResponseDto(true, "SUCCESS", null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
