@@ -1,6 +1,8 @@
-package com.fr.adaming.controller;
+	package com.fr.adaming.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -23,7 +25,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fr.adaming.dto.ModuleDto;
 import com.fr.adaming.dto.ModuleDtoCreate;
-import com.fr.adaming.entity.Matiere;
+import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.entity.Module;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -41,9 +44,9 @@ public class ModuleControllerTest {
 		// preparer le DTO
 		ModuleDtoCreate requestDto = new ModuleDtoCreate();
 		requestDto.setNom("cours des sixiemes");
-		List<Matiere> listeMatiere = new ArrayList<Matiere>();
-		Matiere math = new Matiere(1, "math");
-		Matiere français = new Matiere(1, "français");
+		List<Module> listeMatiere = new ArrayList<Module>();
+		Module math = new Module(1, "math");
+		Module français = new Module(1, "français");
 		listeMatiere.add(math);
 		listeMatiere.add(français);
 		requestDto.setMatiere(listeMatiere);
@@ -58,11 +61,20 @@ public class ModuleControllerTest {
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ModuleDtoCreate responseDto = mapper.readValue(responseAsStrig, ModuleDtoCreate.class);
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("matiere", requestDto.getMatiere());
+		assertNotNull(responseDto);
+
+		String modString = mapper.writeValueAsString(responseDto.getObject());
+		MatiereDtoCreate respModule = mapper.readValue(modString, MatiereDtoCreate.class);
+		
+		assertFalse(responseDto.isError());
+		
+		assertThat(respModule).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
+		assertThat(respModule).isNotNull().hasFieldOrPropertyWithValue("matiere", requestDto.getMatiere());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+		
+		
 	}
 
 	@Test
@@ -78,7 +90,7 @@ public class ModuleControllerTest {
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ModuleDtoCreate responseDto = mapper.readValue(responseAsStrig, ModuleDtoCreate.class);
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
@@ -91,7 +103,7 @@ public class ModuleControllerTest {
 				.perform(get("http://localhost:8080/module/all").contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ModuleDto responseDto = mapper.readValue(responseAsStrig, ModuleDto.class);
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
@@ -119,11 +131,18 @@ public class ModuleControllerTest {
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ModuleDtoCreate responseDto = mapper.readValue(responseAsStrig, ModuleDtoCreate.class);
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("matiere", requestDto.getMatiere());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+		assertFalse(responseDto.isError());
+		
+		String modString = mapper.writeValueAsString(responseDto.getObject());
+		MatiereDtoCreate respModule = mapper.readValue(modString, MatiereDtoCreate.class);
+		
+		assertThat(respModule).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
+		assertThat(respModule).isNotNull().hasFieldOrPropertyWithValue("matiere", requestDto.getMatiere());
+		
+		
 	}
 
 	@Test
@@ -139,7 +158,7 @@ public class ModuleControllerTest {
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ModuleDtoCreate responseDto = mapper.readValue(responseAsStrig, ModuleDtoCreate.class);
+		ResponseDto responseDto = mapper.readValue(responseAsStrig,ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
