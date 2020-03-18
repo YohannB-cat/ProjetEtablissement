@@ -10,7 +10,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
-import com.fr.adaming.dao.IClasseDao;
 import com.fr.adaming.dao.INiveauDao;
 import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Niveau;
@@ -108,8 +107,6 @@ public class NiveauService implements INiveauService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}
-		
-	}
-	
+		}		
+	}	
 }
