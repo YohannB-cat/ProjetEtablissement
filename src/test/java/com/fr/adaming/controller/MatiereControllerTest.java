@@ -79,7 +79,7 @@ public class MatiereControllerTest {
 	@Test
 	@DisplayName("Find with Invalid Id")
 	public void testFindByIdInvalid_shouldNotWork() throws UnsupportedEncodingException, Exception {
-		Integer id = 5;
+		Integer id = 10;
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(id);
 

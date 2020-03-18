@@ -26,7 +26,7 @@ public interface IMatiereController {
 
 	// read matiere by id
 	@GetMapping (path = "{id}")
-	public ResponseEntity<ResponseDto> findById(@RequestParam (name = "id", required = false) Integer id);
+	public ResponseEntity<ResponseDto> findById(@PathVariable (name = "id", required = false) Integer id);
 	
 	// read all
 	@GetMapping (path = "all")
