@@ -21,12 +21,12 @@ public interface IMatiereController {
 	
 	
 	// create matiere
-	@PostMapping
+	@PostMapping (path="create")
 	public ResponseEntity<ResponseDto> create(@RequestBody @Valid MatiereDtoCreate dto);
 
 	// read matiere by id
 	@GetMapping (path = "{id}")
-	public ResponseEntity<ResponseDto> findById(@RequestParam (name = "id", required = false) int id);
+	public ResponseEntity<ResponseDto> findById(@RequestParam (name = "id", required = false) Integer id);
 	
 	// read all
 	@GetMapping (path = "all")
@@ -37,7 +37,7 @@ public interface IMatiereController {
 	public ResponseEntity<ResponseDto> findMatiereByMatieres (int matieres);
 	
 	// update matiere by id
-	@PutMapping
+	@PutMapping (path="update")
 	public ResponseEntity<ResponseDto> update(@RequestBody MatiereDtoCreate dto);
 	
 	// delete matiere by id

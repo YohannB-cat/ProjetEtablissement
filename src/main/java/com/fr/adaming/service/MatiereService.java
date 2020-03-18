@@ -66,7 +66,7 @@ public class MatiereService implements IMatiereService {
 	}
 
 	@Override
-	public boolean update(Matiere matiere) {
+	public Boolean update(Matiere matiere) {
 		try {
 			if (matDao.existsById(matiere.getId())) {
 				matDao.save(matiere);
