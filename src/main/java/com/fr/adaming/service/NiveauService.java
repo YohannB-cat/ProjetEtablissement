@@ -17,10 +17,9 @@ import com.fr.adaming.entity.Niveau;
 
 @Service("niveauservice")
 public class NiveauService implements INiveauService {
-	
+
 	@Autowired
 	private INiveauDao dao;
-
 
 	@Override
 	public Niveau create(Niveau niveau) {
@@ -32,8 +31,7 @@ public class NiveauService implements INiveauService {
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			return null;
-		}
-		catch (ConstraintViolationException er) {
+		} catch (ConstraintViolationException er) {
 			er.printStackTrace();
 			return null;
 		}
@@ -41,9 +39,6 @@ public class NiveauService implements INiveauService {
 
 	@Override
 	public List<Niveau> findAll() {
-		if (dao.findAll().isEmpty()) {
-			return null;
-		}
 		return dao.findAll();
 	}
 
@@ -102,14 +97,13 @@ public class NiveauService implements INiveauService {
 	public List<Classe> findListClasseByIdNiveau(int idNiveau) {
 		try {
 			Optional<Niveau> n = dao.findById(idNiveau);
-			if(n.isPresent() && idNiveau!=0) {
-				return dao.findListClasseByIdNiveau(idNiveau);
-			} else {
-				return null;
-			}
+			if (n.isPresent() && idNiveau != 0) {
+				return dao.findListClasseByIdNiveau(idNiveau);}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}		
-	}	
+		}
+		return null;
+	}
 }

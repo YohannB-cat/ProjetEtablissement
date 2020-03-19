@@ -117,7 +117,7 @@ public class NiveauController implements INiveauController {
 	@GetMapping(path = "/classe/{idNiveau}")
 	public ResponseEntity<ResponseDto> findClasseByNiveau(@PathVariable(name = "idNiveau") int id) {
 		List<ClasseDto> list = convertClasse.listEntiteToDto(service.findListClasseByIdNiveau(id));
-		if(list != null && list.size()>0) {
+		if(list != null && list.isEmpty()) {
 
 			ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);

@@ -169,12 +169,12 @@ public class ClasseConverterTest {
 	// Valide !
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite correct")
-	public void testListDtoToListEntiteWithNullList_shouldReturnNull() {
+	public void testListDtoToListEntiteWithNullList_shouldReturnEmptyList() {
 		List<ClasseDto> listClasseDto = null;
 
 		List<Classe> listRetour = convert.listDtoToEntite(listClasseDto);
 
-		assertNull(listRetour);
+		assertThat(listRetour).isEmpty();
 	}
 
 	// Valide !
@@ -203,12 +203,12 @@ public class ClasseConverterTest {
 	// Valide !
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite null")
-	public void testListEntiteToListDtoWithNullList_shouldReturnNull() {
+	public void testListEntiteToListDtoWithNullList_shouldReturnEmptyList() {
 		List<Classe> listClasse = null;
 
 		List<ClasseDto> listRetour = convert.listEntiteToDto(listClasse);
 
-		assertNull(listRetour);
+		assertThat(listRetour).isEmpty();
 	}
 
 }
