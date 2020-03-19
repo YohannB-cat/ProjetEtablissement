@@ -84,7 +84,7 @@ public class ModuleConverterTest {
 			List<ModuleDto> listeMatiereDto = null;
 			List<Module> listeEntite = convert.listDtoToEntite(listeMatiereDto);
 			
-			assertThat(listeEntite).isNull();
+			assertThat(listeEntite).isEmpty();
 		}
 		
 		//TEST  ENTITE TO DTO
@@ -150,7 +150,7 @@ public class ModuleConverterTest {
 			List<Module> listeMod = null;
 			List<ModuleDto> dtoLiist = convert.listEntiteToDto(listeMod);
 			
-			assertThat(dtoLiist).isNull();
+			assertThat(dtoLiist).isEmpty();
 			
 		}
 
