@@ -15,6 +15,7 @@ import com.fr.adaming.dao.IModuleDao;
 import com.fr.adaming.entity.Module;
 
 @Service ("moduleservice")
+@SuppressWarnings("squid:S1148")
 public class ModuleService implements IModuleService{
 	
 	@Autowired

@@ -16,6 +16,7 @@ import com.fr.adaming.dao.IModuleDao;
 import com.fr.adaming.entity.Matiere;
 
 @Service ("matiereservice")
+@SuppressWarnings("squid:S1148")
 public class MatiereService implements IMatiereService {
 
 	@Autowired
@@ -104,9 +105,8 @@ public class MatiereService implements IMatiereService {
 	@Override
 	public List<Matiere> findMatiereByIdModule(Integer matieres) {
 		List<Matiere> listeMatiere = new ArrayList<>();
-		if (matieres != 0) {
-			listeMatiere =  matDao.findMatiereByMatieres(matieres);
-			return listeMatiere;
+		if (matieres != null) {
+			return  matDao.findMatiereByMatieres(matieres);
 		}
 		else {
 			return listeMatiere;
