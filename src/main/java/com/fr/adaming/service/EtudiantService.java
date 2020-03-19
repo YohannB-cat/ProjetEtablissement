@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -40,7 +41,7 @@ public class EtudiantService implements IEtudiantService {
 	@Override
 	public List<Etudiant> findAll() {
 		if (dao.findAll().isEmpty()) {
-			return null;
+			return new ArrayList<>();
 		}
 		return dao.findAll();
 	}
