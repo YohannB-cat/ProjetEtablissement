@@ -25,15 +25,15 @@ public class ModuleController implements IModuleController {
 	private IModuleService service;
 
 	@Autowired
-	private IConverter<Module, ModuleDtoCreate> modulCreateDto;
+	private IConverter<Module, ModuleDtoCreate> convertCreateDto;
 
 	@Autowired
-	private IConverter<Module, ModuleDto> modulDto;
+	private IConverter<Module, ModuleDto> convertDto;
 
 	// create
 	@Override
 	public ResponseEntity<ResponseDto> create(ModuleDtoCreate dto) {
-		ModuleDtoCreate module = modulCreateDto.entiteToDto(service.create(modulCreateDto.dtoToEntite(dto)));
+		ModuleDtoCreate module = convertCreateDto.entiteToDto(service.create(convertCreateDto.dtoToEntite(dto)));
 
 		// initialisation de la reponse
 		ResponseDto resp = null;
@@ -51,7 +51,7 @@ public class ModuleController implements IModuleController {
 	// find By Id
 	@Override
 	public ResponseEntity<ResponseDto> findById(int id) {
-		ModuleDto module = modulDto.entiteToDto(service.findById(id));
+		ModuleDto module = convertDto.entiteToDto(service.findById(id));
 
 		// initialisation de la reponse
 		ResponseDto resp = null;
@@ -68,7 +68,7 @@ public class ModuleController implements IModuleController {
 	// Find All
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		List<ModuleDto> list = modulDto.listEntiteToDto(service.findAll());
+		List<ModuleDto> list = convertDto.listEntiteToDto(service.findAll());
 
 		ResponseDto resp = null;
 		if (list != null) {
@@ -82,7 +82,7 @@ public class ModuleController implements IModuleController {
 	// Update
 	@Override
 	public ResponseEntity<ResponseDto> update(ModuleDtoCreate dto) {
-		boolean result = service.update(modulCreateDto.dtoToEntite(dto));
+		boolean result = service.update(convertCreateDto.dtoToEntite(dto));
 		ResponseDto resp = null;
 
 		if (result) {
