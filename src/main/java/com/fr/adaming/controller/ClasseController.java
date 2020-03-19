@@ -25,6 +25,9 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.Classe;
 import com.fr.adaming.service.IClasseService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping(path = "/classe")
 public class ClasseController implements IClasseController {
@@ -46,9 +49,11 @@ public class ClasseController implements IClasseController {
 		ResponseDto resp = null;
 		
 		if (etu != null) {
+			log.info("ClassCreate OK");
 			resp = new ResponseDto(false, WebConstant.SUCCESS, etu);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
+		log.warn("ClassCreate FAIL");
 		resp = new ResponseDto(true, WebConstant.FAIL, etu);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
@@ -60,9 +65,11 @@ public class ClasseController implements IClasseController {
 		ResponseDto resp = null;
 
 		if (!result) {
+			log.info("ClassUpdate OK");
 			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
+		log.warn("ClassUpdate FAIL");
 		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
@@ -74,9 +81,11 @@ public class ClasseController implements IClasseController {
 		ResponseDto resp = null;
 
 		if (dto != null) {
+			log.info("ClassFinById OK");
 			resp = new ResponseDto(false, WebConstant.SUCCESS, dto);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
+		log.warn("ClassFinById FAIL");
 		resp = new ResponseDto(true, WebConstant.FAIL, dto);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
@@ -86,6 +95,7 @@ public class ClasseController implements IClasseController {
 	public ResponseEntity<ResponseDto> findAll() {
 		List<ClasseDto> list = convert.listEntiteToDto(service.findAll());
 		
+		log.info("ClassFindAll OK");
 		ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
@@ -97,9 +107,11 @@ public class ClasseController implements IClasseController {
 		ResponseDto resp = null;
 
 		if (!result) {
+			log.info("ClassDelete OK");
 			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
+		log.warn("ClassDelete FAIL");
 		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}

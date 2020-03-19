@@ -27,6 +27,9 @@ import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Niveau;
 import com.fr.adaming.service.INiveauService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping(path = "/niveau")
 public class NiveauController implements INiveauController {
@@ -54,9 +57,11 @@ public class NiveauController implements INiveauController {
 		ResponseDto resp = null;
 				
 		if (etu != null) {
+			log.info("NiveauCreate OK");
 			resp = new ResponseDto(false, WebConstant.SUCCESS, etu);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
+		log.warn("NiveauCreate FAIL");
 		resp = new ResponseDto(true, WebConstant.FAIL, etu);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
@@ -68,9 +73,11 @@ public class NiveauController implements INiveauController {
 		ResponseDto resp = null;
 
 		if (result) {
+			log.info("NiveauUpdate OK");
 			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
+		log.warn("NiveauUpdate FAIL");
 		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
@@ -82,9 +89,11 @@ public class NiveauController implements INiveauController {
 		ResponseDto resp = null;
 
 		if (dto != null) {
+			log.info("NiveauFindById OK");
 			resp = new ResponseDto(false, WebConstant.SUCCESS, dto);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
+		log.warn("NiveauFindById FAIL");
 		resp = new ResponseDto(true, WebConstant.FAIL, dto);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
@@ -95,6 +104,7 @@ public class NiveauController implements INiveauController {
 	public ResponseEntity<ResponseDto> findAll() {
 		List<NiveauDto> list = convert.listEntiteToDto(service.findAll());
 
+		log.info("NiveauFindAll OK");
 		ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 		return ResponseEntity.status(HttpStatus.OK).body(resp);		
 	}
@@ -106,9 +116,11 @@ public class NiveauController implements INiveauController {
 		ResponseDto resp = null;
 
 		if (result) {
+			log.info("NiveauDelete OK");
 			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
+		log.warn("NiveauDelete FAIL");
 		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
@@ -119,9 +131,11 @@ public class NiveauController implements INiveauController {
 		List<ClasseDto> list = convertClasse.listEntiteToDto(service.findListClasseByIdNiveau(id));
 		if(list != null && list.isEmpty()) {
 
+			log.info("NiveauFindClasseByNiveau OK");
 			ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}else {
+			log.warn("NiveauFindClasseByNiveau FAIL");
 			ResponseDto resp = new ResponseDto(true, WebConstant.FAIL, null);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}		
