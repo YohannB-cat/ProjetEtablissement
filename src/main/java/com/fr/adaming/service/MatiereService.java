@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -10,11 +11,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
-import com.fr.adaming.controller.IModuleController;
 import com.fr.adaming.dao.IMatiereDao;
 import com.fr.adaming.dao.IModuleDao;
 import com.fr.adaming.entity.Matiere;
-import com.fr.adaming.entity.Module;
 
 @Service ("matiereservice")
 public class MatiereService implements IMatiereService {
@@ -45,8 +44,9 @@ public class MatiereService implements IMatiereService {
 
 	@Override
 	public List<Matiere> findAll() {
+		List <Matiere> listeMatiere = new ArrayList<>();
 		if (matDao.findAll().isEmpty()) {
-			return null;
+			return listeMatiere;
 		}
 		return matDao.findAll();
 	}
@@ -103,13 +103,13 @@ public class MatiereService implements IMatiereService {
 
 	@Override
 	public List<Matiere> findMatiereByIdModule(Integer matieres) {
-		List<Matiere> listeMatiere = null;
+		List<Matiere> listeMatiere = new ArrayList<>();
 		if (matieres != 0) {
 			listeMatiere =  matDao.findMatiereByMatieres(matieres);
 			return listeMatiere;
 		}
 		else {
-			return null;
+			return listeMatiere;
 		}
 	}
 	

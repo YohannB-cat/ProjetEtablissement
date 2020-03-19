@@ -14,8 +14,7 @@ public class MatiereConverter implements IConverter<Matiere, MatiereDto> {
 	@Override
 	public Matiere dtoToEntite(MatiereDto dto) {
 		if (dto != null && dto.getNom() != null) {
-			Matiere entite = new Matiere(0, dto.getNom());
-			return entite;
+			return new Matiere(0, dto.getNom());
 
 		} else {
 			return null;
@@ -25,10 +24,10 @@ public class MatiereConverter implements IConverter<Matiere, MatiereDto> {
 
 	@Override
 	public List<Matiere> listDtoToEntite(List<MatiereDto> dtoliste) {
+		List<Matiere> liste = new ArrayList<>();
 		if (dtoliste == null) {
-			return null;
+			return liste;
 		}
-		List<Matiere> liste = new ArrayList<Matiere>();
 		for (MatiereDto dto : dtoliste) {
 			if (dto.getNom() != null) {
 				liste.add(new Matiere(0, dto.getNom()));
@@ -39,9 +38,8 @@ public class MatiereConverter implements IConverter<Matiere, MatiereDto> {
 
 	@Override
 	public MatiereDto entiteToDto(Matiere entite) {
-		if (entite != null && entite.getNom()!=null) {
-			MatiereDto dto = new MatiereDto(entite.getNom());
-			return dto;
+		if (entite != null && entite.getNom() != null) {
+			return new MatiereDto(entite.getNom());
 
 		} else {
 			return null;
@@ -51,10 +49,11 @@ public class MatiereConverter implements IConverter<Matiere, MatiereDto> {
 
 	@Override
 	public List<MatiereDto> listEntiteToDto(List<Matiere> entite) {
+		List<MatiereDto> liste = new ArrayList<>();
 		if (entite == null) {
-			return null;
+			return liste;
 		}
-		List<MatiereDto> liste = new ArrayList<MatiereDto>();
+
 		for (Matiere e : entite) {
 			if (e.getNom() != null) {
 				liste.add(new MatiereDto(e.getNom()));

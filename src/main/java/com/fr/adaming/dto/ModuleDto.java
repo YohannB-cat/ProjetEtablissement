@@ -1,6 +1,5 @@
 package com.fr.adaming.dto;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.fr.adaming.entity.Matiere;

@@ -14,18 +14,18 @@ public class ModuleConverter implements IConverter<Module, ModuleDto> {
 	@Override
 	public Module dtoToEntite(ModuleDto dto) {
 		if (dto != null && dto.getNom() != null) {
-			Module entite = new Module(0, dto.getNom(), dto.getMatiere());
-			return entite;
+			return new Module(0, dto.getNom(), dto.getMatiere());
 		}
 		return null;
 	}
 
 	@Override
 	public List<Module> listDtoToEntite(List<ModuleDto> dtoliste) {
+		List<Module> liste = new ArrayList<>();
 		if (dtoliste == null) {
-			return null;
+			return liste;
 		}
-		List<Module> liste = new ArrayList<Module>();
+		
 		for (ModuleDto dto : dtoliste) {
 			if (dto.getNom() != null) {
 				liste.add(new Module(0, dto.getNom(), dto.getMatiere()));
@@ -37,8 +37,7 @@ public class ModuleConverter implements IConverter<Module, ModuleDto> {
 	@Override
 	public ModuleDto entiteToDto(Module entite) {
 		if (entite != null && entite.getNom() != null) {
-			ModuleDto dto = new ModuleDto(entite.getNom(), entite.getMatieres());
-			return dto;
+			return new ModuleDto(entite.getNom(), entite.getMatieres());
 
 		}
 		return null;
@@ -46,10 +45,11 @@ public class ModuleConverter implements IConverter<Module, ModuleDto> {
 
 	@Override
 	public List<ModuleDto> listEntiteToDto(List<Module> entite) {
+		List<ModuleDto> liste = new ArrayList<>();
 		if (entite == null) {
-			return null;
+			return liste;
 		}
-		List<ModuleDto> liste = new ArrayList<ModuleDto>();
+		
 		for (Module e : entite) {
 			if (e.getNom() != null) {
 				liste.add(new ModuleDto(e.getNom(), e.getMatieres()));
