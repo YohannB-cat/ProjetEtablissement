@@ -152,13 +152,13 @@ public class AbsenceConverterTest {
 		listeDto.add(dto);
 		listeDto.add(dto2);
 		
-		assertThat((convert.listDtoToEntite(listeDto)).isEmpty());
+		assertTrue((convert.listDtoToEntite(listeDto)).isEmpty());
 	}
 
 	
 	@Test
 	public void testListDtoToEntiteNull_shouldReturnEmpty() {
-		assertThat((convert.listDtoToEntite(null)).isEmpty());
+		assertTrue((convert.listDtoToEntite(null)).isEmpty());
 
 	}
 
@@ -209,14 +209,14 @@ public class AbsenceConverterTest {
 		liste.add(et);
 		liste.add(et2);
 		
-		assertNull(convert.listEntiteToDto(liste));
+		assertTrue(convert.listEntiteToDto(liste).isEmpty());
 
 	}
 
 	
 	@Test
 	public void testListEntiteToDtoNull_shouldReturnEmpty() {
-		assertThat(convert.listEntiteToDto(null).isEmpty());
+		assertTrue(convert.listEntiteToDto(null).isEmpty());
 
 	}
 

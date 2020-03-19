@@ -1,5 +1,6 @@
 package com.fr.adaming.converter;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -143,7 +144,7 @@ public class AbsenceCreateConverterTest {
 	}
 	
 	@Test
-	public void testListDtoToEntiteInvalidSansDates_shouldReturnEntite() {
+	public void testListDtoToEntiteInvalidSansDates_shouldReturnEmpty() {
 		List<AbsenceDtoCreate> listeDto = new ArrayList<AbsenceDtoCreate>();
 		AbsenceDtoCreate dto = new AbsenceDtoCreate(10, null, null, null, null, null);
 		AbsenceDtoCreate dto2 = new AbsenceDtoCreate();
@@ -151,12 +152,12 @@ public class AbsenceCreateConverterTest {
 		listeDto.add(dto);
 		listeDto.add(dto2);
 		
-		assertNull((convert.listDtoToEntite(listeDto)));
+		assertTrue((convert.listDtoToEntite(listeDto)).isEmpty());
 	}
 
 	@Test
-	public void testListDtoToEntiteNull_shouldReturnNull() {
-		assertNull(convert.listDtoToEntite(null));
+	public void testListDtoToEntiteNull_shouldReturnEmpty() {
+		assertTrue((convert.listDtoToEntite(null)).isEmpty());
 
 	}
 
@@ -194,7 +195,7 @@ public class AbsenceCreateConverterTest {
 	}
 
 	@Test
-	public void testListEntiteToDtoInvalidSansDates_shouldReturnEntite() {
+	public void testListEntiteToDtoInvalidSansDates_shouldReturnEmpty() {
 		List<Absence> liste = new ArrayList<Absence>();
 		Absence et = new Absence(4, null, null,"justif","desc", null);
 		Absence et2 = new Absence();
@@ -202,7 +203,7 @@ public class AbsenceCreateConverterTest {
 		liste.add(et);
 		liste.add(et2);
 		
-		assertNull(convert.listEntiteToDto(liste));
+		assertTrue(convert.listEntiteToDto(liste).isEmpty());
 	}
 
 

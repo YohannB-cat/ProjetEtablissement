@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -42,11 +43,11 @@ public class AbsenceService implements IAbsenceService {
 	public List<Absence> findAll() {
 		try {
 		if (dao.findAll().isEmpty()) {
-			return null;
+			return new ArrayList<>();
 		}
 		return dao.findAll();
 		} catch (NullPointerException npe) {
-			return null;
+			return new ArrayList<>();
 		}
 	}
 

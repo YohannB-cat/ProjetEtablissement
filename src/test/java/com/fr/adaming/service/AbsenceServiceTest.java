@@ -64,7 +64,7 @@ public class AbsenceServiceTest {
 	@Test
 	@DisplayName("Demande de la liste vide")
 	public void testGetList_shouldReturnEmptyList() {
-		assertNull(service.findAll());
+		assertTrue(service.findAll().isEmpty());
 	}
 
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (1, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)

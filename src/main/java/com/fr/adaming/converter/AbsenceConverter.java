@@ -42,8 +42,8 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 	@Override
 	public List<Absence> listDtoToEntite(List<AbsenceDto> dtoliste) {
 		try {
-			if (dtoliste.isEmpty() || dtoliste == null) {
-				return new ArrayList<Absence>();
+			if (dtoliste.isEmpty()) {
+				return new ArrayList<>();
 			}
 			List<Absence> liste = new ArrayList<>();
 			for (AbsenceDto dto : dtoliste) {
@@ -60,7 +60,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 			return liste;
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			return new ArrayList<Absence>();
+			return new ArrayList<>();
 		}
 	}
 
@@ -83,7 +83,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 	public List<AbsenceDto> listEntiteToDto(List<Absence> entite) {
 		try {
 			if (entite == null) {
-				return new ArrayList<AbsenceDto>();
+				return new ArrayList<>();
 			}
 			List<AbsenceDto> liste = new ArrayList<>();
 			for (Absence e : entite) {
@@ -104,7 +104,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 			return liste;
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			return new ArrayList<AbsenceDto>();
+			return new ArrayList<>();
 		}
 
 	}
