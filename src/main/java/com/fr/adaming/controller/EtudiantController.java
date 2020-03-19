@@ -98,7 +98,6 @@ public class EtudiantController implements IEtudiantController {
 	@Override
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
-		System.out.println(id);
 		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
