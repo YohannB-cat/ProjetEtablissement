@@ -14,6 +14,7 @@ import com.fr.adaming.dao.IEtudiantDao;
 import com.fr.adaming.entity.Etudiant;
 
 @Service("etudiantservice")
+@SuppressWarnings("squid:S1148")
 public class EtudiantService implements IEtudiantService {
 
 	@Autowired
