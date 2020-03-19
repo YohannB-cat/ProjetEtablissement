@@ -80,7 +80,7 @@ public class ModuleService implements IModuleService{
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (dao.findById(id) != null && id != 0) {
+			if (dao.findById(id).isPresent() && id != 0) {
 				dao.deleteById(id);
 				return true;
 			} else {

@@ -8,19 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.NestedServletException;
 
-import com.fr.adaming.converter.ExamenConverter;
+import com.fr.adaming.config.WebConstant;
 import com.fr.adaming.converter.IConverter;
-import com.fr.adaming.converter.MatiereConverter;
-import com.fr.adaming.dto.ExamenDto;
-import com.fr.adaming.dto.ExamenDtoCreate;
 import com.fr.adaming.dto.MatiereDto;
 import com.fr.adaming.dto.MatiereDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
-import com.fr.adaming.entity.Examen;
 import com.fr.adaming.entity.Matiere;
 import com.fr.adaming.service.IMatiereService;
 
@@ -36,6 +30,7 @@ public class MatiereController implements IMatiereController {
 
 	@Autowired
 	private IConverter<Matiere, MatiereDto> matiereDto;
+	
 
 	// create matiere
 	@Override
@@ -48,10 +43,10 @@ public class MatiereController implements IMatiereController {
 		// Attribution de la réponse en fonction du retour DB et de la conposition de
 		// l'objet
 		if (matiere != null) {
-			resp = new ResponseDto(false, "SUCCESS", matiere);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, matiere);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(true, "FAIL", matiere);
+		resp = new ResponseDto(true, WebConstant.FAIL, matiere);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -64,10 +59,10 @@ public class MatiereController implements IMatiereController {
 		ResponseDto resp = null;
 
 		if (matiere != null) {
-			resp = new ResponseDto(false, "SUCCESS", matiere);
+			resp = new ResponseDto(false,  WebConstant.SUCCESS, matiere);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		} else {
-			resp = new ResponseDto(true, "FAIL", matiere);
+			resp = new ResponseDto(true, WebConstant.FAIL, matiere);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
 
@@ -80,10 +75,10 @@ public class MatiereController implements IMatiereController {
 
 		ResponseDto resp = null;
 		if (list != null) {
-			resp = new ResponseDto(false, "SUCCESS", list);
+			resp = new ResponseDto(false,  WebConstant.SUCCESS, list);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -95,10 +90,10 @@ public class MatiereController implements IMatiereController {
 		ResponseDto resp = null;
 
 		if (listMatiere != null) {
-			resp = new ResponseDto(false, "SUCCESS", listMatiere);
+			resp = new ResponseDto(false,  WebConstant.SUCCESS, listMatiere);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -110,10 +105,10 @@ public class MatiereController implements IMatiereController {
 		ResponseDto resp = null;
 
 		if (isSuccess) {
-			resp = new ResponseDto(false, "SUCCESS", isSuccess);
+			resp = new ResponseDto(false,  WebConstant.SUCCESS, isSuccess);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(true, "FAIL", null);
+		resp = new ResponseDto(true, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -124,10 +119,10 @@ public class MatiereController implements IMatiereController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true,  WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
