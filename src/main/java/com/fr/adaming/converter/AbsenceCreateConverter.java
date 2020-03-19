@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.fr.adaming.dto.AbsenceDto;
 import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.entity.Absence;
 
 @Component
+@SuppressWarnings("squid:S1148")
 public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCreate> {
 
 	@Override

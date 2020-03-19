@@ -14,6 +14,7 @@ import com.fr.adaming.dao.IAbsenceDao;
 import com.fr.adaming.entity.Absence;
 
 @Service("absenceservice")
+@SuppressWarnings("squid:S1148")
 public class AbsenceService implements IAbsenceService {
 	
 	@Autowired
@@ -84,7 +85,7 @@ public class AbsenceService implements IAbsenceService {
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (dao.findById(id) != null && id != 0) {
+			if (dao.findById(id).isPresent()  && id != 0) {
 				dao.deleteById(id);
 				return true;
 			} else {
