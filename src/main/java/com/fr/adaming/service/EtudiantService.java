@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import com.fr.adaming.dao.IEtudiantDao;
 import com.fr.adaming.entity.Etudiant;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service("etudiantservice")
-@SuppressWarnings("squid:S1148")
 public class EtudiantService implements IEtudiantService {
 
 	@Autowired
@@ -29,11 +31,11 @@ public class EtudiantService implements IEtudiantService {
 			}
 			return dao.save(etudiant);
 		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return null;
 		}
 		catch (ConstraintViolationException er) {
-			er.printStackTrace();
+			log.warn(er.getMessage());
 			return null;
 		}
 	}
@@ -55,7 +57,7 @@ public class EtudiantService implements IEtudiantService {
 				return null;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return null;
 		}
 	}
@@ -71,10 +73,10 @@ public class EtudiantService implements IEtudiantService {
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
+			log.warn(er.getMessage());
 			return false;
 		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+			log.warn(ec.getMessage());
 			return false;
 		}
 	}
@@ -89,14 +91,14 @@ public class EtudiantService implements IEtudiantService {
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return false;
 		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+			log.warn(er.getMessage());
 			return false;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.warn(ex.getMessage());
 			return false;
 		}
 	}

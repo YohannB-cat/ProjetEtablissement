@@ -25,6 +25,9 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.Etudiant;
 import com.fr.adaming.service.IEtudiantService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping(path = "/etudiant")
 public class EtudiantController implements IEtudiantController {
@@ -50,9 +53,11 @@ public class EtudiantController implements IEtudiantController {
 		
 		if (etu != null) {
 			setResponseSuccess();
+			log.info("Creation etudiant Ok");
 			return ResponseEntity.status(HttpStatus.OK).body(this.resp);
 		}
 		setResponseFail();
+		log.warn("Creation etudiant fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.resp);
 
 	}
@@ -66,9 +71,11 @@ public class EtudiantController implements IEtudiantController {
 
 		if (result) {
 			setResponseSuccess();
+			log.info("Modification etudiant Ok");
 			return ResponseEntity.status(HttpStatus.OK).body(this.resp);
 		}
 		setResponseFail();
+		log.warn("Modification etudiant fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.resp);
 	}
 
@@ -82,9 +89,11 @@ public class EtudiantController implements IEtudiantController {
 		if (dto != null) {
 
 			setResponseSuccess();
+			log.info("Recherche etudiant par id Ok");
 			return ResponseEntity.status(HttpStatus.OK).body(this.resp);
 		}
 		setResponseFail();
+		log.warn("Recherche etudiant par id Fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.resp);
 	}
 
@@ -94,6 +103,7 @@ public class EtudiantController implements IEtudiantController {
 		List<EtudiantDto> list = convert.listEntiteToDto(service.findAll());
 		this.resp.setObject(list);
 		setResponseSuccess();
+		log.info("Recherche etudiant all Ok");
 		return ResponseEntity.status(HttpStatus.OK).body(this.resp);
 	}
 
@@ -106,9 +116,11 @@ public class EtudiantController implements IEtudiantController {
 
 		if (result) {
 			setResponseSuccess();
+			log.info("Suppression etudiant par id Ok");
 			return ResponseEntity.status(HttpStatus.OK).body(this.resp);
 		}
 		setResponseFail();
+		log.warn("Suppression etudiant par id Fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.resp);
 	}
 
