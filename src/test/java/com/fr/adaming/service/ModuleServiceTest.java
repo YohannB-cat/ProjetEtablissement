@@ -35,9 +35,9 @@ public class ModuleServiceTest {
 
 	@Test
 	@DisplayName("Création d'un Module avec param null")
-	@Sql(statements = "DELETE FROM Matiere WHERE nom =null", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module WHERE nom =null", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingModuleWithNullName_shouldReturnModule() {
-		Module m = new Module(0, null, null);
+		Module m = new Module(1, null, null);
 		assertThat(service.create(m)).isEqualTo(m);
 	}
 
@@ -46,15 +46,14 @@ public class ModuleServiceTest {
 	@Sql(statements = "DELETE FROM Matiere WHERE nom ='Matiere4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Module WHERE nom ='JAVA4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingCorrectModule_shouldReturnModule() {
-		Matiere mat = new Matiere();
-		mat.setNom("Matiere4Test");
+		Matiere mat = new Matiere(1,"Matiere4Test");
 
-		List<Matiere> list = new ArrayList<Matiere>();
+		List<Matiere> list = new ArrayList<>();
 		list.add(mat);
 		matService.create(mat);
 		Module m = new Module(1, "JAVA4Test", list);
 		Module mcreate = service.create(m);
-
+		
 		assertThat(mcreate).hasFieldOrPropertyWithValue("id", m.getId());
 		assertThat(mcreate).hasFieldOrPropertyWithValue("nom", m.getNom());
 		assertThat(mcreate.getMatieres()).asList().hasSize(1);
@@ -65,7 +64,7 @@ public class ModuleServiceTest {
 	@Test
 	@DisplayName("Demande de la liste vide")
 	public void testGetList_shouldReturnNull() {
-		assertThat(service.findAll()).isNull();
+		assertThat(service.findAll()).isEmpty();
 	}
 
 	@Sql(statements = "INSERT INTO Module  VALUES (null, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
