@@ -143,8 +143,8 @@ public class EtudiantCreateConverterTest{
 	}
 
 	@Test
-	public void testListDtoToEntiteNull_shouldReturnNull() {
-		assertNull(convert.listDtoToEntite(null));
+	public void testListDtoToEntiteNull_shouldReturnEmptyList() {
+		assertTrue(convert.listDtoToEntite(null).isEmpty());
 
 	}
 
@@ -173,8 +173,8 @@ public class EtudiantCreateConverterTest{
 	}
 
 	@Test
-	public void testListEntiteToDtoNull_shouldReturnNull() {
-		assertNull(convert.listEntiteToDto(null));
+	public void testListEntiteToDtoNull_shouldReturnEmptyList() {
+		assertTrue(convert.listEntiteToDto(null).isEmpty());
 
 	}
 
