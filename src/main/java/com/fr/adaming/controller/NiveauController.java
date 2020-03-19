@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.config.WebConstant;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.ClasseDto;
 import com.fr.adaming.dto.NiveauDto;
@@ -53,10 +54,10 @@ public class NiveauController implements INiveauController {
 		ResponseDto resp = null;
 				
 		if (etu != null) {
-			resp = new ResponseDto(false, "SUCCESS", etu);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, etu);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(true, "FAIL", etu);
+		resp = new ResponseDto(true, WebConstant.FAIL, etu);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -67,10 +68,10 @@ public class NiveauController implements INiveauController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -81,10 +82,10 @@ public class NiveauController implements INiveauController {
 		ResponseDto resp = null;
 
 		if (dto != null) {
-			resp = new ResponseDto(false, "SUCCESS", dto);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, dto);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(true, "FAIL", dto);
+		resp = new ResponseDto(true, WebConstant.FAIL, dto);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -94,7 +95,7 @@ public class NiveauController implements INiveauController {
 	public ResponseEntity<ResponseDto> findAll() {
 		List<NiveauDto> list = convert.listEntiteToDto(service.findAll());
 
-		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+		ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 		return ResponseEntity.status(HttpStatus.OK).body(resp);		
 	}
 
@@ -105,10 +106,10 @@ public class NiveauController implements INiveauController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 	
@@ -118,12 +119,11 @@ public class NiveauController implements INiveauController {
 		List<ClasseDto> list = convertClasse.listEntiteToDto(service.findListClasseByIdNiveau(id));
 		if(list != null && list.size()>0) {
 
-			ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+			ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}else {
-			ResponseDto resp = new ResponseDto(true, "FAIL", null);
+			ResponseDto resp = new ResponseDto(true, WebConstant.FAIL, null);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-		}
-		
+		}		
 	}
 }

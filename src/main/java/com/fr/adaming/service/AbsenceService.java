@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -14,6 +15,7 @@ import com.fr.adaming.dao.IAbsenceDao;
 import com.fr.adaming.entity.Absence;
 
 @Service("absenceservice")
+@SuppressWarnings("squid:S1148")
 public class AbsenceService implements IAbsenceService {
 	
 	@Autowired
@@ -41,11 +43,11 @@ public class AbsenceService implements IAbsenceService {
 	public List<Absence> findAll() {
 		try {
 		if (dao.findAll().isEmpty()) {
-			return null;
+			return new ArrayList<>();
 		}
 		return dao.findAll();
 		} catch (NullPointerException npe) {
-			return null;
+			return new ArrayList<>();
 		}
 	}
 
@@ -84,7 +86,7 @@ public class AbsenceService implements IAbsenceService {
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (dao.findById(id) != null && id != 0) {
+			if (dao.findById(id).isPresent()  && id != 0) {
 				dao.deleteById(id);
 				return true;
 			} else {

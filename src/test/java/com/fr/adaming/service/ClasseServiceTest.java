@@ -72,8 +72,8 @@ public class ClasseServiceTest {
 	// Valide !
 	@Test
 	@DisplayName("Demande de la liste vide")
-	public void testGetList_shouldReturnNull() {
-		assertThat(service.findAll()).isNull();
+	public void testGetList_shouldReturnEmptyList() {
+		assertThat(service.findAll()).isEmpty();
 	}
 
 	// Valide ! (pb avec etudiant)

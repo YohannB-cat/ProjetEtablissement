@@ -14,8 +14,7 @@ public class ModuleCreateConverter implements IConverter<Module, ModuleDtoCreate
 	@Override
 	public Module dtoToEntite(ModuleDtoCreate dto) {
 		if (dto != null && dto.getNom() != null) {
-			Module entite = new Module(dto.getId(), dto.getNom(), dto.getMatiere());
-			return entite;
+			return new Module(dto.getId(), dto.getNom(), dto.getMatiere());
 
 		}
 		return null;
@@ -23,10 +22,10 @@ public class ModuleCreateConverter implements IConverter<Module, ModuleDtoCreate
 
 	@Override
 	public List<Module> listDtoToEntite(List<ModuleDtoCreate> dtoliste) {
+		List<Module> liste = new ArrayList<>();
 		if (dtoliste == null) {
-			return null;
+			return liste;
 		}
-		List<Module> liste = new ArrayList<Module>();
 		for (ModuleDtoCreate dto : dtoliste) {
 			if (dto.getNom() != null) {
 				liste.add(new Module(dto.getId(), dto.getNom(), dto.getMatiere()));
@@ -38,25 +37,23 @@ public class ModuleCreateConverter implements IConverter<Module, ModuleDtoCreate
 	@Override
 	public ModuleDtoCreate entiteToDto(Module entite) {
 		if (entite != null && entite.getNom() != null) {
-			ModuleDtoCreate dto = new ModuleDtoCreate(entite.getId(), entite.getNom(), entite.getMatieres());
-			return dto;
+			return new ModuleDtoCreate(entite.getId(), entite.getNom(), entite.getMatieres());
 		}
 		return null;
 	}
 
 	@Override
 	public List<ModuleDtoCreate> listEntiteToDto(List<Module> entite) {
-		if (entite != null) {
-			List<ModuleDtoCreate> liste = new ArrayList<ModuleDtoCreate>();
+		List<ModuleDtoCreate> liste = new ArrayList<>();
+		if (entite == null) {
+			return liste ;
+		}
 			for (Module e : entite) {
 				if (e.getNom() != null) {
 					liste.add(new ModuleDtoCreate(e.getId(), e.getNom(), e.getMatieres()));
 				}
 			}
 			return liste;
-
 		}
-		return null;
 	}
 
-}

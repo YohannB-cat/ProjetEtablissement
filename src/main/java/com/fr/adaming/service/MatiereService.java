@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -43,8 +44,9 @@ public class MatiereService implements IMatiereService {
 
 	@Override
 	public List<Matiere> findAll() {
+		List <Matiere> listeMatiere = new ArrayList<>();
 		if (matDao.findAll().isEmpty()) {
-			return null;
+			return listeMatiere;
 		}
 		return matDao.findAll();
 	}
@@ -101,13 +103,13 @@ public class MatiereService implements IMatiereService {
 
 	@Override
 	public List<Matiere> findMatiereByIdModule(Integer matieres) {
-		List<Matiere> listeMatiere = null;
+		List<Matiere> listeMatiere = new ArrayList<>();
 		if (matieres != 0) {
 			listeMatiere =  matDao.findMatiereByMatieres(matieres);
 			return listeMatiere;
 		}
 		else {
-			return null;
+			return listeMatiere;
 		}
 	}
 	

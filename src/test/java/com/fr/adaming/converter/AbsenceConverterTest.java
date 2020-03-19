@@ -144,7 +144,7 @@ public class AbsenceConverterTest {
 
 	
 	@Test
-	public void testListDtoToEntiteInvalidSansDates_shouldReturnEntite() {
+	public void testListDtoToEntiteInvalidSansDates_shouldReturnEmpty() {
 		List<AbsenceDto> listeDto = new ArrayList<AbsenceDto>();
 		AbsenceDto dto = new AbsenceDto();
 		AbsenceDto dto2 = new AbsenceDto();
@@ -152,13 +152,13 @@ public class AbsenceConverterTest {
 		listeDto.add(dto);
 		listeDto.add(dto2);
 		
-		assertNull((convert.listDtoToEntite(listeDto)));
+		assertTrue((convert.listDtoToEntite(listeDto)).isEmpty());
 	}
 
 	
 	@Test
-	public void testListDtoToEntiteNull_shouldReturnNull() {
-		assertNull(convert.listDtoToEntite(null));
+	public void testListDtoToEntiteNull_shouldReturnEmpty() {
+		assertTrue((convert.listDtoToEntite(null)).isEmpty());
 
 	}
 
@@ -199,7 +199,7 @@ public class AbsenceConverterTest {
 	}
 	
 	@Test
-	public void testListEntiteToDtoSansDatesInvalid_shouldReturnNull() {
+	public void testListEntiteToDtoSansDatesInvalid_shouldReturnEmpty() {
 		List<Absence> liste = new ArrayList<Absence>();
 		String date = "2020-02-20";
 		LocalDate lDate = LocalDate.parse(date);
@@ -209,14 +209,14 @@ public class AbsenceConverterTest {
 		liste.add(et);
 		liste.add(et2);
 		
-		assertNull(convert.listEntiteToDto(liste));
+		assertTrue(convert.listEntiteToDto(liste).isEmpty());
 
 	}
 
 	
 	@Test
-	public void testListEntiteToDtoNull_shouldReturnNull() {
-		assertThat(convert.listEntiteToDto(null).isEmpty());
+	public void testListEntiteToDtoNull_shouldReturnEmpty() {
+		assertTrue(convert.listEntiteToDto(null).isEmpty());
 
 	}
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.config.WebConstant;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.AbsenceDto;
 import com.fr.adaming.dto.AbsenceDtoCreate;
@@ -39,7 +40,7 @@ public class AbsenceController implements IAbsenceController {
 		ResponseDto resp = null;
 
 		if (abs != null) {
-			resp = new ResponseDto(false, "SUCCESS", abs);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, abs);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, "FAIL", abs);
@@ -52,7 +53,7 @@ public class AbsenceController implements IAbsenceController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(false, "FAIL", null);
@@ -65,7 +66,7 @@ public class AbsenceController implements IAbsenceController {
 		ResponseDto resp = null;
 
 		if (dto != null) {
-			resp = new ResponseDto(false, "SUCCESS", dto);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, dto);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, "FAIL", dto);
@@ -76,7 +77,7 @@ public class AbsenceController implements IAbsenceController {
 	public ResponseEntity<ResponseDto> findAll() {
 		List<AbsenceDto> list = convert.listEntiteToDto(service.findAll());
 
-		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+		ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
@@ -86,7 +87,7 @@ public class AbsenceController implements IAbsenceController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(false, "FAIL", null);

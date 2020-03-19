@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -39,8 +40,9 @@ public class ModuleService implements IModuleService{
 
 	@Override
 	public List<Module> findAll() {
+		List <Module> listeModule = new ArrayList<>();
 		if (dao.findAll().isEmpty()) {
-			return null;
+			return listeModule;
 		}
 		return dao.findAll();
 	}

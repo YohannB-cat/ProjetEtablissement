@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.config.WebConstant;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
@@ -37,21 +38,22 @@ public class EtudiantController implements IEtudiantController {
 
 	@Autowired
 	private IConverter<Etudiant, EtudiantDtoCreate> convertCreate;
+	
+	private ResponseDto resp;
 
 	// Methode create
 	@Override
 	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto) {
 		EtudiantDtoCreate etu = convertCreate.entiteToDto(service.create(convert.dtoToEntite(dto)));
-
-		ResponseDto resp = null;
-
+		this.resp.setObject(etu);
+		
 		if (etu != null) {
-			resp = new ResponseDto(false, "SUCCESS", etu);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
+			setResponseSuccess();
+			return ResponseEntity.status(HttpStatus.OK).body(this.resp);
 		}
-		resp = new ResponseDto(true, "FAIL", etu);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		setResponseFail();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.resp);
 
 	}
 
@@ -60,14 +62,14 @@ public class EtudiantController implements IEtudiantController {
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody EtudiantDtoCreate dto) {
 		boolean result = service.update(convertCreate.dtoToEntite(dto));
-		ResponseDto resp = null;
+		this.resp = null;
 
 		if (result) {
-			resp = new ResponseDto(false, "SUCCESS", null);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
+			setResponseSuccess();
+			return ResponseEntity.status(HttpStatus.OK).body(this.resp);
 		}
-		resp = new ResponseDto(true, "FAIL", null);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		setResponseFail();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.resp);
 	}
 
 	// read
@@ -75,23 +77,24 @@ public class EtudiantController implements IEtudiantController {
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
 		EtudiantDto dto = convert.entiteToDto(service.findById(id));
-		ResponseDto resp = null;
-
+		this.resp.setObject(dto);
+		
 		if (dto != null) {
-			resp = new ResponseDto(false, "SUCCESS", dto);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
+
+			setResponseSuccess();
+			return ResponseEntity.status(HttpStatus.OK).body(this.resp);
 		}
-		resp = new ResponseDto(true, "FAIL", dto);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		setResponseFail();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.resp);
 	}
 
 	@Override
 	@GetMapping(path = "/all")
 	public ResponseEntity<ResponseDto> findAll() {
 		List<EtudiantDto> list = convert.listEntiteToDto(service.findAll());
-
-		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
+		this.resp.setObject(list);
+		setResponseSuccess();
+		return ResponseEntity.status(HttpStatus.OK).body(this.resp);
 	}
 
 	// delete
@@ -99,14 +102,24 @@ public class EtudiantController implements IEtudiantController {
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
 		boolean result = service.deleteById(id);
-		ResponseDto resp = null;
+		this.resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
+			setResponseSuccess();
+			return ResponseEntity.status(HttpStatus.OK).body(this.resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		setResponseFail();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.resp);
 	}
 
+	public void setResponseSuccess() {
+		this.resp.setError(false);
+		this.resp.setMessage(WebConstant.SUCCESS);
+	}
+	public void setResponseFail() {
+		this.resp.setError(true);
+		this.resp.setMessage(WebConstant.FAIL);
+	}
+	
+	
 }
