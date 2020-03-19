@@ -18,6 +18,8 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.Examen;
 import com.fr.adaming.service.IExamenService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 public class ExamenController implements IExamenController {
 	

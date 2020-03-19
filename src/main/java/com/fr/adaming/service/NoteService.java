@@ -15,8 +15,10 @@ import com.fr.adaming.dao.IEtudiantDao;
 import com.fr.adaming.dao.INoteDao;
 import com.fr.adaming.entity.Note;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service //("noteservice")
-@SuppressWarnings("squid:S1148")
+@Slf4j
 public class NoteService implements INoteService {
 
 	@Autowired
@@ -29,14 +31,16 @@ public class NoteService implements INoteService {
 	public Note create(Note note) {
 		try {
 			if (note == null || noteDao.existsById(note.getId())) {
+				log.warn("Tentative vaine de creation d'une note");
 				return null;
 			}
+			log.info("Creation d'une nouvelle note");
 			return noteDao.save(note);
 		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
+			log.error("DataIntegrityViolationException");
 			return null;
 		}catch (ConstraintViolationException er) {
-			er.printStackTrace();
+			log.error("ConstraintViolationException");
 			return null;
 		}
 	}
@@ -44,8 +48,10 @@ public class NoteService implements INoteService {
 	@Override
 	public List<Note> findAll() {
 		if (noteDao.findAll().isEmpty()) {
+			log.warn("La liste de note est vide");
 			return new ArrayList<>();
 		}
+		log.info("Recuperation de la liste des notes");
 		return noteDao.findAll();
 	}
 
@@ -53,12 +59,14 @@ public class NoteService implements INoteService {
 	public Note findById(int id) {
 		try {
 			if (id != 0) {
+				log.info("Recuperation d'une note");
 				return noteDao.findById(id).orElse(null);
 			} else {
+				log.warn("Tentative de recuperation d'une note inexistante");
 				return null;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.error("InvalidDataAccessApiUsageException");
 			return null;
 		}
 	}
@@ -68,6 +76,7 @@ public class NoteService implements INoteService {
 		try {
 			if (noteDao.existsById(note.getId())) {
 				noteDao.save(note);
+				
 				return true;
 			} else {
 				return false;

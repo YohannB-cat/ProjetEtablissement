@@ -14,8 +14,10 @@ import com.fr.adaming.dao.IExamenDao;
 import com.fr.adaming.dao.IMatiereDao;
 import com.fr.adaming.entity.Examen;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service ("examenservice")
-@SuppressWarnings("squid:S1148")
+@Slf4j
 public class ExamenService implements IExamenService {
 	
 	@Autowired
@@ -30,20 +32,22 @@ public class ExamenService implements IExamenService {
 			if (exam == null || dao.existsById(exam.getId())) {
 				return null;
 			}
+			log.info("Creation d'un examen");
 			return dao.save(exam);
 		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
+			log.error("DataIntegrityViolationException");
 			return null;
 		}
 
 		catch (ConstraintViolationException er) {
-			er.printStackTrace();
+			log.error("ConstraintViolationException");
 			return null;
 		}
 	}
 
 	@Override
 	public List<Examen> findAll() {
+		log.info("Recuperation de la liste des examens");
 		return dao.findAll();
 	}
 
@@ -51,12 +55,14 @@ public class ExamenService implements IExamenService {
 	public Examen findById(int id) {
 		try {
 			if (id != 0) {
+				log.info("Recuperation d'un Examen");
 				return dao.findById(id).orElse(null);
 			} else {
+				log.warn("Tentative de recuperation d'un examen par son id");
 				return null;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.error("InvalidDataAccessApiUsageException");
 			return null;
 		}
 	}
