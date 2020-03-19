@@ -15,8 +15,10 @@ import com.fr.adaming.dao.IMatiereDao;
 import com.fr.adaming.dao.IModuleDao;
 import com.fr.adaming.entity.Matiere;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service ("matiereservice")
-@SuppressWarnings("squid:S1148")
+@Slf4j
 public class MatiereService implements IMatiereService {
 
 	@Autowired
@@ -33,12 +35,12 @@ public class MatiereService implements IMatiereService {
 			}
 			return matDao.save(matiere);
 		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
+			log.error("MESSAGE ERROR CREATE MATIERE"+ e.getMessage());
 			return null;
 		}
 
 		catch (ConstraintViolationException er) {
-			er.printStackTrace();
+			log.error("MESSAGE ERROR CREATE MATIERE" + er.getMessage());
 			return null;
 		}
 	}
@@ -61,7 +63,7 @@ public class MatiereService implements IMatiereService {
 				return null;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.error("ERROR FIND BY ID MATIERE" + e.getMessage());
 			return null;
 		}
 	}
@@ -76,10 +78,10 @@ public class MatiereService implements IMatiereService {
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
+			log.error("ERROR UPDATE MATIERE" + er.getMessage());
 			return false;
 		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+			log.error("ERROR UPDATE MATIERE" + ec.getMessage());
 			return false;
 		}
 	}
@@ -94,10 +96,10 @@ public class MatiereService implements IMatiereService {
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.error("ERROR DELETE BY ID" + e.getMessage());
 			return false;
 		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+			log.error("ERRROR DELETE BY ID" + er.getMessage());
 			return false;
 		}
 	}

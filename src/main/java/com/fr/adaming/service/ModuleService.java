@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import com.fr.adaming.dao.IModuleDao;
 import com.fr.adaming.entity.Module;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service ("moduleservice")
-@SuppressWarnings("squid:S1148")
+@Slf4j
 public class ModuleService implements IModuleService{
 	
 	@Autowired
@@ -29,12 +31,11 @@ public class ModuleService implements IModuleService{
 			}
 			return dao.save(module);
 		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
+			log.error("ERROR create module"+e.getMessage());
 			return null;
 		}
-
 		catch (ConstraintViolationException er) {
-			er.printStackTrace();
+			log.error("ERROR create module "+er.getMessage());
 			return null;
 		}
 	}
@@ -57,7 +58,7 @@ public class ModuleService implements IModuleService{
 				return null;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.error("ERROR find by id module" + e.getMessage());
 			return null;
 		}
 	}
@@ -72,10 +73,10 @@ public class ModuleService implements IModuleService{
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
+			log.error("ERROR update module "+ er.getMessage());
 			return false;
 		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+			log.error("ERROR update module"+ec.getMessage());
 			return false;
 		}
 	}
@@ -90,10 +91,10 @@ public class ModuleService implements IModuleService{
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.error("ERROR delete by id"+ e.getMessage());
 			return false;
 		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+			log.error("ERROR delete by id"+er.getMessage());
 			return false;
 		}
 	}

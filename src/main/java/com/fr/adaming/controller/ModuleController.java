@@ -16,7 +16,10 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.Module;
 import com.fr.adaming.service.IModuleService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class ModuleController implements IModuleController {
 
 	@Autowired
@@ -42,9 +45,11 @@ public class ModuleController implements IModuleController {
 		// l'objet
 		if (module != null) {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, module);
+			log.info("SUCCESS create module");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, WebConstant.FAIL, module);
+		log.warn("FAIL create module");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -58,9 +63,11 @@ public class ModuleController implements IModuleController {
 
 		if (module != null) {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, module);
+			log.info("SUCCESS find by Id module");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		} else {
 			resp = new ResponseDto(true, WebConstant.FAIL, module);
+			log.warn("FAIL find by Id module");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
 	}
@@ -73,9 +80,11 @@ public class ModuleController implements IModuleController {
 		ResponseDto resp = null;
 		if (list != null) {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, list);
+			log.info("SUCESS find all module");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, WebConstant.FAIL, null);
+		log.warn("FAIL find all module");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -87,9 +96,11 @@ public class ModuleController implements IModuleController {
 
 		if (result) {
 			resp = new ResponseDto(true, WebConstant.SUCCESS, result);
+			log.info("SUCCESS update module");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, WebConstant.FAIL, null);
+		log.warn("FAIL update module");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -101,9 +112,11 @@ public class ModuleController implements IModuleController {
 
 		if (result) {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, null);
+			log.info("SUCCESS delete by Id module");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, WebConstant.FAIL, null);
+		log.warn("FAIL delete by Id module");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
