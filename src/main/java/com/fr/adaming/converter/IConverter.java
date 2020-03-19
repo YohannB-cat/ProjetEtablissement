@@ -2,8 +2,6 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 
 public interface IConverter<Entite, Dto> {
 	

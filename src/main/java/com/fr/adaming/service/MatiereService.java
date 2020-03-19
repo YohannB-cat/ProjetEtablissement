@@ -84,9 +84,9 @@ public class MatiereService implements IMatiereService {
 	}
 
 	@Override
-	public boolean deleteById(int id) {
+	public boolean deleteById(Integer id) {
 		try {
-			if (matDao.findById(id) != null && id != 0) {
+			if (matDao.findById(id).isPresent()  && id != null) {
 				matDao.deleteById(id);
 				return true;
 			} else {
