@@ -16,8 +16,7 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 		if(dto==null) {
 			return null;
 		}
-		Note entite = new Note(dto.getId(), dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen());
-		return entite;
+		return new Note(dto.getId(), dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen());
 	}
 
 	@Override
@@ -25,7 +24,7 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 		if(dtoliste==null) {
 			return null;
 		}
-		List<Note> liste = new ArrayList<Note>();
+		List<Note> liste = new ArrayList<>();
 		for (NoteDtoCreate dto : dtoliste) {
 			liste.add(new Note(dto.getId(), dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen()));
 		}

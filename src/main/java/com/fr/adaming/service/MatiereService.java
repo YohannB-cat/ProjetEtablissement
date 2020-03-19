@@ -10,11 +10,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
-import com.fr.adaming.controller.IModuleController;
 import com.fr.adaming.dao.IMatiereDao;
 import com.fr.adaming.dao.IModuleDao;
 import com.fr.adaming.entity.Matiere;
-import com.fr.adaming.entity.Module;
 
 @Service ("matiereservice")
 public class MatiereService implements IMatiereService {
