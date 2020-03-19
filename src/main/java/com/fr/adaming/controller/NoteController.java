@@ -25,6 +25,9 @@ import com.fr.adaming.service.INoteService;
 @RequestMapping(path = "/note")
 public class NoteController implements INoteController {
 
+	private final String SUCCESS = "SUCCESS";
+	private final String FAIL = "FAIL";
+	
 	@Autowired
 //	@Qualifier("noteservice")
 	private INoteService service;
@@ -47,10 +50,10 @@ public class NoteController implements INoteController {
 		// Attribution de la réponse en fonction du retour DB et de la conposition de
 		// l'objet
 		if (note != null) {
-			resp = new ResponseDto(false, "SUCCESS", note);
+			resp = new ResponseDto(false, SUCCESS, note);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(true, "FAIL", note);
+		resp = new ResponseDto(true, FAIL, note);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 
 	}
@@ -65,10 +68,10 @@ public class NoteController implements INoteController {
 		ResponseDto resp = null;
 
 		if (note != null) {
-			resp = new ResponseDto(false, "SUCCESS", note);
+			resp = new ResponseDto(false, SUCCESS, note);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(true, "FAIL", note);
+		resp = new ResponseDto(true, FAIL, note);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		
 	}
@@ -81,10 +84,10 @@ public class NoteController implements INoteController {
 
 		ResponseDto resp = null;
 		if (list != null) {
-			resp = new ResponseDto(false, "SUCCESS", list);
+			resp = new ResponseDto(false, SUCCESS, list);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 
 	}
@@ -98,10 +101,10 @@ public class NoteController implements INoteController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -113,10 +116,10 @@ public class NoteController implements INoteController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 	
@@ -126,10 +129,10 @@ public class NoteController implements INoteController {
 		ResponseDto resp = null;
 		List<NoteDto> listNote = noteDto.listEntiteToDto(service.listByEtudiant(id_etudiant));
 		if (listNote != null && listNote.size()>0) {
-			resp = new ResponseDto(false, "SUCCESS", listNote);
+			resp = new ResponseDto(false, SUCCESS, listNote);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		
 	}

@@ -1,0 +1,597 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.2.0"
+  title: "Projet Etablissement"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+#basePath: "/api"
+tags:
+- name: "examen"
+  description: "Gestion des examens"
+schemes:
+- "http"
+paths:
+  /examen/:
+    post:
+      tags:
+      - "examen"
+      summary : "créer un examen"
+      description : "Creation d'un examen"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Examen à creer"
+        required: true
+        schema:
+          $ref: "#/definitions/Examen"
+      responses:
+        400:
+          description: "FAIL : examen non créé"
+        200:
+          description: "SUCCESS : examen créé"
+    put:
+      tags:
+      - "examen"
+      summary : "Update examen"
+      description: "Mise à jour d'un examen existant"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Id de l'examen à modifier"
+        required: true
+        schema: 
+          $ref: "#/definitions/Examen" 
+      responses:
+        400:
+          description: "FAIL : examen non mis à jour"
+        200:
+          description: "SUCCESS : examen mis à jour"
+  /examen/{id}:
+    get:
+      tags:
+      - "examen"
+      summary: "Find Examen by Id"
+      description: "Trouver un examen par son id"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de l'examen à afficher"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : examen non trouvé"
+        200:
+          description: "SUCCESS : examen trouvé"
+    delete:
+      tags:
+      - "examen"
+      summary: "Delete Examen by Id"
+      description: "Trouver un examen par son id et le supprime de la base de données"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de l'examen à supprimer"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : examen non supprimé"
+        200:
+          description: "SUCCESS : examen supprimé"
+  /examen/all:
+    get:
+      tags:
+      - "examen"
+      summary: "Find all Examen"
+      description: "Afficher tous les examens"
+      produces: 
+      - "application/json"
+      responses:
+        400:
+          description: "FAIL : liste non trouvé"
+        200:
+          description: "SUCCESS : liste de tous les examens trouvé"
+  /examen/matiere:
+    get:
+      tags:
+      - "examen"
+      summary: "Find all Examen By Matiere"
+      description: "Afficher tous les examens d'une matiere"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de la matiere"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : liste non trouvé"
+        200:
+          description: "SUCCESS : liste de tous les examens de la matiere choisie trouvé"
+  /note:
+    post:
+      tags:
+      - "note"
+      summary : "créer une note"
+      description : "Creation d'une nouvelle note"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Note à creer"
+        required: true
+        schema:
+          $ref: "#/definitions/Note"
+      responses:
+        400:
+          description: "FAIL : note non créé"
+          schema:
+            $ref: "#/descriptions/ResponseDto"
+        200:
+          description: "SUCCESS : note créé"
+          schema:
+            $ref: "#/descriptions/ResponseDto"
+    put:
+      tags:
+      - "note"
+      summary : "Update note"
+      description: "Mise à jour d'une note existante"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Id de la note à modifier"
+        required: true
+        schema: 
+          $ref: "#/definitions/Note" 
+      responses:
+        400:
+          description: "FAIL : note non mis à jour"
+          schema:
+            $ref: "#/descriptions/ResponseDto"
+        200:
+          description: "SUCCESS : note mis à jour"
+          schema:
+            $ref: "#/descriptions/ResponseDto"
+  /examen/{id}:
+    get:
+      tags:
+      - "examen"
+      summary: "Find Examen by Id"
+      description: "Trouver un examen par son id"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de l'examen à afficher"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : examen non trouvé"
+        200:
+          description: "SUCCESS : examen trouvé"
+    delete:
+      tags:
+      - "examen"
+      summary: "Delete Examen by Id"
+      description: "Trouver un examen par son id et le supprime de la base de données"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de l'examen à supprimer"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : examen non supprimé"
+        200:
+          description: "SUCCESS : examen supprimé"
+  /examen/all:
+    get:
+      tags:
+      - "examen"
+      summary: "Find all Examen"
+      description: "Afficher tous les examens"
+      produces: 
+      - "application/json"
+      responses:
+        400:
+          description: "FAIL : liste non trouvé"
+        200:
+          description: "SUCCESS : liste de tous les examens trouvé"
+  /examen/matiere:
+    get:
+      tags:
+      - "examen"
+      summary: "Find all Examen By Matiere"
+      description: "Afficher tous les examens d'une matiere"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de la matiere"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : liste non trouvé"
+        200:
+          description: "SUCCESS : liste de tous les examens de la matiere choisie trouvé"
+
+
+
+definitions:
+  Matiere :
+    type : "object"
+    properties:
+      id :
+        type : "integer"
+        example: 1
+      nom :
+        type : "string"
+        example: "Mathematique"
+    xml:
+      name: "Matiere"
+  MatiereDto:
+    type: "object"
+    properties:
+      nom:
+        type: "string"
+        example: "Physique-Chimie"
+    xml:
+      name: "MatiereDto"
+  MatiereDtoCreate :
+    type : "object"
+    properties :
+      id :
+        type : "integer"
+        format : "int64"
+        example: 5
+      nom :
+        type : "string"
+        example: "Histoire Géographie"
+    xml :
+      name : "MatiereDtoCreate"
+  ModuleDto :
+    type : "object"
+    properties:
+      nom :
+        type : "string"
+        example: "Sixième"
+      matieres :
+        $ref: '#/definitions/Matiere'
+    xml:
+      name: "ModuleDto"
+  ModuleDtoCreate :
+    type : "integer"
+    properties:
+      id :
+        type: "integer"
+        format: "int64"
+      nom : 
+        type: "string"
+        example: "Quatrième"
+      matiere:
+        $ref: '#/definitions/Matiere'
+    xml:
+      name: "ModuleDtoCreate"
+  Module :
+    type : "integer"
+    properties:
+      id :
+        type: "integer"
+        format: "int64"
+      nom : 
+        type: "string"
+        example: "Quatrième"
+      matiere:
+        type: "array"
+        items:
+          $ref: '#/definitions/Matiere'
+    xml:
+      name: "Module"
+  EtudiantDto:
+    type: "object"
+    properties:
+      nom:
+        type: "string"
+      prenom:
+        type: "string"
+      adresse:
+        type: "string"
+      codePostal:
+        type: "integer"
+        format : "int32"
+      ville:
+        type : "string"
+      sexe:
+        type : "boolean"
+      cni:
+        type : "integer"
+        format : "int32"
+      telephone:
+        type : "integer"
+        format : "int32"
+      email:
+        type : "string"
+      enEtude :
+        type : "boolean"
+    xml:
+      name: "EtudiantDto"
+  EtudiantDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format : "int32"
+      nom:
+        type: "string"
+      prenom:
+        type: "string"
+      adresse:
+        type: "string"
+      codePostal:
+        type: "integer"
+        format : "int32"
+      ville:
+        type : "string"
+      sexe:
+        type : "boolean"
+      cni:
+        type : "integer"
+        format : "int32"
+      telephone:
+        type : "integer"
+        format : "int32"
+      email:
+        type : "string"
+      enEtude :
+        type : "boolean"
+    xml:
+      name: "EtudiantDtoCreate"
+  Etudiant:
+    type: "object"
+    properties :
+      id:
+        type: "integer"
+        format : "int32"
+      nom:
+        type: "string"
+      prenom:
+        type: "string"
+      adresse:
+        type: "string"
+      ville:
+        type : "string"
+      email:
+        type : "string"
+      codePostal:
+        type: "integer"
+        format : "int32"
+      cni:
+        type : "integer"
+        format : "int32"
+      telephone:
+        type : "integer"
+        format : "int32"
+      sexe:
+        type : "boolean"
+      enEtude :
+        type : "boolean"
+    xml:
+      name: "Etudiant"
+  ResponseDto:
+    type: "object"
+    properties :
+      error:
+        type : "boolean"
+      message:
+        type : "string"
+      object :
+        type : "object"
+    xml:
+      name: "ResponseDto"
+  AbsenceDto:
+    type: "object"
+    properties:
+      debut: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      fin: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-05"
+      justification:
+        type: "string"
+        example: "Maladie"
+      description:
+        type: "string"
+        example: "Douleurs abdominales"
+      etudiant: 
+        $ref: "#/definitions/Etudiant"
+    xml:
+      name: "AbsenceDto"
+  AbsenceDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+      debut: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      fin: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-05"
+      justification:
+        type: "string"
+        example: "Maladie"
+      description:
+        type: "string"
+        example: "Douleurs abdominales"
+      etudiant: 
+        $ref: "#/definitions/Etudiant"
+    xml:
+      name: "AbsenceDtoCreate"
+  Absence:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+      debut: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      fin: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-05"
+      justification:
+        type: "string"
+        example: "Maladie"
+      description:
+        type: "string"
+        example: "Douleurs abdominales"
+      etudiant: 
+        $ref: "#/definitions/Etudiant"
+    xml:
+      name: "Absence"
+  ExamenDto:
+    type: "object"
+    properties:
+      date: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      type: 
+        type: "string"
+        example: "DS"
+      coefficient:
+        type: "number"
+        format: "double"
+        example: "2.2"
+    xml:
+      name: "ExamenDto"
+  ExamenDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      date: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      type: 
+        type: "string"
+        example: "DS"
+      coefficient:
+        type: "number"
+        format: "double"
+        example: "2.2"
+    xml:
+      name: "ExamenDtoCreate"
+  Examen:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      date: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      type: 
+        type: "string"
+        example: "DS"
+      coefficient:
+        type: "number"
+        format: "double"
+        example: "2.2"
+    xml:
+      name: "Examen"
+  NoteDto:
+    type: "object"
+    properties:
+      module: 
+        $ref: "#/definitions/Module"
+      valeur: 
+        type: "number"
+        format: "float"
+        example: "2.2"
+      etudiant:
+        $ref: "#/definitions/Etudiant"
+      examen:
+        $ref: "#/definitions/Examen"
+    xml:
+      name: "NoteDto"
+  NoteDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        example: "1"
+      module: 
+        $ref: "#/definitions/Module"
+      valeur: 
+        type: "number"
+        format: "float"
+        example: "2.2"
+      etudiant:
+        $ref: "#/definitions/Etudiant"
+      examen:
+        $ref: "#/definitions/Examen"
+    xml:
+      name: "NoteDtoCreate"
+  Note:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        example: "1"
+      module: 
+        $ref: "#/definitions/Module"
+      valeur: 
+        type: "number"
+        format: "float"
+        example: "2.2"
+      etudiant:
+        $ref: "#/definitions/Etudiant"
+      examen:
+        $ref: "#/definitions/Examen"
+    xml:
+      name: "Note"

@@ -15,6 +15,7 @@ import com.fr.adaming.dao.INoteDao;
 import com.fr.adaming.entity.Note;
 
 @Service //("noteservice")
+@SuppressWarnings("squid:S1148")
 public class NoteService implements INoteService {
 
 	@Autowired
@@ -82,7 +83,7 @@ public class NoteService implements INoteService {
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (noteDao.findById(id) != null && id != 0) {
+			if (noteDao.findById(id).isPresent()) {
 				noteDao.deleteById(id);
 				return true;
 			} else {
@@ -101,7 +102,7 @@ public class NoteService implements INoteService {
 	public List<Note> listByEtudiant(int id_etudiant){
 		List<Note> listNote =null;
 		try {
-			if (etudiantDao.findById(id_etudiant) != null && id_etudiant != 0) {
+			if (etudiantDao.findById(id_etudiant).isPresent()) {
 				 listNote = noteDao.listByEtudiant(id_etudiant);
 			}
 		}catch (InvalidDataAccessApiUsageException e) {

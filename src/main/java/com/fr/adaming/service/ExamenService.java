@@ -15,6 +15,7 @@ import com.fr.adaming.dao.IMatiereDao;
 import com.fr.adaming.entity.Examen;
 
 @Service ("examenservice")
+@SuppressWarnings("squid:S1148")
 public class ExamenService implements IExamenService {
 	
 	@Autowired
@@ -81,7 +82,7 @@ public class ExamenService implements IExamenService {
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (dao.findById(id) != null && id != 0) {
+			if (dao.findById(id).isPresent()) {
 				dao.deleteById(id);
 				return true;
 			} else {
@@ -100,7 +101,7 @@ public class ExamenService implements IExamenService {
 	public List<Examen> listByMatiere(int idMatiere){
 		List<Examen> list =null;
 		try {
-			if (matiereDao.findById(idMatiere) != null && idMatiere != 0) {
+			if (matiereDao.findById(idMatiere).isPresent()) {
 				 list = dao.listByMatiere(idMatiere);
 			}
 		}catch (InvalidDataAccessApiUsageException e) {

@@ -19,6 +19,9 @@ import com.fr.adaming.service.IExamenService;
 
 @RestController
 public class ExamenController implements IExamenController {
+	
+	private final String SUCCESS = "SUCCESS";
+	private final String FAIL = "FAIL";
 
 	@Autowired
 	@Qualifier("examenservice")
@@ -42,10 +45,10 @@ public class ExamenController implements IExamenController {
 				
 				//Attribution de la réponse en fonction du retour DB et de la conposition de l'objet
 				if (exam != null) {
-					resp = new ResponseDto(false, "SUCCESS", exam);
+					resp = new ResponseDto(false, SUCCESS, exam);
 					return ResponseEntity.status(HttpStatus.OK).body(resp);
 				}
-				resp = new ResponseDto(true, "FAIL", exam);
+				resp = new ResponseDto(true, FAIL, exam);
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -57,10 +60,10 @@ public class ExamenController implements IExamenController {
 		ResponseDto resp = null;
 		
 		if (exam != null) {
-			resp = new ResponseDto(false, "SUCCESS", exam);
+			resp = new ResponseDto(false, SUCCESS, exam);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		} else {
-			resp = new ResponseDto(true, "FAIL", exam);
+			resp = new ResponseDto(true, FAIL, exam);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
 		
@@ -74,10 +77,10 @@ public class ExamenController implements IExamenController {
 		
 		ResponseDto resp = null;
 		if (list != null) {
-			 resp = new ResponseDto(false, "SUCCESS", list);
+			 resp = new ResponseDto(false, SUCCESS, list);
 			 return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -89,10 +92,10 @@ public class ExamenController implements IExamenController {
 		ResponseDto resp = null;
 
 		if (!result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false,FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -103,10 +106,10 @@ public class ExamenController implements IExamenController {
 		ResponseDto resp = null;
 		
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 	
@@ -115,10 +118,10 @@ public class ExamenController implements IExamenController {
 		ResponseDto resp = null;
 		List<Examen> list = service.listByMatiere(idMatiere);
 		if (list != null) {
-			resp = new ResponseDto(false, "SUCCESS", list);
+			resp = new ResponseDto(false, SUCCESS, list);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		
 	}
