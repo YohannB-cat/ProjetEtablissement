@@ -35,8 +35,7 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 		if(entite==null) {
 			return null;
 		}
-		NoteDtoCreate dto = new NoteDtoCreate(entite.getId(), entite.getModule(), entite.getValeur(), entite.getEtudiant(), entite.getExamen());
-		return dto;
+		return new NoteDtoCreate(entite.getId(), entite.getModule(), entite.getValeur(), entite.getEtudiant(), entite.getExamen());
 	}
 
 	@Override

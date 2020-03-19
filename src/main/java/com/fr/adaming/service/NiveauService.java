@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import com.fr.adaming.dao.INiveauDao;
 import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Niveau;
 
+@SuppressWarnings("squid:S1148")
 @Service("niveauservice")
 public class NiveauService implements INiveauService {
 
@@ -102,8 +104,8 @@ public class NiveauService implements INiveauService {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return new ArrayList<>();
 		}
-		return null;
+		return new ArrayList<>();
 	}
 }
