@@ -20,7 +20,10 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.Absence;
 import com.fr.adaming.service.IAbsenceService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class AbsenceController implements IAbsenceController {
 
 	@Autowired
@@ -41,9 +44,11 @@ public class AbsenceController implements IAbsenceController {
 
 		if (abs != null) {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, abs);
+			log.info("Creation absence Ok");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, "FAIL", abs);
+		log.warn("Creation absence fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -54,9 +59,11 @@ public class AbsenceController implements IAbsenceController {
 
 		if (result) {
 			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
+			log.info("Modification absence OK");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(false, "FAIL", null);
+		log.warn("Modification absence Fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -67,9 +74,11 @@ public class AbsenceController implements IAbsenceController {
 
 		if (dto != null) {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, dto);
+			log.info("Find by Id absence OK");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, "FAIL", dto);
+		log.warn("Find by Id absence Fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -78,6 +87,7 @@ public class AbsenceController implements IAbsenceController {
 		List<AbsenceDto> list = convert.listEntiteToDto(service.findAll());
 
 		ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
+		log.info("Find all absence Ok");
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
@@ -88,9 +98,11 @@ public class AbsenceController implements IAbsenceController {
 
 		if (result) {
 			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
+			log.info("Suppression absence par id Ok");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(false, "FAIL", null);
+		log.warn("Suppression absence par id Fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 }

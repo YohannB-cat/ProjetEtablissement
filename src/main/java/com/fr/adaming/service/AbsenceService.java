@@ -11,11 +11,14 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
+import com.fr.adaming.controller.AbsenceController;
 import com.fr.adaming.dao.IAbsenceDao;
 import com.fr.adaming.entity.Absence;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service("absenceservice")
-@SuppressWarnings("squid:S1148")
+@Slf4j
 public class AbsenceService implements IAbsenceService {
 	
 	@Autowired
@@ -29,12 +32,12 @@ public class AbsenceService implements IAbsenceService {
 			}
 			return dao.save(absence);
 		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
+			log.warn("MESSAGE ERREUR CREATE ABSENCE" + e.getMessage());
 			return null;
 		}
 
 		catch (ConstraintViolationException er) {
-			er.printStackTrace();
+			log.warn("MESSAGE ERREUR CREATE ABSENCE" + er.getMessage());
 			return null;
 		}
 	}
@@ -47,6 +50,7 @@ public class AbsenceService implements IAbsenceService {
 		}
 		return dao.findAll();
 		} catch (NullPointerException npe) {
+			log.warn("MESSAGE ERREUR FIND ALL ABSENCE" + npe.getMessage());
 			return new ArrayList<>();
 		}
 	}
@@ -60,7 +64,7 @@ public class AbsenceService implements IAbsenceService {
 				return null;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.warn("MESSAGE ERREUR FIND By ID ABSENCE" + e.getMessage());
 			return null;
 		}
 	}
@@ -75,10 +79,10 @@ public class AbsenceService implements IAbsenceService {
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
+			log.warn("MESSAGE ERREUR UPDATE ABSENCE" + er.getMessage());
 			return false;
 		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+			log.warn("MESSAGE ERREUR UPDATE ABSENCE" + ec.getMessage());
 			return false;
 		}
 	}
@@ -93,10 +97,10 @@ public class AbsenceService implements IAbsenceService {
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.warn("MESSAGE ERREUR DELETE By ID ABSENCE" + e.getMessage());
 			return false;
 		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+			log.warn("MESSAGE ERREUR DELETE By ID ABSENCE" + er.getMessage());
 			return false;
 		}
 	}
