@@ -7,7 +7,6 @@ import static org.junit.Assert.assertNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.entity.Classe;
-import com.fr.adaming.entity.Etudiant;
 import com.fr.adaming.entity.Niveau;
 
 @SpringBootTest
@@ -59,8 +57,8 @@ public class NiveauServiceTest {
 	// Valide !
 	@Test
 	@DisplayName("Demande de la liste vide")
-	public void testGetList_shouldReturnNull() {
-		assertThat(service.findAll()).isNull();
+	public void testGetList_shouldReturnEmptyList() {
+		assertThat(service.findAll()).isEmpty();
 	}
 
 	// Valide !
@@ -153,8 +151,8 @@ public class NiveauServiceTest {
 	//Valide !
 	@Test
 	@DisplayName("Liste des classes avec id 0")
-	public void testFindListClasseByIdNiveauWithId0_ShouldReturnNull() {
-		assertNull(service.findListClasseByIdNiveau(0));
+	public void testFindListClasseByIdNiveauWithId0_ShouldReturnEmptyList() {
+		assertThat(service.findListClasseByIdNiveau(0)).isEmpty();
 	}
 	
 	// Valide !

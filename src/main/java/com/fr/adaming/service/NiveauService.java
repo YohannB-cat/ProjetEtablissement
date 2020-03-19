@@ -1,6 +1,7 @@
 package com.fr.adaming.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.ConstraintViolationException;
 
@@ -81,7 +82,8 @@ public class NiveauService implements INiveauService {
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (dao.findById(id) != null && id != 0) {
+			Optional<Niveau> n = dao.findById(id);
+			if (n.isPresent() && id != 0) {
 				dao.deleteById(id);
 				return true;
 			} else {
@@ -99,7 +101,8 @@ public class NiveauService implements INiveauService {
 	@Override
 	public List<Classe> findListClasseByIdNiveau(int idNiveau) {
 		try {
-			if(dao.findById(idNiveau) != null && idNiveau!=0) {
+			Optional<Niveau> n = dao.findById(idNiveau);
+			if(n.isPresent() && idNiveau!=0) {
 				return dao.findListClasseByIdNiveau(idNiveau);
 			} else {
 				return null;

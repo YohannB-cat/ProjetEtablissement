@@ -1,6 +1,7 @@
 package com.fr.adaming.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.ConstraintViolationException;
 
@@ -39,9 +40,6 @@ public class ClasseService implements IClasseService{
 
 	@Override
 	public List<Classe> findAll() {
-		if (dao.findAll().isEmpty()) {
-			return null;
-		}
 		return dao.findAll();
 	}
 
@@ -80,7 +78,8 @@ public class ClasseService implements IClasseService{
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (dao.findById(id) != null && id != 0) {
+			Optional<Classe> c = dao.findById(id);
+			if (c.isPresent() && id != 0) {
 				dao.deleteById(id);
 				return true;
 			} else {
