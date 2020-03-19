@@ -124,10 +124,10 @@ public class NoteController implements INoteController {
 	
 	@Override
 	@GetMapping(path = "/etudiant/{id}")
-	public ResponseEntity<ResponseDto> listByEtudiant(@PathVariable(name = "id") int id_etudiant){
+	public ResponseEntity<ResponseDto> listByEtudiant(@PathVariable(name = "id") int idetudiant){
 		ResponseDto resp = null;
-		List<NoteDto> listNote = noteDto.listEntiteToDto(service.listByEtudiant(id_etudiant));
-		if (listNote != null && listNote.size()>0) {
+		List<NoteDto> listNote = noteDto.listEntiteToDto(service.listByEtudiant(idetudiant));
+		if (listNote != null && !listNote.isEmpty()) {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, listNote);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
