@@ -21,12 +21,11 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 
 	@Override
 	public List<Note> listDtoToEntite(List<NoteDtoCreate> dtoliste) {
-		if(dtoliste==null) {
-			return null;
-		}
 		List<Note> liste = new ArrayList<>();
-		for (NoteDtoCreate dto : dtoliste) {
-			liste.add(new Note(dto.getId(), dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen()));
+		if(dtoliste!=null) {
+			for (NoteDtoCreate dto : dtoliste) {
+				liste.add(new Note(dto.getId(), dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen()));
+			}
 		}
 		return liste;
 	}
@@ -42,12 +41,11 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 
 	@Override
 	public List<NoteDtoCreate> listEntiteToDto(List<Note> entite) {
-		if(entite==null) {
-			return null;
-		}
-		List<NoteDtoCreate> liste = new ArrayList<NoteDtoCreate>();
-		for (Note e : entite) {
-			liste.add(new NoteDtoCreate(e.getId(),e.getModule(), e.getValeur(), e.getEtudiant(), e.getExamen()));
+		List<NoteDtoCreate> liste = new ArrayList<>();
+		if(entite!=null) {
+			for (Note e : entite) {
+				liste.add(new NoteDtoCreate(e.getId(),e.getModule(), e.getValeur(), e.getEtudiant(), e.getExamen()));
+			}
 		}
 		return liste;
 	}

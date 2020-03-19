@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -43,7 +44,7 @@ public class NoteService implements INoteService {
 	@Override
 	public List<Note> findAll() {
 		if (noteDao.findAll().isEmpty()) {
-			return null;
+			return new ArrayList<>();
 		}
 		return noteDao.findAll();
 	}
@@ -99,11 +100,11 @@ public class NoteService implements INoteService {
 	}
 	
 	@Override
-	public List<Note> listByEtudiant(int id_etudiant){
+	public List<Note> listByEtudiant(int idetudiant){
 		List<Note> listNote =null;
 		try {
-			if (etudiantDao.findById(id_etudiant).isPresent()) {
-				 listNote = noteDao.listByEtudiant(id_etudiant);
+			if (etudiantDao.findById(idetudiant).isPresent()) {
+				 listNote = noteDao.listByEtudiant(idetudiant);
 			}
 		}catch (InvalidDataAccessApiUsageException e) {
 			e.printStackTrace();

@@ -17,7 +17,7 @@ public interface INoteService {
 
 	public boolean deleteById(int id);
 	
-	public List<Note> listByEtudiant(int id_etudiant);
+	public List<Note> listByEtudiant(int idetudiant);
 
 
 }
