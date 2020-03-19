@@ -41,11 +41,12 @@ public class MatiereServiceTest {
 
 	@Test
 	@DisplayName("Création d'une Matiere avec correct param")
+	@Sql(statements = "DELETE FROM Matiere WHERE nom = 'null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Matiere WHERE nom ='IT'",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingCorrectMatiere_shouldReturnMatiere() {
 		Matiere m = new Matiere(1,"IT");
 		Matiere matCreate = service.create(m);
-		assertThat(matCreate).isEqualTo(m);
+		assertThat(matCreate).hasFieldOrPropertyWithValue("nom", m.getNom());
 	}
 	
 	//******************************************************************
