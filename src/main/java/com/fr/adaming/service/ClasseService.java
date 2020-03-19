@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import com.fr.adaming.dao.IClasseDao;
 import com.fr.adaming.entity.Classe;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @SuppressWarnings("squid:S1148")
 @Service ("classeservice")
 public class ClasseService implements IClasseService{
@@ -29,12 +32,12 @@ public class ClasseService implements IClasseService{
 			}
 			return dao.save(classe);
 		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return null;
 		}
 
 		catch (ConstraintViolationException er) {
-			er.printStackTrace();
+			log.warn("MESSAGE ERROR CREATE MATIERE" + er.getMessage());
 			return null;
 		}
 	}
@@ -53,7 +56,7 @@ public class ClasseService implements IClasseService{
 				return null;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return null;
 		}
 	}
@@ -68,10 +71,10 @@ public class ClasseService implements IClasseService{
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
+			log.warn(er.getMessage());
 			return false;
 		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+			log.warn(ec.getMessage());
 			return false;
 		}
 	}
@@ -87,10 +90,10 @@ public class ClasseService implements IClasseService{
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return false;
 		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+			log.warn(er.getMessage());
 			return false;
 		}
 	}

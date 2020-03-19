@@ -16,6 +16,9 @@ import com.fr.adaming.dao.INiveauDao;
 import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Niveau;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @SuppressWarnings("squid:S1148")
 @Service("niveauservice")
 public class NiveauService implements INiveauService {
@@ -31,10 +34,10 @@ public class NiveauService implements INiveauService {
 			}
 			return dao.save(niveau);
 		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return null;
 		} catch (ConstraintViolationException er) {
-			er.printStackTrace();
+			log.warn(er.getMessage());
 			return null;
 		}
 	}
@@ -53,7 +56,7 @@ public class NiveauService implements INiveauService {
 				return null;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return null;
 		}
 	}
@@ -68,10 +71,10 @@ public class NiveauService implements INiveauService {
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
+			log.warn(er.getMessage());
 			return false;
 		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+			log.warn(ec.getMessage());
 			return false;
 		}
 	}
@@ -87,10 +90,10 @@ public class NiveauService implements INiveauService {
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return false;
 		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+			log.warn(er.getMessage());
 			return false;
 		}
 	}
@@ -103,7 +106,7 @@ public class NiveauService implements INiveauService {
 				return dao.findListClasseByIdNiveau(idNiveau);}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return new ArrayList<>();
 		}
 		return new ArrayList<>();
