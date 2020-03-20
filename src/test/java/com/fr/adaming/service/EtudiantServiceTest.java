@@ -44,6 +44,7 @@ public class EtudiantServiceTest {
 
 	// Test findAll
 	@Test
+	@Sql(statements = "DELETE FROM Etudiant", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@DisplayName("Demande de la liste vide")
 	public void testGetList_shouldReturnEmptyList() {
 		System.out.println(service.findAll());
@@ -83,7 +84,10 @@ public class EtudiantServiceTest {
 	public void testFindById_shouldReturnEtudiant() {
 		Etudiant etu = new Etudiant(1, "Bob", "Marley", "3eme nuage a gauche", "paradis", "jamin@with.you", 0, 0, 0,
 				true, true);
-		assertThat(service.findById(1)).isEqualTo(etu);
+		assertTrue(service.findById(1).getId()==etu.getId());
+		assertTrue(service.findById(1).getNom()==etu.getNom());
+		assertTrue(service.findById(1).getPrenom()==etu.getPrenom());
+		
 	}
 
 	// Test update

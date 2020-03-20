@@ -36,7 +36,9 @@ public class ClasseController implements IClasseController {
 	@Qualifier("classeservice")
 	private IClasseService service;
 	
+	@Autowired
 	private IConverter<Classe, ClasseDto> convert;
+	@Autowired
 	private IConverter<Classe, ClasseDtoCreate> convertCreate;
 
 	@Override
@@ -48,7 +50,7 @@ public class ClasseController implements IClasseController {
 			
 		ResponseDto resp = null;
 		
-		if (etu != null) {
+		if (etu != null && etu.getId() != 0) {
 			log.info("ClassCreate OK");
 			resp = new ResponseDto(false, WebConstant.SUCCESS, etu);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);

@@ -68,7 +68,7 @@ public class AbsenceService implements IAbsenceService {
 	@Override
 	public boolean deleteById(int id) {
 
-		if (dao.findById(id).isPresent() && id != 0) {
+		if (dao.findById(id).isPresent()) {
 			dao.deleteById(id);
 			return true;
 		} else {
