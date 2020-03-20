@@ -5,10 +5,11 @@ import com.fr.adaming.entity.Examen;
 import com.fr.adaming.entity.Module;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-@Data @NoArgsConstructor @AllArgsConstructor
+import lombok.Setter;
+import lombok.ToString;
+@Getter @Setter @ToString @NoArgsConstructor @AllArgsConstructor
 public class NoteDto {
 	private Module module;
 
