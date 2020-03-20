@@ -55,14 +55,35 @@ public class ExamenControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 
 	}
+	@Test
+	@DisplayName("Creation Examen non valide")
+	public void testCreatingNonValidExamenWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
+
+		// preparer le DTO
+		ExamenDtoCreate requestDto = new ExamenDtoCreate();
+		requestDto.setCoefficient(2.5d);
+		requestDto.setType("DSpppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
+
+		// convrtir le DTO en Json
+		String dtoAsJson = mapper.writeValueAsString(requestDto);
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(post("http://localhost:8080/examen/").contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
+				.andDo(print()).andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
+	}
 
 	@Test
 	@DisplayName("Examen par id valide")
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into examen values(1,'1994-02-03','ds',2.2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into examen(id,date,type,coefficient) values(5,'1994-02-03','ds',2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
-		Integer id = 1;
+		Integer id = 5;
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(id);
 		// test requete
@@ -78,7 +99,7 @@ public class ExamenControllerTest {
 	@Test
 	@DisplayName("Examen par id non valide")
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into examen values(1,'1994-02-03','ds',2.2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into examen(id,date,type,coefficient) values(1,'1994-02-03','ds',2.2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testFindByIdWithoutController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		Integer id = 1;
@@ -133,6 +154,7 @@ public class ExamenControllerTest {
 	@DisplayName("Update d'un examen existant")
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into examen(id,type) values(1,'ds')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testUpdateExistingExamenWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		ExamenDtoCreate requestDto = new ExamenDtoCreate();
 		requestDto.setId(1);
@@ -190,6 +212,10 @@ public class ExamenControllerTest {
 	
 	@Test
 	@DisplayName("Liste des examens par matiere existante")
+	@Sql(statements = "DELETE FROM Note", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Matiere", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Examen (id, type) VALUES (1, 'exam1')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Examen (id, type) VALUES (2, 'exam2')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module (id, nom) VALUES (1, 'module1')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)

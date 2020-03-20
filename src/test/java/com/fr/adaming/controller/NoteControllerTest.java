@@ -67,11 +67,10 @@ public class NoteControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/note/"+id))
-				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+				.perform(get("http://localhost:8080/note/"+id).contentType(MediaType.APPLICATION_JSON_VALUE)
+				.content(dtoAsJson)).andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 	
@@ -183,7 +182,7 @@ public class NoteControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 	
-	@Sql(statements = "INSERT INTO etudiant (id, nom) values (24, 'bob')" ,executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO etudiant (id, nom,cni,code_postale,telephone,sexe,en_etude) values (24, 'bob',11,11,11,1,1)" ,executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO note (id, valeur, etudiant_id) values (5, 18,24)" ,executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM note", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
