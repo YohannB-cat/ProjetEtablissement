@@ -3,12 +3,7 @@ package com.fr.adaming.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dao.IEtudiantDao;
@@ -30,12 +25,8 @@ public class EtudiantService implements IEtudiantService {
 				return null;
 			}
 			return dao.save(etudiant);
-		} catch (DataIntegrityViolationException e) {
+		} catch (Exception e) {
 			log.warn(e.getMessage());
-			return null;
-		}
-		catch (ConstraintViolationException er) {
-			log.warn(er.getMessage());
 			return null;
 		}
 	}
@@ -56,12 +47,11 @@ public class EtudiantService implements IEtudiantService {
 			} else {
 				return null;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
+		} catch (Exception e) {
 			log.warn(e.getMessage());
 			return null;
 		}
 	}
-
 
 	@Override
 	public boolean update(Etudiant etudiant) {
@@ -72,11 +62,8 @@ public class EtudiantService implements IEtudiantService {
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException er) {
-			log.warn(er.getMessage());
-			return false;
-		} catch (NullPointerException ec) {
-			log.warn(ec.getMessage());
+		} catch (Exception e) {
+			log.warn(e.getMessage());
 			return false;
 		}
 	}
@@ -90,15 +77,8 @@ public class EtudiantService implements IEtudiantService {
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
+		} catch (Exception e) {
 			log.warn(e.getMessage());
-			return false;
-		} catch (EmptyResultDataAccessException er) {
-			log.warn(er.getMessage());
-			return false;
-		}
-		catch (Exception ex) {
-			log.warn(ex.getMessage());
 			return false;
 		}
 	}
