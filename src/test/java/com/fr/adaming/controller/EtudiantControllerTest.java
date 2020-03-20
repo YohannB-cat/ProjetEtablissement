@@ -34,8 +34,8 @@ public class EtudiantControllerTest {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
-	@Sql(statements = "Delete from etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@Sql(statements = "Delete from etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingEtudiantWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
@@ -49,10 +49,11 @@ public class EtudiantControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/etudiant/").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/etudiant").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
+		
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertNotNull(responseDto);
