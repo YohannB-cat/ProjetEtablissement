@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 import com.fr.adaming.dto.AbsenceDto;
 import com.fr.adaming.entity.Absence;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
-@SuppressWarnings("squid:S1148")
+@Slf4j
 public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 
 	@Override
@@ -34,7 +36,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 				return entite;
 			}
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return null;
 		}
 	}
@@ -59,7 +61,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 			}
 			return liste;
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return new ArrayList<>();
 		}
 	}
@@ -74,7 +76,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 				entite.getJustification(), entite.getDescription(), entite.getEtudiant());
 		
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return null;
 		}
 	}
@@ -82,7 +84,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 	@Override
 	public List<AbsenceDto> listEntiteToDto(List<Absence> entite) {
 		try {
-			if (entite == null) {
+			if (entite.isEmpty()) {
 				return new ArrayList<>();
 			}
 			List<AbsenceDto> liste = new ArrayList<>();
@@ -103,7 +105,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 			}
 			return liste;
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return new ArrayList<>();
 		}
 

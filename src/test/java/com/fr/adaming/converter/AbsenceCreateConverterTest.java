@@ -157,7 +157,7 @@ public class AbsenceCreateConverterTest {
 
 	@Test
 	public void testListDtoToEntiteNull_shouldReturnEmpty() {
-		assertTrue((convert.listDtoToEntite(null)).isEmpty());
+		assertTrue((convert.listDtoToEntite(new ArrayList<AbsenceDtoCreate>())).isEmpty());
 
 	}
 
@@ -208,8 +208,8 @@ public class AbsenceCreateConverterTest {
 
 
 	@Test
-	public void testListEntiteToDtoNull_shouldReturnNull() {
-		assertTrue(convert.listEntiteToDto(null).isEmpty());
+	public void testListEntiteToDtoNull_shouldReturnEmpty() {
+		assertTrue(convert.listEntiteToDto(new ArrayList<Absence>()).isEmpty());
 	}
 
 }

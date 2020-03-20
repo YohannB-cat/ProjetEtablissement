@@ -35,7 +35,7 @@ public class AbsenceServiceTest {
 	@DisplayName("Création d'une Absence avec param null")
 	public void testCreatingAbsenceWithNullParams_shouldReturnAbsence() {
 		Absence abs = new Absence(0, null, null, null, null, null);
-		assertNull(service.create(abs));
+		assertNull(service.create(abs));		
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class AbsenceServiceTest {
 	@DisplayName("Recherche d'Absence par id")
 	public void testFindById_shouldReturnAbsence() {
 		Absence abs = new Absence(1, LocalDate.parse("2020-02-20"), LocalDate.parse("2020-02-20"));
-		assertThat(service.findById(1)).isEqualTo(abs);
+		assertEquals(abs, service.findById(1));
 	}
 
 	// Test update
@@ -130,7 +130,7 @@ public class AbsenceServiceTest {
 	}
 
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (1, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {

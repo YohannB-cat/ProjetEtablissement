@@ -5,10 +5,13 @@ import javax.validation.constraints.NotNull;
 import com.fr.adaming.entity.Etudiant;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @ToString
+@NoArgsConstructor @AllArgsConstructor
 public class AbsenceDtoCreate {
 	
 	private int id;
