@@ -166,6 +166,9 @@ public class MatiereControllerTest {
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+		
+		String listeMatString = mapper.writeValueAsString(responseDto.getObject());
+		assertThat(listeMatString).isNotNull();
 
 	}
 	

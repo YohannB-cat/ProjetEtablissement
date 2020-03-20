@@ -10,11 +10,11 @@ public interface IModuleService {
 
 	public List<Module> findAll();
 
-	public Module findById(int id);
+	public Module findById(Integer id);
 
 	public boolean update(Module module);
 
-	public boolean deleteById(int id);
+	public boolean deleteById(Integer id);
 
 
 }

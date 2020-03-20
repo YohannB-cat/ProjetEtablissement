@@ -50,9 +50,9 @@ public class ModuleService implements IModuleService{
 	}
 
 	@Override
-	public Module findById(int id) {
+	public Module findById(Integer id) {
 		try {
-			if (id != 0) {
+			if (id != null) {
 				return dao.findById(id).orElse(null);
 			} else {
 				return null;
@@ -82,20 +82,14 @@ public class ModuleService implements IModuleService{
 	}
 
 	@Override
-	public boolean deleteById(int id) {
-		try {
-			if (dao.existsById(id) && id != 0) {
+	public boolean deleteById(Integer id) {
+
+			if (dao.existsById(id) && id != null) {
 				dao.deleteById(id);
 				return true;
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			log.error("ERROR delete by id"+ e.getMessage());
-			return false;
-		} catch (EmptyResultDataAccessException er) {
-			log.error("ERROR delete by id"+er.getMessage());
-			return false;
-		}
+	
 	}
 }

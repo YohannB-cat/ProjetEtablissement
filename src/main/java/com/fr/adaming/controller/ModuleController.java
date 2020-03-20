@@ -32,7 +32,6 @@ public class ModuleController implements IModuleController {
 	@Autowired
 	private IConverter<Module, ModuleDto> convertDto;
 
-	
 	// create
 	@Override
 	public ResponseEntity<ResponseDto> create(ModuleDtoCreate dto) {
@@ -47,10 +46,12 @@ public class ModuleController implements IModuleController {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, module);
 			log.info("SUCCESS create module");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		} else {
+			resp = new ResponseDto(true, WebConstant.FAIL, module);
+			log.warn("FAIL create module");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
-		resp = new ResponseDto(true, WebConstant.FAIL, module);
-		log.warn("FAIL create module");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+
 	}
 
 	// find By Id
@@ -78,10 +79,10 @@ public class ModuleController implements IModuleController {
 		List<ModuleDto> list = convertDto.listEntiteToDto(service.findAll());
 
 		ResponseDto resp = null;
-			resp = new ResponseDto(false, WebConstant.SUCCESS, list);
-			log.info("SUCESS find all module");
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-	
+		resp = new ResponseDto(false, WebConstant.SUCCESS, list);
+		log.info("SUCESS find all module");
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
+
 	}
 
 	// Update
@@ -91,13 +92,15 @@ public class ModuleController implements IModuleController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, WebConstant.SUCCESS, result);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, result);
 			log.info("SUCCESS update module");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		} else {
+			resp = new ResponseDto(true, WebConstant.FAIL, null);
+			log.warn("FAIL update module");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
-		resp = new ResponseDto(true, WebConstant.FAIL, null);
-		log.warn("FAIL update module");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+
 	}
 
 	// Delete By Id
@@ -107,13 +110,15 @@ public class ModuleController implements IModuleController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(false, WebConstant.SUCCESS, null);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, result);
 			log.info("SUCCESS delete by Id module");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		} else {
+			resp = new ResponseDto(true, WebConstant.FAIL, result);
+			log.warn("FAIL delete by Id module");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
-		resp = new ResponseDto(true, WebConstant.FAIL, null);
-		log.warn("FAIL delete by Id module");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+
 	}
 
 }

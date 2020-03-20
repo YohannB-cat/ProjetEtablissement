@@ -40,6 +40,9 @@ public class ModuleControllerTest {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
+	// **********************************************************************
+	// TEST CREATING MODULE
+
 	// Unable to fnd entite.Matiere with id = 1
 	@Test
 	@DisplayName("Creation module")
@@ -48,12 +51,7 @@ public class ModuleControllerTest {
 		// preparer le DTO
 		ModuleDtoCreate requestDto = new ModuleDtoCreate();
 		requestDto.setNom("cours des sixiemes");
-		List<Matiere> listeMatiere = new ArrayList<Matiere>();
-		Matiere math = new Matiere(1, "math");
-		Matiere français = new Matiere(2, "français");
-		listeMatiere.add(math);
-		listeMatiere.add(français);
-		requestDto.setMatiere(listeMatiere);
+
 
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
@@ -85,7 +83,6 @@ public class ModuleControllerTest {
 		// preparer le DTO
 		ModuleDtoCreate requestDto = new ModuleDtoCreate();
 
-
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
 
@@ -103,25 +100,43 @@ public class ModuleControllerTest {
 
 	}
 
+	// **********************************************************************
+	// TEST FIND BY ID MODULE
+
 	@Sql(statements = "INSERT INTO Module VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Module WHERE id = 5", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Test
 	@DisplayName("Find one module")
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
-		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(id);
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/module/id").contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
+				.perform(get("http://localhost:8080/module/" + id).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
+
+	@Test
+	@DisplayName("Find By Id with no DB - shoudl return fail")
+	public void testFindByIdWithIncorrectId_ShouldReturnFail() throws UnsupportedEncodingException, Exception {
+		int id = 5;
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(get("http://localhost:8080/module/" + id).contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
+	}
+
+	// **********************************************************************
+	// TEST FIND ALL MODULE
 
 	@Sql(statements = "INSERT INTO Module VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module VALUES (6,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -139,6 +154,9 @@ public class ModuleControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	// **********************************************************************
+	// TEST UPDATE MODULE
+
 	@Sql(statements = "INSERT INTO Module VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Module WHERE id = '5'", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Test
@@ -149,12 +167,7 @@ public class ModuleControllerTest {
 		ModuleDtoCreate requestDto = new ModuleDtoCreate();
 		requestDto.setNom("cinquième");
 		requestDto.setId(5);
-		List<Matiere> listeMatiere = new ArrayList<Matiere>();
-		Matiere math = new Matiere(1, "math");
-		Matiere français = new Matiere(2, "français");
-		listeMatiere.add(math);
-		listeMatiere.add(français);
-		requestDto.setMatiere(listeMatiere);
+
 
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
@@ -178,6 +191,34 @@ public class ModuleControllerTest {
 
 	}
 
+	@Test
+	@DisplayName("Update matiere with no")
+	public void testUpdateModuleWithNoEntityDb_ShouldReturnFail() throws UnsupportedEncodingException, Exception {
+
+		// preparer le dto
+		ModuleDtoCreate requestDto = new ModuleDtoCreate();
+		requestDto.setNom("cinquième");
+		requestDto.setId(5);
+
+		// convrtir le DTO en Json
+		String dtoAsJson = mapper.writeValueAsString(requestDto);
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(put("http://localhost:8080/module/").contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
+				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
+		assertFalse(responseDto.isError());
+
+	}
+
+	// **********************************************************************
+	// TEST DELETE MODULE
+
 	@Sql(statements = "INSERT INTO Module VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Module WHERE id = 5", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Test
@@ -185,17 +226,31 @@ public class ModuleControllerTest {
 	public void testDeleteByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(id);
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(delete("http://localhost:8080/module/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
+				.perform(delete("http://localhost:8080/module/" + id).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+	}
+	
+	@Test
+	@DisplayName("Delete Module with no DB")
+	public void testDeleteByIdWithNoDB_shouldReturnFail() throws UnsupportedEncodingException, Exception {
+		
+		int id = 5;
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(delete("http://localhost:8080/module/" + id).contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
 }
