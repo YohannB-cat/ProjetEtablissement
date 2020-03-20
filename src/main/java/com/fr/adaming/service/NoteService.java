@@ -76,16 +76,17 @@ public class NoteService implements INoteService {
 		try {
 			if (noteDao.existsById(note.getId())) {
 				noteDao.save(note);
-				
+				log.info("SUCCESS update note");
 				return true;
 			} else {
+				log.warn("FAIL update note");
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
+			log.error("ERROR update note"+er.getMessage());
 			return false;
 		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+			log.error("ERROR update nore"+ec.getMessage());
 			return false;
 		}
 	}
@@ -95,15 +96,17 @@ public class NoteService implements INoteService {
 		try {
 			if (noteDao.findById(id).isPresent()) {
 				noteDao.deleteById(id);
+				log.info("SUCCESS delete note by id");
 				return true;
 			} else {
+				log.info("FAIL delete note by id");
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.error("ERROR DELETE BY ID"+e.getMessage());
 			return false;
 		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+			log.error("ERROR DELETE BY ID"+er.getMessage());
 			return false;
 		}
 	}

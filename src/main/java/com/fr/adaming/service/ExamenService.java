@@ -72,15 +72,17 @@ public class ExamenService implements IExamenService {
 		try {
 			if (dao.existsById(exam.getId())) {
 				dao.save(exam);
+				log.info("SUCCESS update exam");
 				return true;
 			} else {
+				log.warn("FAIL update exam");
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
+			log.error("ERROR update exam "+ er.getMessage());
 			return false;
 		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+			log.error("ERROR update exam "+ec.getMessage());
 			return false;
 		}
 	}
@@ -90,15 +92,17 @@ public class ExamenService implements IExamenService {
 		try {
 			if (dao.findById(id).isPresent()) {
 				dao.deleteById(id);
+				log.info("SUCCESS delete exam");
 				return true;
 			} else {
+				log.warn("FAIL delete exam");
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.error("ERROR delete exam "+ e.getMessage());
 			return false;
 		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+			log.error("ERROR delete exam"+er.getMessage());
 			return false;
 		}
 	}
@@ -108,12 +112,13 @@ public class ExamenService implements IExamenService {
 		List<Examen> list =null;
 		try {
 			if (matiereDao.findById(idMatiere).isPresent()) {
-				 list = dao.listByMatiere(idMatiere);
+				log.info("SUCCESS LIST BY Matiere");
+				return list = dao.listByMatiere(idMatiere);
 			}
 		}catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.error("ERROR list by Marieres" + e.getMessage());
 		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+			log.error("ERROR list By Matiere" +er.getMessage());
 		}
 		return list;
 	}
