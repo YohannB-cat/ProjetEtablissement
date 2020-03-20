@@ -53,18 +53,8 @@ public class ExamenService implements IExamenService {
 
 	@Override
 	public Examen findById(int id) {
-		try {
-			if (id != 0) {
-				log.info("Recuperation d'un Examen");
-				return dao.findById(id).orElse(null);
-			} else {
-				log.warn("Tentative de recuperation d'un examen par son id");
-				return null;
-			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			log.error("InvalidDataAccessApiUsageException");
-			return null;
-		}
+		log.info("Recuperation d'un Examen");
+		return dao.findById(id).orElse(null);
 	}
 
 	@Override
@@ -76,11 +66,8 @@ public class ExamenService implements IExamenService {
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
-			return false;
 		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+			log.error("NullPointerException : update d'un objet null");
 			return false;
 		}
 	}
@@ -90,15 +77,17 @@ public class ExamenService implements IExamenService {
 		try {
 			if (dao.findById(id).isPresent()) {
 				dao.deleteById(id);
+				log.info("Suppression d'un examen");
 				return true;
 			} else {
+				log.warn("Tentative vaine de suppression d'un examen");
 				return false;
 			}
 		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+			log.error("InvalidDataAccessApiUsageException");
 			return false;
 		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+			log.error("EmptyResultDataAccessException");
 			return false;
 		}
 	}
@@ -106,15 +95,7 @@ public class ExamenService implements IExamenService {
 	@Override
 	public List<Examen> listByMatiere(int idMatiere){
 		List<Examen> list =null;
-		try {
-			if (matiereDao.findById(idMatiere).isPresent()) {
-				 list = dao.listByMatiere(idMatiere);
-			}
-		}catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
-		}
+		if (matiereDao.findById(idMatiere).isPresent()) list = dao.listByMatiere(idMatiere);
 		return list;
 	}
 

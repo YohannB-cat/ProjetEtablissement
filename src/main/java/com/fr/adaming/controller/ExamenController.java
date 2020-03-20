@@ -72,15 +72,9 @@ public class ExamenController implements IExamenController {
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
 		List<ExamenDto> list = examDto.listEntiteToDto(service.findAll());
-				
+		ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
 		
-		ResponseDto resp = null;
-		if (list != null) {
-			 resp = new ResponseDto(false, WebConstant.SUCCESS, list);
-			 return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(false, WebConstant.FAIL, null);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 	// update

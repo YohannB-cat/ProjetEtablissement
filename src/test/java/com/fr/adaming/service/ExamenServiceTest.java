@@ -25,6 +25,12 @@ public class ExamenServiceTest {
 		Examen exam = null;
 		assertNull(service.create(exam));
 	}
+	@Test
+	@DisplayName("Création d'un Examen avec length type>20")
+	public void testCreatingNonValidExamen_shouldReturnNull() {
+		Examen exam = new Examen(0,null,"1234567891011121314151617181920",2.2d);
+		assertNull(service.create(exam));
+	}
 
 	@Test
 	@DisplayName("Création d'un Examen avec param null")
@@ -130,6 +136,11 @@ public class ExamenServiceTest {
 	@Test
 	public void testListByMatiere_shouldReturnListOfExamen() {
 		assertThat(service.listByMatiere(1)).hasSize(2).hasOnlyElementsOfType(Examen.class);
+		
+	}
+	@Test
+	public void testListByNonExistingMatiere_shouldReturnNull() {
+		assertThat(service.listByMatiere(1)).isNull();
 		
 	}
 	
