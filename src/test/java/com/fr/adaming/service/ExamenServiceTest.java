@@ -1,6 +1,7 @@
 package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.DisplayName;
@@ -77,7 +78,9 @@ public class ExamenServiceTest {
 	@DisplayName("Recherche d'un Examen par id")
 	public void testFindById_shouldReturnNiveau() {
 		Examen exam = new Examen(1, null, "DS", 3D);
-		assertThat(service.findById(1)).isEqualTo(exam);
+		assertEquals(service.findById(1).getCoefficient(), exam.getCoefficient());
+		assertEquals(service.findById(1).getDate(), exam.getDate());
+		assertEquals(service.findById(1).getType(), exam.getType());
 	}
 
 	// Test update

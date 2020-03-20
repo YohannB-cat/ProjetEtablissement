@@ -122,23 +122,18 @@ public class ModuleServiceTest {
 	
 	//PROBLEMMMMMMEE false/true
 	// pb colum doesn'tcount match value at row 1
-	@Sql(statements = "DELETE FROM Module WHERE nom='null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module (id,nom)  VALUES (1,'it4TEST')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE nom = 'JAVA4TEST'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un Module enregistrer dans la BD")
 	public void testUpdateModuleWithId_shouldReturnTrue() {
-		Matiere mat = new Matiere(1,"JAVA4TEST");
-		List<Matiere> list = new ArrayList<>();
-		list.add(mat);
-		Module m = new Module("JPA", list);
+		Module m = new Module("JPA", null);
+		m.setId(1);
 		assertThat(service.update(m)).isTrue();
 	}
 
 	// Test deleteById
-	@Sql (statements = "DELETE FROM Module WHERE nom = 'null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Module VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
@@ -146,9 +141,9 @@ public class ModuleServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
-	@Sql (statements = "DELETE FROM Module WHERE nom = 'null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql (statements = "DELETE FROM Module",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {

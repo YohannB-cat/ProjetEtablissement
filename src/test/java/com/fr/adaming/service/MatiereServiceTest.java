@@ -91,8 +91,7 @@ public class MatiereServiceTest {
 	@Test
 	@DisplayName("Update d'une Matiere null")
 	public void testUpdateNullMatiere_shouldReturnFalse() {
-		Matiere m = null;
-		assertThat(service.update(m)).isFalse();
+		assertThat(service.update(null)).isFalse();
 	}
 
 	@Test

@@ -19,7 +19,6 @@ import com.fr.adaming.entity.Niveau;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@SuppressWarnings("squid:S1148")
 @Service("niveauservice")
 public class NiveauService implements INiveauService {
 

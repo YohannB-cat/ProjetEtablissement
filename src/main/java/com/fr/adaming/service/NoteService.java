@@ -42,6 +42,9 @@ public class NoteService implements INoteService {
 		}catch (ConstraintViolationException er) {
 			log.error("ConstraintViolationException");
 			return null;
+		}catch (InvalidDataAccessApiUsageException err) {
+			log.error("InvalidDataAccessApiUsageException : utilisation d'un objet en attribut qui n'existe pas dans la DB");
+			return null;
 		}
 	}
 

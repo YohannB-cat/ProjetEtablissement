@@ -42,7 +42,8 @@ public class ClasseServiceTest {
 	// Valide !
 	@Sql(statements = "INSERT INTO Etudiant (nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
 			+ "VALUES ('Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Création d'une classe correct")
 	public void testCreatingCorrectClasse_shouldReturnClasse() {
@@ -52,9 +53,7 @@ public class ClasseServiceTest {
 		list.add(Bob);
 		Classe cla = new Classe(1, "Session2020", list);
 		Classe retour = service.create(cla);
-		assertThat(retour).hasFieldOrPropertyWithValue("id", 1);
 		assertThat(retour).hasFieldOrPropertyWithValue("nom", "Session2020");
-		assertThat(retour.getEtudiants().get(0)).hasFieldOrPropertyWithValue("id", 1);
 		assertThat(retour.getEtudiants().get(0)).hasFieldOrPropertyWithValue("nom", "Bob");
 		assertThat(retour.getEtudiants().get(0)).hasFieldOrPropertyWithValue("prenom", "Marley");
 		assertThat(retour.getEtudiants().get(0)).hasFieldOrPropertyWithValue("adresse", "3eme nuage a gauche");

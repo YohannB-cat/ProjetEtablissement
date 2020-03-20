@@ -3,6 +3,7 @@ package com.fr.adaming.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,11 +83,18 @@ public class EtudiantServiceTest {
 	@Test
 	@DisplayName("Recherche d'etudiant par id")
 	public void testFindById_shouldReturnEtudiant() {
-		Etudiant etu = new Etudiant(1, "Bob", "Marley", "3eme nuage a gauche", "paradis", "jamin@with.you", 0, 0, 0,
-				true, true);
-		assertTrue(service.findById(1).getId()==etu.getId());
-		assertTrue(service.findById(1).getNom()==etu.getNom());
-		assertTrue(service.findById(1).getPrenom()==etu.getPrenom());
+		Etudiant cetu = service.findById(1);
+		assertTrue(cetu.getId()==1);
+		assertTrue(cetu.getCodePostale()==0);
+		assertTrue(cetu.getCni()==0);
+		assertTrue(cetu.getTelephone()==0);
+		assertTrue(cetu.isSexe());
+		assertTrue(cetu.isEnEtude());
+		assertEquals(cetu.getNom(),"Bob");
+		assertEquals(cetu.getPrenom(),"Marley");
+		assertEquals(cetu.getAdresse(),"3eme nuage a gauche");
+		assertEquals(cetu.getVille(),"paradis");
+		assertEquals(cetu.getEmail(),"jamin@with.you");
 		
 	}
 

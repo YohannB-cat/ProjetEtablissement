@@ -3,6 +3,8 @@ package com.fr.adaming.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class NiveauServiceTest {
 	// Valide !
 	@Test
 	@DisplayName("Création d'un niveau avec param null")
+	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingNiveauWithNullName_shouldReturnNiveau() {
 		Niveau niv = new Niveau(null, 0, null);
 		assertThat(service.create(niv)).isEqualTo(niv);
@@ -43,14 +46,13 @@ public class NiveauServiceTest {
 	// Valide !
 	@Test
 	@DisplayName("Création d'un niveau avec correct")
+	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingCorrectNiveau_shouldReturnNiveau() {
-		Classe term1 = new Classe();
-		Classe term2 = new Classe();
-		List<Classe> list = new ArrayList<Classe>();
-		list.add(term1);
-		list.add(term2);
-		Niveau niv = new Niveau(list, 0, "Bof");
-		assertThat(service.create(niv)).isEqualTo(niv);
+		Niveau niv = new Niveau(null, 0, "Bof");
+		Niveau cniv = service.create(niv);
+		assertThat(cniv.getClasses()).isNull();
+		assertEquals(cniv.getNom(),"Bof");
 	}
 
 	// Test findAll
@@ -66,20 +68,18 @@ public class NiveauServiceTest {
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (19, 'Maternel')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (29, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 niveaux")
 	public void testGetList_shouldReturnList() {
 		List<Niveau> retour = service.findAll();
-		assertThat(retour).hasSize(2);
-		assertThat(retour.get(0).getId()).isEqualTo(1);
-		assertThat(retour.get(0).getNom()).isEqualTo("Maternel");
+		assertThat(retour).hasSize(2).hasOnlyElementsOfTypes(Niveau.class);
 	}
 
 	// Test findById
 	// Valide !
 	@Test
 	@DisplayName("Recherche de niveau par id non existant")
+	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
@@ -91,9 +91,8 @@ public class NiveauServiceTest {
 	@DisplayName("Recherche de niveau par id")
 	public void testFindById_shouldReturnNiveau() {
 		Niveau retour = service.findById(1);
-		assertThat(retour.getId()).isEqualTo(1);
-		assertThat(retour.getNom()).isEqualTo("Primaire");
-		//assertThat(retour.getClasses()).isEmpty();
+		assertTrue(retour.getId()==1);
+		assertEquals(retour.getNom(),"Primaire");
 	}
 
 	// Test update
@@ -108,6 +107,8 @@ public class NiveauServiceTest {
 	// Valide !
 	@Test
 	@DisplayName("Update d'un niveau inexistant dans la bd")
+	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testUpdateInexistantNiveau_shouldReturnFalse() {
 		Classe term1 = new Classe();
 		Classe term2 = new Classe();
@@ -124,7 +125,9 @@ public class NiveauServiceTest {
 	@Test
 	@DisplayName("Update d'un niveau enregistrer dans la BD")
 	public void testUpdateNiveauWithId_shouldReturnTrue() {
-		Niveau niv = new Niveau(null, 2878, "Bof");
+		Niveau niv = new Niveau();
+		niv.setId(2878);
+		niv.setNom("secondaire");
 		assertThat(service.update(niv)).isTrue();
 	}
 

@@ -207,12 +207,16 @@ public class NiveauControllerTest {
 	}
 	
 	@Test
+	@Sql(statements = "DELETE FROM classe", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM niveau", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void testFindClassByNotExistingIdWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
-		int id = 5;
+		int id = 50;
 		// convrtir le DTO en Json
+		String dtoAsJson = mapper.writeValueAsString(id);
 	
 		// test requete
-		String responseAsStrig = mockMvc.perform(get("http://localhost:8080/niveau/classe/" + id)).andDo(print())
+		String responseAsStrig = mockMvc.perform(get("http://localhost:8080/niveau/classe/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
+				.content(dtoAsJson)).andDo(print())
 				.andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
