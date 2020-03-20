@@ -177,7 +177,7 @@ public class ClasseCreateConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite correct")
 	public void testListDtoToListEntiteWithNullList_shouldReturnEmptyListl() {
-		List<ClasseDtoCreate> listEtudiantDtoCreate = null;
+		List<ClasseDtoCreate> listEtudiantDtoCreate = new ArrayList<>();
 
 		List<Classe> listRetour = convert.listDtoToEntite(listEtudiantDtoCreate);
 
@@ -212,7 +212,7 @@ public class ClasseCreateConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite null")
 	public void testListEntiteToListDtoWithNullList_shouldReturnEmptyList() {
-		List<Classe> listClasse = null;
+		List<Classe> listClasse = new ArrayList<>();
 
 		List<ClasseDtoCreate> listRetour = convert.listEntiteToDto(listClasse);
 

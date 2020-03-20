@@ -177,11 +177,11 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite correct")
 	public void testListDtoToListEntiteWithNullList_shouldReturnNull() {
-		List<NiveauDtoCreate> listNiveauDtoCreate = null;
+		List<NiveauDtoCreate> listNiveauDtoCreate = new ArrayList<>();
 
 		List<Niveau> listRetour = convert.listDtoToEntite(listNiveauDtoCreate);
 
-		assertNull(listRetour);
+		assertThat(listRetour).isEmpty();
 	}
 
 	// Valide !
@@ -212,11 +212,11 @@ public class NiveauCreateConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite null")
 	public void testListEntiteToListDtoWithNullList_shouldReturnNull() {
-		List<Niveau> listNiveau = null;
+		List<Niveau> listNiveau = new ArrayList<>();
 
 		List<NiveauDtoCreate> listRetour = convert.listEntiteToDto(listNiveau);
 
-		assertNull(listRetour);
+		assertThat(listRetour).isEmpty();
 	}
 
 }
