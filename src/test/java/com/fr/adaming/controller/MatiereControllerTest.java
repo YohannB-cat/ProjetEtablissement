@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.UnsupportedEncodingException;
@@ -24,8 +23,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fr.adaming.dto.MatiereDtoCreate;
 import com.fr.adaming.dto.ResponseDto;

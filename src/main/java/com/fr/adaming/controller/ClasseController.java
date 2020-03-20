@@ -53,9 +53,12 @@ public class ClasseController implements IClasseController {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, etu);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		log.warn("ClassCreate FAIL");
-		resp = new ResponseDto(true, WebConstant.FAIL, etu);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		else {
+			log.warn("ClassCreate FAIL");
+			resp = new ResponseDto(true, WebConstant.FAIL, etu);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		}
+		
 	}
 
 	@Override
@@ -106,7 +109,7 @@ public class ClasseController implements IClasseController {
 		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
-		if (!result) {
+		if (result) {
 			log.info("ClassDelete OK");
 			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);

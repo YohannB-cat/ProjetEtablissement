@@ -82,7 +82,7 @@ public class MatiereServiceTest {
 	@DisplayName("Recherche de Matiere par id")
 	public void testFindByIdMatiereWithCorrectParam_shouldReturnMatiere() {
 		Matiere m = new Matiere(1, "IT");
-		assertThat(service.findById(1)).isEqualTo(m);
+		assertThat(service.findById(m.getId())).hasFieldOrPropertyWithValue("nom", m.getNom());
 	}
 
 	
