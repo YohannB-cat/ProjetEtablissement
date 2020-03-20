@@ -165,11 +165,11 @@ public class NiveauServiceTest {
 	
 	// Valide !
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (2, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude, etudiants_id) "
-			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Liste des classes avec id valide et classes existantes")
@@ -178,14 +178,12 @@ public class NiveauServiceTest {
 		
 		assertNotNull(retour);
 		assertThat(retour).hasSize(1);
-		assertThat(retour.get(0)).hasFieldOrPropertyWithValue("id", 1);
+		assertThat(retour.get(0)).hasFieldOrPropertyWithValue("id", 2);
 		assertThat(retour.get(0)).hasFieldOrPropertyWithValue("nom", "Session2020");
 		assertThat(retour.get(0).getEtudiants()).hasSize(1);
 		assertThat(retour.get(0).getEtudiants().get(0)).hasFieldOrPropertyWithValue("id", 1);
 		assertThat(retour.get(0).getEtudiants().get(0)).hasFieldOrPropertyWithValue("nom", "Bob");
 		assertThat(retour.get(0).getEtudiants().get(0)).hasFieldOrPropertyWithValue("prenom", "Marley");
-		assertThat(retour.get(0).getEtudiants().get(0)).hasFieldOrPropertyWithValue("adresse", "3eme nuage a gauche");
-		
-	}
-	
+		assertThat(retour.get(0).getEtudiants().get(0)).hasFieldOrPropertyWithValue("adresse", "3eme nuage a gauche");		
+	}	
 }
