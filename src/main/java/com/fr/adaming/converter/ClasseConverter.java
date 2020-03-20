@@ -12,19 +12,15 @@ public class ClasseConverter implements IConverter<Classe, ClasseDto> {
 
 	@Override
 	public Classe dtoToEntite(ClasseDto dto) {
-		if(dto==null) {
+		if(dto==null ) {
 			return null;
 		}
-		Classe classe = new Classe(0, dto.getNom(), dto.getListe());
-		return classe;
+		return new Classe(0, dto.getNom(), dto.getListe());
 	}
 
 	@Override
 	public List<Classe> listDtoToEntite(List<ClasseDto> dtoliste) {
-		if(dtoliste==null) {
-			return null;
-		}
-		List<Classe> liste = new ArrayList<Classe>();
+		List<Classe> liste = new ArrayList<>();
 		for (ClasseDto dto : dtoliste) {
 			liste.add(new Classe(0, dto.getNom(), dto.getListe()));
 		}
@@ -36,16 +32,12 @@ public class ClasseConverter implements IConverter<Classe, ClasseDto> {
 		if(entite==null) {
 			return null;
 		}
-		ClasseDto dto = new ClasseDto(entite.getNom(), entite.getEtudiants());
-		return dto;
+		return new ClasseDto(entite.getNom(), entite.getEtudiants());
 	}
 
 	@Override
 	public List<ClasseDto> listEntiteToDto(List<Classe> entite) {
-		if(entite==null) {
-			return null;
-		}
-		List<ClasseDto> liste = new ArrayList<ClasseDto>();
+		List<ClasseDto> liste = new ArrayList<>();
 		for (Classe c : entite) {
 			liste.add(new ClasseDto(c.getNom(), c.getEtudiants()));
 		}

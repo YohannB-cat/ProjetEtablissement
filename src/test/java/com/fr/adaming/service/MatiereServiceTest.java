@@ -34,25 +34,27 @@ public class MatiereServiceTest {
 	@DisplayName("Création d'une Matiere avec param null")
 	@Sql(statements = "DELETE FROM Matiere WHERE nom =null",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingMatiereWithNullName_shouldReturnMatiere() {
-		Matiere m = new Matiere(null);
-		assertThat(service.create(m)).isEqualTo(m);
+		Matiere m = new Matiere(5,null);
+		Matiere matCreate1 = service.create(m);
+		assertThat(matCreate1).hasFieldOrPropertyWithValue("nom", m.getNom());
 	}
 
 	@Test
 	@DisplayName("Création d'une Matiere avec correct param")
-	@Sql(statements = "DELETE FROM Matiere WHERE nom ='matiere'",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Matiere WHERE nom = 'null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Matiere WHERE nom ='IT'",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingCorrectMatiere_shouldReturnMatiere() {
-		Matiere m = new Matiere("IT");
-		assertThat(service.create(m)).isEqualTo(m);
+		Matiere m = new Matiere(1,"IT");
+		Matiere matCreate = service.create(m);
+		assertThat(matCreate).hasFieldOrPropertyWithValue("nom", m.getNom());
 	}
-
 	
 	//******************************************************************
 	// Test findAll
 	@Test
 	@DisplayName("Demande de la liste vide")
-	public void testGetListMatiere_shouldReturnNull() {
-		assertThat(service.findAll()).isNull();
+	public void testGetListMatiere_shouldReturnEmpty() {
+		assertThat(service.findAll()).isEmpty();
 	}
 
 	@Sql(statements = "INSERT INTO Matiere (id, nom) VALUES (1, 'IT')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -80,7 +82,7 @@ public class MatiereServiceTest {
 	@DisplayName("Recherche de Matiere par id")
 	public void testFindByIdMatiereWithCorrectParam_shouldReturnMatiere() {
 		Matiere m = new Matiere(1, "IT");
-		assertThat(service.findById(1)).isEqualTo(m);
+		assertThat(service.findById(m.getId())).hasFieldOrPropertyWithValue("nom", m.getNom());
 	}
 
 	
@@ -173,7 +175,7 @@ public class MatiereServiceTest {
 	@DisplayName("Test find Matiere By Null Module")
 	public void testFindMatiereByNullModule_shouldReturnNull () {
 		List<Matiere> listeMatieres = service.findMatiereByIdModule(null);
-		assertThat(listeMatieres).isNull();
+		assertThat(listeMatieres).isEmpty();
 	}
 	
 

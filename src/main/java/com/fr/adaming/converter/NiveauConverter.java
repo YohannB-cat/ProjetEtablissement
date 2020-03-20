@@ -15,16 +15,12 @@ public class NiveauConverter implements IConverter<Niveau, NiveauDto> {
 		if(dto==null) {
 			return null;
 		}
-		Niveau entite = new Niveau(dto.getClasses(),0 , dto.getNom());
-		return entite;
+		return new Niveau(dto.getClasses(),0 , dto.getNom());
 	}
 
 	@Override
 	public List<Niveau> listDtoToEntite(List<NiveauDto> dtoliste) {
-		if(dtoliste==null) {
-			return null;
-		}
-		List<Niveau> liste = new ArrayList<Niveau>();
+		List<Niveau> liste = new ArrayList<>();
 		for (NiveauDto dto : dtoliste) {
 			liste.add(new Niveau(dto.getClasses(),0 , dto.getNom()));
 		}
@@ -36,21 +32,15 @@ public class NiveauConverter implements IConverter<Niveau, NiveauDto> {
 		if(entite==null) {
 			return null;
 		}
-		NiveauDto dto = new NiveauDto(entite.getClasses(), entite.getNom());
-		return dto;
+		return new NiveauDto(entite.getClasses(), entite.getNom());
 	}
 
 	@Override
 	public List<NiveauDto> listEntiteToDto(List<Niveau> entite) {
-		if(entite==null) {
-			return null;
-		}
-		List<NiveauDto> liste = new ArrayList<NiveauDto>();
+		List<NiveauDto> liste = new ArrayList<>();
 		for (Niveau e : entite) {
 			liste.add(new NiveauDto(e.getClasses(), e.getNom()));
 		}
 		return liste;
 	}
-	
-
 }

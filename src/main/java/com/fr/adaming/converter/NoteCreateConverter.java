@@ -16,18 +16,16 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 		if(dto==null) {
 			return null;
 		}
-		Note entite = new Note(dto.getId(), dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen());
-		return entite;
+		return new Note(dto.getId(), dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen());
 	}
 
 	@Override
 	public List<Note> listDtoToEntite(List<NoteDtoCreate> dtoliste) {
-		if(dtoliste==null) {
-			return null;
-		}
-		List<Note> liste = new ArrayList<Note>();
-		for (NoteDtoCreate dto : dtoliste) {
-			liste.add(new Note(dto.getId(), dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen()));
+		List<Note> liste = new ArrayList<>();
+		if(dtoliste!=null) {
+			for (NoteDtoCreate dto : dtoliste) {
+				liste.add(dtoToEntite(dto));
+			}
 		}
 		return liste;
 	}
@@ -37,18 +35,16 @@ public class NoteCreateConverter implements IConverter<Note, NoteDtoCreate> {
 		if(entite==null) {
 			return null;
 		}
-		NoteDtoCreate dto = new NoteDtoCreate(entite.getId(), entite.getModule(), entite.getValeur(), entite.getEtudiant(), entite.getExamen());
-		return dto;
+		return new NoteDtoCreate(entite.getId(), entite.getModule(), entite.getValeur(), entite.getEtudiant(), entite.getExamen());
 	}
 
 	@Override
 	public List<NoteDtoCreate> listEntiteToDto(List<Note> entite) {
-		if(entite==null) {
-			return null;
-		}
-		List<NoteDtoCreate> liste = new ArrayList<NoteDtoCreate>();
-		for (Note e : entite) {
-			liste.add(new NoteDtoCreate(e.getId(),e.getModule(), e.getValeur(), e.getEtudiant(), e.getExamen()));
+		List<NoteDtoCreate> liste = new ArrayList<>();
+		if(entite!=null) {
+			for (Note e : entite) {
+				liste.add(entiteToDto(e));
+			}
 		}
 		return liste;
 	}

@@ -53,7 +53,7 @@ public class ModuleCreateConverterTest {
 
 	@Test
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
-		List<ModuleDtoCreate> listeModuleDto = new ArrayList();
+		List<ModuleDtoCreate> listeModuleDto = new ArrayList<>();
 		
 		ModuleDtoCreate dto1 = new ModuleDtoCreate("math");
 		ModuleDtoCreate dto2 = new ModuleDtoCreate("français");
@@ -70,7 +70,7 @@ public class ModuleCreateConverterTest {
 
 	@Test
 	public void testListDtoToEntiteWithOneBlankDto_shouldReturnNotBlankListItem() {
-		List<ModuleDtoCreate> listeModuleDto = new ArrayList();
+		List<ModuleDtoCreate> listeModuleDto = new ArrayList<>();
 		
 		ModuleDtoCreate dto1 = new ModuleDtoCreate();
 		ModuleDtoCreate dto2 = new ModuleDtoCreate("math");
@@ -87,7 +87,7 @@ public class ModuleCreateConverterTest {
 		List<ModuleDtoCreate> listeModuleDto = null;
 		List<Module> listeEntite = convert.listDtoToEntite(listeModuleDto);
 
-		assertThat(listeEntite).isNull();
+		assertThat(listeEntite).isEmpty();
 	}
 
 	// TEST ENTITE TO DTO
@@ -137,7 +137,7 @@ public class ModuleCreateConverterTest {
 
 	@Test
 	public void testListEntiteToDtoWithBlankItem_shouldReturnListWithNoBlankItem() {
-		List<Module> listeMod = new ArrayList();
+		List<Module> listeMod = new ArrayList<>();
 		Module dto1 = new Module();
 		Module dto2 = new Module(6,"math");
 		listeMod.add(dto1);
@@ -153,7 +153,7 @@ public class ModuleCreateConverterTest {
 		List<Module> listeMod = null;
 		List<ModuleDtoCreate> dtoLiist = convert.listEntiteToDto(listeMod);
 
-		assertThat(dtoLiist).isNull();
+		assertThat(dtoLiist).isEmpty();
 
 	}
 

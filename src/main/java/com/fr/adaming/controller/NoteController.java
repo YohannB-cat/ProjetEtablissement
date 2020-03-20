@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.config.WebConstant;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.NoteDto;
 import com.fr.adaming.dto.NoteDtoCreate;
@@ -25,6 +26,7 @@ import com.fr.adaming.service.INoteService;
 @RequestMapping(path = "/note")
 public class NoteController implements INoteController {
 
+	
 	@Autowired
 //	@Qualifier("noteservice")
 	private INoteService service;
@@ -47,10 +49,10 @@ public class NoteController implements INoteController {
 		// Attribution de la réponse en fonction du retour DB et de la conposition de
 		// l'objet
 		if (note != null) {
-			resp = new ResponseDto(false, "SUCCESS", note);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, note);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(true, "FAIL", note);
+		resp = new ResponseDto(true, WebConstant.FAIL, note);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 
 	}
@@ -65,10 +67,10 @@ public class NoteController implements INoteController {
 		ResponseDto resp = null;
 
 		if (note != null) {
-			resp = new ResponseDto(false, "SUCCESS", note);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, note);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(true, "FAIL", note);
+		resp = new ResponseDto(true, WebConstant.FAIL, note);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		
 	}
@@ -81,10 +83,10 @@ public class NoteController implements INoteController {
 
 		ResponseDto resp = null;
 		if (list != null) {
-			resp = new ResponseDto(false, "SUCCESS", list);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 
 	}
@@ -98,10 +100,10 @@ public class NoteController implements INoteController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -113,23 +115,23 @@ public class NoteController implements INoteController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 	
 	@Override
 	@GetMapping(path = "/etudiant/{id}")
-	public ResponseEntity<ResponseDto> listByEtudiant(@PathVariable(name = "id") int id_etudiant){
+	public ResponseEntity<ResponseDto> listByEtudiant(@PathVariable(name = "id") int idetudiant){
 		ResponseDto resp = null;
-		List<NoteDto> listNote = noteDto.listEntiteToDto(service.listByEtudiant(id_etudiant));
-		if (listNote != null && listNote.size()>0) {
-			resp = new ResponseDto(false, "SUCCESS", listNote);
+		List<NoteDto> listNote = noteDto.listEntiteToDto(service.listByEtudiant(idetudiant));
+		if (listNote != null && !listNote.isEmpty()) {
+			resp = new ResponseDto(false, WebConstant.SUCCESS, listNote);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		
 	}

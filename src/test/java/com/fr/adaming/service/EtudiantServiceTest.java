@@ -2,6 +2,7 @@ package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,10 +44,11 @@ public class EtudiantServiceTest {
 
 	// Test findAll
 	@Test
+	@Sql(statements = "DELETE FROM Etudiant", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@DisplayName("Demande de la liste vide")
-	public void testGetList_shouldReturnNull() {
+	public void testGetList_shouldReturnEmptyList() {
 		System.out.println(service.findAll());
-		assertNull(service.findAll());
+		assertTrue(service.findAll().isEmpty());
 	}
 
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
@@ -67,6 +69,12 @@ public class EtudiantServiceTest {
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
+	
+	@Test
+	@DisplayName("Recherche d'étudiant par id égal à 0")
+	public void testFindByIdWithZeroId_shouldReturnNull() {
+		assertThat(service.findById(0)).isNull();
+	}
 
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
 			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -76,7 +84,10 @@ public class EtudiantServiceTest {
 	public void testFindById_shouldReturnEtudiant() {
 		Etudiant etu = new Etudiant(1, "Bob", "Marley", "3eme nuage a gauche", "paradis", "jamin@with.you", 0, 0, 0,
 				true, true);
-		assertThat(service.findById(1)).isEqualTo(etu);
+		assertTrue(service.findById(1).getId()==etu.getId());
+		assertTrue(service.findById(1).getNom()==etu.getNom());
+		assertTrue(service.findById(1).getPrenom()==etu.getPrenom());
+		
 	}
 
 	// Test update

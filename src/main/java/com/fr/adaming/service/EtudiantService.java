@@ -1,18 +1,17 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dao.IEtudiantDao;
 import com.fr.adaming.entity.Etudiant;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service("etudiantservice")
 public class EtudiantService implements IEtudiantService {
 
@@ -26,12 +25,8 @@ public class EtudiantService implements IEtudiantService {
 				return null;
 			}
 			return dao.save(etudiant);
-		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
-			return null;
-		}
-		catch (ConstraintViolationException er) {
-			er.printStackTrace();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
 			return null;
 		}
 	}
@@ -39,7 +34,7 @@ public class EtudiantService implements IEtudiantService {
 	@Override
 	public List<Etudiant> findAll() {
 		if (dao.findAll().isEmpty()) {
-			return null;
+			return new ArrayList<>();
 		}
 		return dao.findAll();
 	}
@@ -52,12 +47,11 @@ public class EtudiantService implements IEtudiantService {
 			} else {
 				return null;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
 			return null;
 		}
 	}
-
 
 	@Override
 	public boolean update(Etudiant etudiant) {
@@ -68,11 +62,8 @@ public class EtudiantService implements IEtudiantService {
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
-			return false;
-		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
 			return false;
 		}
 	}
@@ -86,15 +77,8 @@ public class EtudiantService implements IEtudiantService {
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-			return false;
-		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
-			return false;
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
 			return false;
 		}
 	}

@@ -1,10 +1,12 @@
 package com.fr.adaming.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class EtudiantDtoCreate {
 	
 	private int id;
@@ -22,7 +24,7 @@ public class EtudiantDtoCreate {
 	private boolean sexe;
 	
 	private int cni;
-	
+	@ApiModelProperty(example = "0645454545")
 	private int telephone;
 	
 	private String email;

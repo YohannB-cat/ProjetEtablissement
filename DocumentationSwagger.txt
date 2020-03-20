@@ -1,0 +1,1364 @@
+﻿swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "ProjetEtablissement"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+- name: "etudiant"
+  description: "Toutes les requêtes sur les etudiants"
+- name: "niveau"
+  description: "Toutes les requêtes sur les niveau"
+- name: "module"
+  description: "Toutes les requêtes sur les module"
+- name: "absence"
+  description: "Toutes les requêtes sur les absence"
+- name: "classe"
+  description: "Toutes les requêtes sur les absence"
+- name: "examen"
+  description: "Toutes les requêtes sur les absence"
+- name: "note"
+  description: "Toutes les requêtes sur les absence"
+- name: "matiere"
+  description: "Toutes les requêtes sur les absence"
+  
+
+
+schemes:
+- "http"
+paths:
+  /etudiant:
+    post:
+      tags:
+      - "etudiant"
+      summary: "Ajoute un nouvel étudiant"
+      description: ""
+      operationId: "addEtudiant"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objet EtudiantDto à enregistrer"
+        required: true
+        schema:
+          $ref: "#/definitions/EtudiantDto"
+      responses:
+        200 :
+          description : "Success"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        400 :
+          description : "Bad Request"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+
+    put:
+      tags:
+      - "etudiant"
+      summary: "Modifie un etudiant existant"
+      description: ""
+      operationId: "updateEtudiant"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Object EtudiantDtoCreate ayant le même id que l'étudiant à modifier"
+        required: true
+        schema:
+          $ref: "#/definitions/EtudiantDtoCreate"
+      responses:
+        400:
+          description: "Id inconnu dans la base de donnée"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "Modification effectuée"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+      
+  /etudiant/{id}:
+    get:
+      tags:
+      - "etudiant"
+      summary: "Trouver un étudiant par son id"
+      description: "Un seul étudiant par id, si l'id existe"
+      operationId: "findEtudiantById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        type : "integer"
+        description: "id de l'étudiant à rechercher"
+        required: true
+      responses:
+        200:
+          description: "etudiant trouvé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        400:
+          description: "id inconnu"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+    delete:
+      tags:
+      - "etudiant"
+      summary: "Supprimer un étudiant par id"
+      description: ""
+      operationId: "deleteEtudiantById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        type : "integer"
+        description: "id de l'étudiant à rechercher"
+        required: true
+      responses:
+        200:
+          description: "etudiant trouvé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        400:
+          description: "id inconnu"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+            
+  /etudiant/all:
+    get:
+      tags:
+      - "etudiant"
+      summary: "Trouver tout les étudiants"
+      description: "Une liste d'étudiant si il y en a, sinon null"
+      operationId: "findEtudiantAll"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "etudiant trouvé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        400:
+          description: "id inconnu"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+  /note:
+    post:
+      tags:
+      - "note"
+      summary : "créer une note"
+      description : "Creation d'une nouvelle note"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Note à creer"
+        required: true
+        schema:
+          $ref: "#/definitions/Note"
+      responses:
+        400:
+          description: "FAIL : note non créé"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : note créé"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+    put:
+      tags:
+      - "note"
+      summary : "Update note"
+      description: "Mise à jour d'une note existante"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Id de la note à modifier"
+        required: true
+        schema: 
+          $ref: "#/definitions/Note" 
+      responses:
+        400:
+          description: "FAIL : note non mis à jour"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : note mis à jour"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+  /note/{id}:
+    get:
+      tags:
+      - "note"
+      summary: "Find note by Id"
+      description: "Trouver une note par son id"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de la note à afficher"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : examen non trouvé"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : examen trouvé"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+    delete:
+      tags:
+      - "note"
+      summary: "Delete note by Id"
+      description: "Trouver une note par son id et le supprime de la base de données"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de la note à supprimer"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : examen non supprimé"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : examen supprimé"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+  /note/all:
+    get:
+      tags:
+      - "note"
+      summary: "Find all note"
+      description: "Afficher toutes les notes"
+      produces: 
+      - "application/json"
+      responses:
+        400:
+          description: "FAIL : liste non trouvé"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : liste de tous les examens trouvé"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+  /note/etudiant/{id}:
+    get:
+      tags:
+      - "note"
+      summary: "Find all note By Etudiant"
+      description: "Afficher toutes les notes d'un etudiant"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de l'etudiant'"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : liste non trouvé"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : liste de toutes les notes de l'etudiant' choisie trouvé"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+  
+  /niveau:
+    post:
+      tags:
+      - "Niveau"
+      summary: "Create niveau"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created niveauDto"
+        required: true
+        schema:
+          $ref: "#/definitions/NiveauDtoCreate"
+      responses:
+        200:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        400:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+            
+    put:
+      tags:
+      - "Niveau"
+      summary: "Update niveau"
+      description: "This can only be done by the logged in user."
+      operationId: "updateUser"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Updated niveauDto"
+        required: true
+        schema:
+          $ref: "#/definitions/NiveauDtoCreate"
+      responses:
+        200:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        400:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        
+  /niveau/all:
+    get:
+      tags:
+      - "Niveau"
+      summary: "Get list"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        400:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+              
+  /niveau/classe/{idNiveau}:
+    get:
+      tags:
+      - "Niveau"
+      summary: "Get classeList by idNiveau"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idNiveau"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      responses:
+        200:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        400:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+          
+  /niveau/{id}:
+    get:
+      tags:
+      - "Niveau"
+      summary: "Find by id"
+      description: ""
+      operationId: "getUserByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be find"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        400:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+          
+    delete:
+      tags:
+      - "Niveau"
+      summary: "Delete by id"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        400:
+          description : ""
+          schema :
+            $ref: "#/definitions/ResponseDto"
+          
+  
+  
+  /examen/:
+    post:
+      tags:
+      - "examen"
+      summary : "créer un examen"
+      description : "Creation d'un examen"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Examen à creer"
+        required: true
+        schema:
+          $ref: "#/definitions/Examen"
+      responses:
+        400:
+          description: "FAIL : examen non créé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : examen créé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+    put:
+      tags:
+      - "examen"
+      summary : "Update examen"
+      description: "Mise à jour d'un examen existant"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Id de l'examen à modifier"
+        required: true
+        schema: 
+          $ref: "#/definitions/Examen" 
+      responses:
+        400:
+          description: "FAIL : examen non mis à jour"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : examen mis à jour"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+  /examen/{id}:
+    get:
+      tags:
+      - "examen"
+      summary: "Find Examen by Id"
+      description: "Trouver un examen par son id"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de l'examen à afficher"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : examen non trouvé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : examen trouvé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+    delete:
+      tags:
+      - "examen"
+      summary: "Delete Examen by Id"
+      description: "Trouver un examen par son id et le supprime de la base de données"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de l'examen à supprimer"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : examen non supprimé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : examen supprimé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+  /examen/all:
+    get:
+      tags:
+      - "examen"
+      summary: "Find all Examen"
+      description: "Afficher tous les examens"
+      produces: 
+      - "application/json"
+      responses:
+        400:
+          description: "FAIL : liste non trouvé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : liste de tous les examens trouvé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+  /examen/matiere:
+    get:
+      tags:
+      - "examen"
+      summary: "Find all Examen By Matiere"
+      description: "Afficher tous les examens d'une matiere"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id de la matiere"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        400:
+          description: "FAIL : liste non trouvé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS : liste de tous les examens de la matiere choisie trouvé"
+          schema :
+            $ref: "#/definitions/ResponseDto"
+
+  
+  
+  /absence:
+    post:
+      tags:
+      - "absence"
+      summary: "Créer une absence"
+      description: ""
+      parameters: 
+        - in: "body"
+          name: "absenceDtoCreate"
+          description: "AbsenceDtoCreate doit être fourni et valide"
+          required: true
+          schema:
+            $ref: "#/definitions/AbsenceDtoCreate"
+      responses: 
+        400:
+          description: "FAIL"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+    put:
+      tags:
+      - "absence"
+      summary: "Modifier une absence"
+      description: ""
+      parameters: 
+        - in: "body"
+          name: "absenceDtoCreate"
+          description: "AbsenceDtoCreate doit être fourni et valide"
+          required: true
+          schema:
+            $ref: "#/definitions/AbsenceDtoCreate"
+      responses: 
+        400:
+          description: "FAIL"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+  /absence/one/{id}:
+    get:
+      tags:
+      - "absence"
+      summary: "Rechercher une absence par son Id"
+      description: ""
+      parameters:
+      - name: "id"
+        in : "path"
+        required: true
+        description: "ID de l'absence à retourner"
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "FAIL"
+          schema: 
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+  /absence/all:
+    get:
+      tags:
+      - "absence"
+      summary: "Rechercher toutes les absences"
+      description: ""
+      responses: 
+        400:
+          description: "FAIL"
+          schema: 
+            $ref: "#/definitions/ResponseDto"
+        200:
+          description: "SUCCESS"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+            
+  /absence/{id}:
+    delete:
+      tags:
+      - "absence"
+      summary: "Supprimer une absence via son Id"
+      description: ""
+      parameters:
+      - name: "id"
+        in : "path"
+        description: "ID de l'absence à retourner"
+        type: "integer"
+        format: "int64"
+        required: true
+      responses:
+        200:
+          description: "SUCCESS"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+        400:
+          description: "FAIL"
+          schema:
+            $ref: "#/definitions/ResponseDto"
+  
+  
+  /matiere/create:
+    post:
+      tags:
+      - "Matiere"
+      summary: "Add a nnew matiere to the module"
+      description: ""
+      operationId: "addMatiere"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "matiere"
+        description: "Matiere object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: '#/definitions/MatiereDtoCreate'
+      responses:
+        405:
+          description: "Invalid input"
+        200:
+          description: "Valid input"
+        400:
+          description: "Bad Request"
+
+  /matiere/update:
+    put:
+      tags:
+      - "Matiere"
+      summary: "Update an existing matiere"
+      description: ""
+      operationId: "updateMatiere"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "matiere"
+        description: "Matiere object that needs to be updated to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/MatiereDtoCreate"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Pet not found"
+        405:
+          description: "Validation exception"
+
+  /matiere/all:
+    get:
+      tags:
+      - "Matiere"
+      summary: "Finds all Matiere"
+      description: "Response is a list of all matieres"
+      operationId: "findAllMatiere"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/Matiere'
+        400:
+          description: "Bad Request"
+  /matiere/{id}:
+    get:
+      tags:
+      - "Matiere"
+      summary: "Finds Matiere by id"
+      description: "You must specify only one id !"
+      operationId: "findMatiereById"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "integer"
+        description: "Id to filter by"
+        required: true
+      responses:
+        200:
+          description: "Successfull request"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/Matiere'
+        400:
+          description: "Invalid id value"
+    delete:
+      tags:
+      - "Matiere"
+      summary: "Delete Matiere by id"
+      description: "You must specify only one id !"
+      operationId: "deleteMatiereById"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "integer"
+        description: "Id to filter by"
+        required: true
+      responses:
+        200:
+          description: "Successfull request"
+          schema:
+            type: "integer"
+            items:
+              $ref: '#/definitions/Matiere'
+        400:
+          description: "Invalid id value"
+
+  /matiere/byModule/{matieres}:
+    get:
+      tags:
+      - "Matiere"
+      summary: "Find Matiere by Module Id"
+      description: "Returns list of matiere"
+      operationId: "getListOfMatiereByIdModule"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "matieres"
+        in: "path"
+        description: "List of Matiere of Module"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Matiere'
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Matiere not found"
+      security:
+      - api_key: []  
+  
+  /module:
+    post:
+      tags:
+      - "Module"
+      summary: "Create module"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created moduleDtoCreate"
+        required: true
+        schema:
+          $ref: "#/definitions/NiveauDtoCreate"
+      responses:
+        200:
+          description : ""
+        400:
+          description : ""
+          
+    put:
+      tags:
+      - "Module"
+      summary: "Update module"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Updated moduleDtoCreate"
+        required: true
+        schema:
+          $ref: "#/definitions/NiveauDtoCreate"
+      responses:
+        200:
+          description : ""
+        400:
+          description : ""
+        
+  /module/all:
+    get:
+      tags:
+      - "Module"
+      summary: "Get list"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description : ""
+        400:
+          description : ""
+              
+  
+  /module/{id}:
+    get:
+      tags:
+      - "Module"
+      summary: "Find by id"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be find"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description : ""
+        400:
+          description : ""
+          
+    delete:
+      tags:
+      - "Module"
+      summary: "Delete by id"
+      description: ""
+      operationId: ""
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description : ""
+        400:
+          description : ""
+
+
+     
+
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  EtudiantDto:
+    type: "object"
+    properties:
+      nom:
+        type: "string"
+      prenom:
+        type: "string"
+      adresse:
+        type: "string"
+      codePostal:
+        type: "integer"
+        format : "int32"
+      ville:
+        type : "string"
+      sexe:
+        type : "boolean"
+      cni:
+        type : "integer"
+        format : "int32"
+      telephone:
+        type : "integer"
+        format : "int32"
+      email:
+        type : "string"
+      enEtude :
+        type : "boolean"
+    xml:
+      name: "EtudiantDto"
+  EtudiantDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format : "int32"
+      nom:
+        type: "string"
+      prenom:
+        type: "string"
+      adresse:
+        type: "string"
+      codePostal:
+        type: "integer"
+        format : "int32"
+      ville:
+        type : "string"
+      sexe:
+        type : "boolean"
+      cni:
+        type : "integer"
+        format : "int32"
+      telephone:
+        type : "integer"
+        format : "int32"
+      email:
+        type : "string"
+      enEtude :
+        type : "boolean"
+    xml:
+      name: "EtudiantDtoCreate"
+  Etudiant:
+    type: "object"
+    properties :
+      id:
+        type: "integer"
+        format : "int32"
+      nom:
+        type: "string"
+      prenom:
+        type: "string"
+      adresse:
+        type: "string"
+      ville:
+        type : "string"
+      email:
+        type : "string"
+      codePostal:
+        type: "integer"
+        format : "int32"
+      cni:
+        type : "integer"
+        format : "int32"
+      telephone:
+        type : "integer"
+        format : "int32"
+      sexe:
+        type : "boolean"
+      enEtude :
+        type : "boolean"
+
+  Classe:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      etudiants:
+        type: "array"
+        items:
+            $ref: "#/definitions/Etudiant"
+      nom:
+        type: "string"
+  ClasseDto:
+    type: "object"
+    properties:
+      liste:
+        type: "array"
+        items:
+            $ref: "#/definitions/Etudiant"
+      nom:
+        type: "string"
+  ClasseDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      liste:
+        type: "array"
+        items:
+            $ref: "#/definitions/Etudiant"
+      nom:
+        type: "string"
+
+  ResponseDto:
+    type: "object"
+    properties :
+      error:
+        type : "boolean"
+      message:
+        type : "string"
+      object :
+        type : "object"
+        description: can be ExamenDto, ...
+
+
+  ExamenDto:
+    type: "object"
+    properties:
+      date: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      type: 
+        type: "string"
+        example: "DS"
+      coefficient:
+        type: "number"
+        format: "double"
+        example: "2.2"
+    xml:
+      name: "ExamenDto"
+  ExamenDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      date: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      type: 
+        type: "string"
+        example: "DS"
+      coefficient:
+        type: "number"
+        format: "double"
+        example: "2.2"
+    xml:
+      name: "ExamenDtoCreate"
+  Examen:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      date: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      type: 
+        type: "string"
+        example: "DS"
+      coefficient:
+        type: "number"
+        format: "double"
+        example: "2.2"
+    xml:
+      name: "Examen"
+      
+      
+  Niveau:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      classes:
+        type: "array"
+        items:
+          $ref : "#/definitions/Classe"
+      nom:
+        type: "string"
+  NiveauDto:
+    type: "object"
+    properties:
+      classes:
+        type: "array"
+        items:
+          $ref : "#/definitions/Classe"
+      nom:
+        type: "string"
+  NiveauDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      classes:
+        type: "array"
+        items:
+          $ref : "#/definitions/Classe"
+      nom:
+        type: "string"    
+      
+  NoteDto:
+    type: "object"
+    properties:
+      module: 
+        $ref: "#/definitions/Module"
+      valeur: 
+        type: "number"
+        format: "float"
+        example: "2.2"
+      etudiant:
+        $ref: "#/definitions/Etudiant"
+      examen:
+        $ref: "#/definitions/Examen"
+    xml:
+      name: "NoteDto"
+  NoteDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        example: "1"
+      module: 
+        $ref: "#/definitions/Module"
+      valeur: 
+        type: "number"
+        format: "float"
+        example: "2.2"
+      etudiant:
+        $ref: "#/definitions/Etudiant"
+      examen:
+        $ref: "#/definitions/Examen"
+    xml:
+      name: "NoteDtoCreate"
+  Note:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        example: "1"
+      module: 
+        $ref: "#/definitions/Module"
+      valeur: 
+        type: "number"
+        format: "float"
+        example: "2.2"
+      etudiant:
+        $ref: "#/definitions/Etudiant"
+      examen:
+        $ref: "#/definitions/Examen"
+    xml:
+      name: "Note"
+  Matiere :
+    type : "object"
+    properties:
+      id :
+        type : "integer"
+        example: 1
+      nom :
+        type : "string"
+        example: "Mathematique"
+    xml:
+      name: "Matiere"
+  MatiereDto:
+    type: "object"
+    properties:
+      nom:
+        type: "string"
+        example: "Physique-Chimie"
+    xml:
+      name: "MatiereDto"
+  MatiereDtoCreate :
+    type : "object"
+    properties :
+      id :
+        type : "integer"
+        format : "int64"
+        example: 5
+      nom :
+        type : "string"
+        example: "Histoire Géographie"
+    xml :
+      name : "MatiereDtoCreate"
+  Module :
+    type : "object"
+    properties:
+      id :
+        type: "integer"
+        format: "int64"
+      nom :
+        type : "string"
+        example: "Sixième"
+      matieres :
+        type : "array"
+        items :
+          $ref: '#/definitions/Matiere'
+    xml:
+      name: "Module"
+  ModuleDto :
+    type : "object"
+    properties:
+      nom :
+        type : "string"
+        example: "Sixième"
+      matieres :
+        type : "array"
+        items :
+          $ref: '#/definitions/Matiere'
+    xml:
+      name: "ModuleDto"
+  ModuleDtoCreate :
+    type : "object"
+    properties:
+      id :
+        type: "integer"
+        format: "int64"
+      nom : 
+        type: "string"
+        example: "Quatrième"
+      matieres :
+        type : "array"
+        items :
+          $ref: '#/definitions/Matiere'
+    xml:
+      name: "ModuleDtoCreate"
+  
+  AbsenceDto:
+    type: "object"
+    properties:
+      debut: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      fin: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-05"
+      justification:
+        type: "string"
+        example: "Maladie"
+      description:
+        type: "string"
+        example: "Douleurs abdominales"
+      etudiant: 
+        $ref: "#/definitions/Etudiant"
+    xml:
+      name: "AbsenceDto"
+  AbsenceDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+      debut: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-01"
+      fin: 
+        type: "string"
+        format: "date-time"
+        example: "2020-02-05"
+      justification:
+        type: "string"
+        example: "Maladie"
+      description:
+        type: "string"
+        example: "Douleurs abdominales"
+      etudiant: 
+        $ref: "#/definitions/Etudiant"
+    xml:
+      name: "AbsenceDtoCreate"
+  Absence:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+      debut: 
+        type: "object"
+        format: "date-time"
+        example: "2020-02-01"
+      fin: 
+        type: "object"
+        format: "date-time"
+        example: "2020-02-05"
+      justification:
+        type: "string"
+        example: "Maladie"
+      description:
+        type: "string"
+        example: "Douleurs abdominales"
+      etudiant: 
+        $ref: "#/definitions/Etudiant"
+      

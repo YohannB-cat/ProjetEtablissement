@@ -1,19 +1,18 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dao.IModuleDao;
 import com.fr.adaming.entity.Module;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service ("moduleservice")
+@Slf4j
 public class ModuleService implements IModuleService{
 	
 	@Autowired
@@ -26,35 +25,31 @@ public class ModuleService implements IModuleService{
 				return null;
 			}
 			return dao.save(module);
-		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		catch (ConstraintViolationException er) {
-			er.printStackTrace();
+		} catch (Exception e) {
+			log.error("ERROR create module"+e.getMessage());
 			return null;
 		}
 	}
 
 	@Override
 	public List<Module> findAll() {
+		List <Module> listeModule = new ArrayList<>();
 		if (dao.findAll().isEmpty()) {
-			return null;
+			return listeModule;
 		}
 		return dao.findAll();
 	}
 
 	@Override
-	public Module findById(int id) {
+	public Module findById(Integer id) {
 		try {
-			if (id != 0) {
+			if (id != null) {
 				return dao.findById(id).orElse(null);
 			} else {
 				return null;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			log.error("ERROR find by id module" + e.getMessage());
 			return null;
 		}
 	}
@@ -68,30 +63,21 @@ public class ModuleService implements IModuleService{
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
-			return false;
-		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+		} catch (Exception er) {
+			log.error("ERROR update module "+ er.getMessage());
 			return false;
 		}
 	}
 
 	@Override
-	public boolean deleteById(int id) {
-		try {
-			if (dao.findById(id) != null && id != 0) {
+	public boolean deleteById(Integer id) {
+
+			if (dao.existsById(id)) {
 				dao.deleteById(id);
 				return true;
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-			return false;
-		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
-			return false;
-		}
+	
 	}
 }

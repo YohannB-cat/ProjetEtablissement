@@ -123,7 +123,7 @@ public class NiveauConverterTest {
 		List<Classe> listClasse = new ArrayList<Classe>();
 		listClasse.add(c1);
 		listClasse.add(c2);
-		Niveau entite = new Niveau(null, 1, "TopOfTheTop");
+		Niveau entite = new Niveau(listClasse, 1, null);
 
 		NiveauDto retour = convert.entiteToDto(entite);
 
@@ -170,11 +170,11 @@ public class NiveauConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite correct")
 	public void testListDtoToListEntiteWithNullList_shouldReturnNull() {
-		List<NiveauDto> listNiveauDto = null;
+		List<NiveauDto> listNiveauDto = new ArrayList<>();
 
 		List<Niveau> listRetour = convert.listDtoToEntite(listNiveauDto);
 
-		assertNull(listRetour);
+		assertThat(listRetour).isEmpty();
 	}
 
 	// Valide !
@@ -204,10 +204,10 @@ public class NiveauConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite null")
 	public void testListEntiteToListDtoWithNullList_shouldReturnNull() {
-		List<Niveau> listNiveau = null;
+		List<Niveau> listNiveau = new ArrayList<>();
 
 		List<NiveauDto> listRetour = convert.listEntiteToDto(listNiveau);
 
-		assertNull(listRetour);
+		assertThat(listRetour).isEmpty();
 	}
 }

@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.UnsupportedEncodingException;
@@ -24,7 +23,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fr.adaming.dto.MatiereDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
@@ -70,10 +68,30 @@ public class MatiereControllerTest {
 
 	}
 
+	@Test
+	@DisplayName("Creation matiere avec champ null - retour FAIL")
+	public void testCreatingMatiereWithNullAttribute_shouldReturnFail() throws UnsupportedEncodingException, Exception {
 
-	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
-	// NestedServletException : Request processing failed : nested exception is
-	// java.lang.util.NullPointerException
+		// preparer le DTO
+		MatiereDtoCreate requestDto = new MatiereDtoCreate();
+
+		// convrtir le DTO en Json
+		String dtoAsJson = mapper.writeValueAsString(requestDto);
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(post("http://localhost:8080/matiere/create").contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
+				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertNotNull(responseDto);
+		assertTrue(responseDto.isError());
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
+
+	}
+
 	@Sql(statements = "INSERT INTO Matiere (id,nom) VALUES (5,'math')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Matiere where id=5", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -81,7 +99,6 @@ public class MatiereControllerTest {
 	public void testFindByIdInvalid_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		Integer id = 10;
 		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(id);
 
 		// test requete
 		String responseAsStrig = mockMvc
@@ -93,8 +110,6 @@ public class MatiereControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
-	// NE MARCHE PAAAAAAAAAAAAAAAAAAAAAAAAAAAS
-	// Consider declaring it as object wrapper for the corresponding primtive type
 	@Sql(statements = "INSERT INTO Matiere  VALUES (14,'mathematique',null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -102,7 +117,6 @@ public class MatiereControllerTest {
 	public void testFindByIdOk_shouldWork() throws UnsupportedEncodingException, Exception {
 		Integer id = 14;
 		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(id);
 
 		// test requete
 		String responseAsStrig = mockMvc
@@ -133,10 +147,43 @@ public class MatiereControllerTest {
 	// ********************************************************************************
 	// TEST FIND MATIERES BY MODULE
 
+	@Sql(statements = "INSERT INTO Module  VALUES (1,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Matiere  VALUES (14,'mathematique',1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Matiere  VALUES (20,'physique',1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "Delete from Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "Delete from Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	@DisplayName("")
-	public void testFindMatiereByModule_shouldBeOk() {
+	@DisplayName("test find list matiere by module")
+	public void testFindMatiereByModule_shouldBeOk() throws UnsupportedEncodingException, Exception {
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(get("http://localhost:8080/matiere/all").contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+		
+		String listeMatString = mapper.writeValueAsString(responseDto.getObject());
+		assertThat(listeMatString).isNotNull();
+
+	}
+	
+	
+	@Sql(statements = "INSERT INTO Module  VALUES (1,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "Delete from Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	@DisplayName("test find list matiere by module WITH NO MATIERE")
+	public void testFindMatiereByModuleWithNoMatiere_shouldBeOk() throws UnsupportedEncodingException, Exception {
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(get("http://localhost:8080/matiere/all").contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+		
 	}
 
 	// ********************************************************************************

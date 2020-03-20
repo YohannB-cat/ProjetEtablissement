@@ -15,18 +15,16 @@ public class ExamenCreateConverter implements IConverter<Examen, ExamenDtoCreate
 		if(dto==null) {
 			return null;
 		}
-		Examen entite = new Examen(dto.getId(), dto.getDate(), dto.getType(), dto.getCoefficient());
-		return entite;
+		return new Examen(dto.getId(), dto.getDate(), dto.getType(), dto.getCoefficient());
 	}
 
 	@Override
 	public List<Examen>  listDtoToEntite(List<ExamenDtoCreate> dtoliste) {
-		if(dtoliste==null) {
-			return null;
-		}
-		List<Examen> liste = new ArrayList<Examen>();
-		for (ExamenDtoCreate dto : dtoliste) {
-			liste.add(new Examen(dto.getId(), dto.getDate(), dto.getType(), dto.getCoefficient()));
+		List<Examen> liste = new ArrayList<>();
+		if(dtoliste!=null) {
+			for (ExamenDtoCreate dto : dtoliste) {
+				liste.add(new Examen(dto.getId(), dto.getDate(), dto.getType(), dto.getCoefficient()));
+			}
 		}
 		return liste;
 	}
@@ -36,18 +34,16 @@ public class ExamenCreateConverter implements IConverter<Examen, ExamenDtoCreate
 		if(entite==null) {
 			return null;
 		}
-		ExamenDtoCreate dto = new ExamenDtoCreate(entite.getId(), entite.getDate(), entite.getType(),entite.getCoefficient());
-		return dto;
+		return new ExamenDtoCreate(entite.getId(), entite.getDate(), entite.getType(),entite.getCoefficient());
 	}
 
 	@Override
 	public List<ExamenDtoCreate> listEntiteToDto(List<Examen> entite) {
-		if(entite==null) {
-			return null;
-		}
-		List<ExamenDtoCreate> liste = new ArrayList<ExamenDtoCreate>();
-		for (Examen e : entite) {
-			liste.add(new ExamenDtoCreate(e.getId(), e.getDate(), e.getType(),e.getCoefficient()));
+		List<ExamenDtoCreate> liste = new ArrayList<>();
+		if(entite!=null) {
+			for (Examen e : entite) {
+				liste.add(new ExamenDtoCreate(e.getId(), e.getDate(), e.getType(),e.getCoefficient()));
+			}
 		}
 		return liste;
 	}

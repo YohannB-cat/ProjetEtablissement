@@ -16,18 +16,16 @@ public class NoteConverter implements IConverter<Note, NoteDto> {
 		if(dto==null) {
 			return null;
 		}
-		Note entite = new Note(0, dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen());
-		return entite;
+		return new Note(0, dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen());
 	}
 
 	@Override
 	public List<Note> listDtoToEntite(List<NoteDto> dtoliste) {
-		if(dtoliste==null) {
-			return null;
-		}
-		List<Note> liste = new ArrayList<Note>();
-		for (NoteDto dto : dtoliste) {
-			liste.add(new Note(0, dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen()));
+		List<Note> liste = new ArrayList<>();
+		if(dtoliste!=null) {
+			for (NoteDto dto : dtoliste) {
+				liste.add(new Note(0, dto.getModule(),dto.getValeur(),dto.getEtudiant(),dto.getExamen()));
+			}
 		}
 		return liste;
 	}
@@ -37,18 +35,16 @@ public class NoteConverter implements IConverter<Note, NoteDto> {
 		if(entite==null) {
 			return null;
 		}
-		NoteDto dto = new NoteDto(entite.getModule(), entite.getValeur(), entite.getEtudiant(), entite.getExamen());
-		return dto;
+		return new NoteDto(entite.getModule(), entite.getValeur(), entite.getEtudiant(), entite.getExamen());
 	}
 
 	@Override
 	public List<NoteDto> listEntiteToDto(List<Note> entite) {
-		if(entite==null) {
-			return null;
-		}
-		List<NoteDto> liste = new ArrayList<NoteDto>();
-		for (Note e : entite) {
-			liste.add(new NoteDto(e.getModule(), e.getValeur(), e.getEtudiant(), e.getExamen()));
+		List<NoteDto> liste = new ArrayList<>();
+		if(entite!=null) {
+			for (Note e : entite) {
+				liste.add(new NoteDto(e.getModule(), e.getValeur(), e.getEtudiant(), e.getExamen()));
+			}
 		}
 		return liste;
 	}

@@ -86,7 +86,7 @@ public class MatiereCreateConverterTest {
 			List<MatiereDtoCreate> listeMatiereDto = null;
 			List<Matiere> listeEntite = convert.listDtoToEntite(listeMatiereDto);
 			
-			assertThat(listeEntite).isNull();
+			assertThat(listeEntite).isEmpty();
 		}
 		
 		//TEST  ENTITE TO DTO
@@ -152,7 +152,7 @@ public class MatiereCreateConverterTest {
 			List<Matiere> listeMat = null;
 			List<MatiereDtoCreate> dtoLiist = convert.listEntiteToDto(listeMat);
 			
-			assertThat(dtoLiist).isNull();
+			assertThat(dtoLiist).isEmpty();
 			
 		}
 

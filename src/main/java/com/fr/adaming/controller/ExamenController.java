@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.config.WebConstant;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;
@@ -19,6 +20,7 @@ import com.fr.adaming.service.IExamenService;
 
 @RestController
 public class ExamenController implements IExamenController {
+	
 
 	@Autowired
 	@Qualifier("examenservice")
@@ -42,10 +44,10 @@ public class ExamenController implements IExamenController {
 				
 				//Attribution de la réponse en fonction du retour DB et de la conposition de l'objet
 				if (exam != null) {
-					resp = new ResponseDto(false, "SUCCESS", exam);
+					resp = new ResponseDto(false, WebConstant.SUCCESS, exam);
 					return ResponseEntity.status(HttpStatus.OK).body(resp);
 				}
-				resp = new ResponseDto(true, "FAIL", exam);
+				resp = new ResponseDto(true, WebConstant.FAIL, exam);
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -57,10 +59,10 @@ public class ExamenController implements IExamenController {
 		ResponseDto resp = null;
 		
 		if (exam != null) {
-			resp = new ResponseDto(false, "SUCCESS", exam);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, exam);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		} else {
-			resp = new ResponseDto(true, "FAIL", exam);
+			resp = new ResponseDto(true, WebConstant.FAIL, exam);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
 		
@@ -70,15 +72,9 @@ public class ExamenController implements IExamenController {
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
 		List<ExamenDto> list = examDto.listEntiteToDto(service.findAll());
-				
+		ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
 		
-		ResponseDto resp = null;
-		if (list != null) {
-			 resp = new ResponseDto(false, "SUCCESS", list);
-			 return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(false, "FAIL", null);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
 	// update
@@ -88,11 +84,11 @@ public class ExamenController implements IExamenController {
 				
 		ResponseDto resp = null;
 
-		if (!result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+		if (result) {
+			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false,WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -103,10 +99,10 @@ public class ExamenController implements IExamenController {
 		ResponseDto resp = null;
 		
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 	
@@ -115,10 +111,10 @@ public class ExamenController implements IExamenController {
 		ResponseDto resp = null;
 		List<Examen> list = service.listByMatiere(idMatiere);
 		if (list != null) {
-			resp = new ResponseDto(false, "SUCCESS", list);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(false, "FAIL", null);
+		resp = new ResponseDto(false, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		
 	}

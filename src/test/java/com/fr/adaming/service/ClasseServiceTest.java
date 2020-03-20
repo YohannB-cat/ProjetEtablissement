@@ -72,8 +72,8 @@ public class ClasseServiceTest {
 	// Valide !
 	@Test
 	@DisplayName("Demande de la liste vide")
-	public void testGetList_shouldReturnNull() {
-		assertThat(service.findAll()).isNull();
+	public void testGetList_shouldReturnEmptyList() {
+		assertThat(service.findAll()).isEmpty();
 	}
 
 	// Valide ! (pb avec etudiant)
@@ -99,6 +99,12 @@ public class ClasseServiceTest {
 	@DisplayName("Recherche d'une classe par id non existant")
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
+	}
+	
+	@Test
+	@DisplayName("Recherche d'une classe par id egale à zéro")
+	public void testFindByIdWithIdEqualZero_shouldReturnNull() {
+		assertThat(service.findById(0)).isNull();
 	}
 
 	// Valide !

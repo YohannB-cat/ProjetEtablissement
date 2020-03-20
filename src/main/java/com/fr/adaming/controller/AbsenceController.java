@@ -8,15 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.config.WebConstant;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.AbsenceDto;
 import com.fr.adaming.dto.AbsenceDtoCreate;
@@ -24,7 +20,10 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.Absence;
 import com.fr.adaming.service.IAbsenceService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class AbsenceController implements IAbsenceController {
 
 	@Autowired
@@ -44,10 +43,12 @@ public class AbsenceController implements IAbsenceController {
 		ResponseDto resp = null;
 
 		if (abs != null) {
-			resp = new ResponseDto(false, "SUCCESS", abs);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, abs);
+			log.info("Creation absence Ok");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, "FAIL", abs);
+		log.warn("Creation absence fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -57,10 +58,12 @@ public class AbsenceController implements IAbsenceController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
+			log.info("Modification absence OK");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(false, "FAIL", null);
+		log.warn("Modification absence Fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -70,10 +73,12 @@ public class AbsenceController implements IAbsenceController {
 		ResponseDto resp = null;
 
 		if (dto != null) {
-			resp = new ResponseDto(false, "SUCCESS", dto);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, dto);
+			log.info("Find by Id absence OK");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(true, "FAIL", dto);
+		log.warn("Find by Id absence Fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -81,7 +86,8 @@ public class AbsenceController implements IAbsenceController {
 	public ResponseEntity<ResponseDto> findAll() {
 		List<AbsenceDto> list = convert.listEntiteToDto(service.findAll());
 
-		ResponseDto resp = new ResponseDto(false, "SUCCESS", list);
+		ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
+		log.info("Find all absence Ok");
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
@@ -91,10 +97,12 @@ public class AbsenceController implements IAbsenceController {
 		ResponseDto resp = null;
 
 		if (result) {
-			resp = new ResponseDto(true, "SUCCESS", null);
+			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
+			log.info("Suppression absence par id Ok");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		resp = new ResponseDto(false, "FAIL", null);
+		log.warn("Suppression absence par id Fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 }

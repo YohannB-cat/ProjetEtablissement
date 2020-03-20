@@ -2,19 +2,19 @@ package com.fr.adaming.service;
 
 import java.util.List;
 
-import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dao.IExamenDao;
 import com.fr.adaming.dao.IMatiereDao;
 import com.fr.adaming.entity.Examen;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service ("examenservice")
+@Slf4j
 public class ExamenService implements IExamenService {
 	
 	@Autowired
@@ -29,35 +29,24 @@ public class ExamenService implements IExamenService {
 			if (exam == null || dao.existsById(exam.getId())) {
 				return null;
 			}
+			log.info("Creation d'un examen");
 			return dao.save(exam);
 		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		catch (ConstraintViolationException er) {
-			er.printStackTrace();
+			log.error("DataIntegrityViolationException");
 			return null;
 		}
 	}
 
 	@Override
 	public List<Examen> findAll() {
+		log.info("Recuperation de la liste des examens");
 		return dao.findAll();
 	}
 
 	@Override
 	public Examen findById(int id) {
-		try {
-			if (id != 0) {
-				return dao.findById(id).orElse(null);
-			} else {
-				return null;
-			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-			return null;
-		}
+		log.info("Recuperation d'un Examen");
+		return dao.findById(id).orElse(null);
 	}
 
 	@Override
@@ -65,15 +54,14 @@ public class ExamenService implements IExamenService {
 		try {
 			if (dao.existsById(exam.getId())) {
 				dao.save(exam);
+				log.info("SUCCESS update exam");
 				return true;
 			} else {
+				log.warn("FAIL update exam");
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException er) {
-			er.printStackTrace();
-			return false;
 		} catch (NullPointerException ec) {
-			ec.printStackTrace();
+			log.error("NullPointerException : update d'un objet null");
 			return false;
 		}
 	}
@@ -81,34 +69,27 @@ public class ExamenService implements IExamenService {
 	@Override
 	public boolean deleteById(int id) {
 		try {
-			if (dao.findById(id) != null && id != 0) {
+			if (dao.findById(id).isPresent()) {
 				dao.deleteById(id);
+				log.info("SUCCESS delete exam");
 				return true;
 			} else {
+				log.warn("FAIL delete exam");
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-			return false;
-		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			log.error("ERROR delete exam "+ e.getMessage());
 			return false;
 		}
 	}
 	
 	@Override
 	public List<Examen> listByMatiere(int idMatiere){
-		List<Examen> list =null;
-		try {
-			if (matiereDao.findById(idMatiere) != null && idMatiere != 0) {
-				 list = dao.listByMatiere(idMatiere);
-			}
-		}catch (InvalidDataAccessApiUsageException e) {
-			e.printStackTrace();
-		} catch (EmptyResultDataAccessException er) {
-			er.printStackTrace();
+		if (matiereDao.findById(idMatiere).isPresent()) {
+			log.info("SUCCESS LIST BY Matiere");
+			return dao.listByMatiere(idMatiere);
 		}
-		return list;
+		return null;
 	}
 
 }

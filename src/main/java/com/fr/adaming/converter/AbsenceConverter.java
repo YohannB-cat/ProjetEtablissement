@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 import com.fr.adaming.dto.AbsenceDto;
 import com.fr.adaming.entity.Absence;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 
 	@Override
@@ -33,7 +36,7 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 				return entite;
 			}
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return null;
 		}
 	}
@@ -41,10 +44,10 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 	@Override
 	public List<Absence> listDtoToEntite(List<AbsenceDto> dtoliste) {
 		try {
-			if (dtoliste == null) {
-				return null;
+			if (dtoliste.isEmpty()) {
+				return new ArrayList<>();
 			}
-			List<Absence> liste = new ArrayList<Absence>();
+			List<Absence> liste = new ArrayList<>();
 			for (AbsenceDto dto : dtoliste) {
 				if (dto.getEtudiant() != null) {
 					liste.add(new Absence(LocalDate.parse(dto.getDebut()), LocalDate.parse(dto.getFin()),
@@ -58,8 +61,8 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 			}
 			return liste;
 		} catch (NullPointerException e) {
-			e.printStackTrace();
-			return null;
+			log.warn(e.getMessage());
+			return new ArrayList<>();
 		}
 	}
 
@@ -69,11 +72,11 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 			if (entite == null) {
 			return null;
 		}
-		AbsenceDto dto = new AbsenceDto(entite.getDebut().toString(), entite.getFin().toString(),
+		return new AbsenceDto(entite.getDebut().toString(), entite.getFin().toString(),
 				entite.getJustification(), entite.getDescription(), entite.getEtudiant());
-		return dto;
+		
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return null;
 		}
 	}
@@ -81,11 +84,10 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 	@Override
 	public List<AbsenceDto> listEntiteToDto(List<Absence> entite) {
 		try {
-			if (entite == null) {
-				List<AbsenceDto> listeNulle = new ArrayList<AbsenceDto>();
-				return listeNulle;
+			if (entite.isEmpty()) {
+				return new ArrayList<>();
 			}
-			List<AbsenceDto> liste = new ArrayList<AbsenceDto>();
+			List<AbsenceDto> liste = new ArrayList<>();
 			for (Absence e : entite) {
 				if (e.getEtudiant() != null) {
 					liste.add(new AbsenceDto(e.getDebut().toString(), e.getFin().toString(), e.getJustification(),
@@ -103,8 +105,8 @@ public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {
 			}
 			return liste;
 		} catch (NullPointerException e) {
-			e.printStackTrace();
-			return null;
+			log.warn(e.getMessage());
+			return new ArrayList<>();
 		}
 
 	}
