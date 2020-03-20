@@ -13,7 +13,71 @@
 	<artifactId>ProjetEtablissement</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ProjetEtablissement</name>
-	<description>Projet etablissement du groupe de Clara</description>
+	<description>ProjetEtablissement est une application de gestion à destination du personnel d'un établissement scolaire.
+	      Elle permet aux utilisateurs (professeurs, directeurs) de visualiser les informations gérées et de les modifier.</description>
+
+	<scm>
+		<url>https://github.com/YohannB-cat/ProjetEtablissement</url>
+	</scm>
+
+	<developers>
+		<developer>
+			<name>Yohann BACHELIER</name>
+			<roles>
+				<role>Tech Lead</role>
+			</roles>
+			<email>yohann.bachelier@gmail.com</email>
+
+		</developer>
+		<developer>
+			<name>Isaline MILLET</name>
+			<roles>
+				<role>Developper</role>
+			</roles>
+			<email>isalinemillet38@gmail.com</email>
+
+		</developer>
+		<developer>
+			<name>Flavien GOMILA</name>
+			<roles>
+				<role>Developper</role>
+			</roles>
+			<email>flavien.gomila@gmail.com</email>
+
+		</developer>
+		<developer>
+			<name>Maxime REMBERT</name>
+			<roles>
+				<role>Developper</role>
+			</roles>
+			<email>maxime.rembert@gmail.com</email>
+
+		</developer>
+		<developer>
+			<name>Clara CADET</name>
+			<roles>
+				<role>Project Manager</role>
+			</roles>
+			<email>clara.cadet@yahoo.fr</email>
+
+		</developer>
+	</developers>
+
+	<organization>
+		<name>INTI Formation</name>
+		<url>https://www.intiformation.com/</url>
+	</organization>
+
+	<contributors>
+		<contributor>
+			<name>Mehdi BENSALHA</name>
+			<email>mbensalha@adaming.fr</email>
+			<roles>
+			<role>Former</role>
+			</roles>
+		</contributor>
+	</contributors>
+
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -83,5 +147,17 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.1.0</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
 
 </project>

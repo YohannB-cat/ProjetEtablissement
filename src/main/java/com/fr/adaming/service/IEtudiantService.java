@@ -6,6 +6,11 @@ import com.fr.adaming.entity.Etudiant;
 
 public interface IEtudiantService {
 
+	/**
+	 * description : le rôle de la méthode
+	 * @param etudiant description du param nommé etudiant
+	 * @return object de type etudiant ou null
+	 */
 	public Etudiant create(Etudiant etudiant);
 
 	public List<Etudiant> findAll();
