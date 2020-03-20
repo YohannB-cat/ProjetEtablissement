@@ -78,14 +78,10 @@ public class ModuleController implements IModuleController {
 		List<ModuleDto> list = convertDto.listEntiteToDto(service.findAll());
 
 		ResponseDto resp = null;
-		if (list != null) {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 			log.info("SUCESS find all module");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(true, WebConstant.FAIL, null);
-		log.warn("FAIL find all module");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+	
 	}
 
 	// Update
