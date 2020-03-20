@@ -12,7 +12,7 @@ public class ClasseConverter implements IConverter<Classe, ClasseDto> {
 
 	@Override
 	public Classe dtoToEntite(ClasseDto dto) {
-		if(dto==null) {
+		if(dto==null ) {
 			return null;
 		}
 		return new Classe(0, dto.getNom(), dto.getListe());

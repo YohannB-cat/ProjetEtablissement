@@ -57,7 +57,6 @@ public class ClasseControllerTest {
 		ClasseDtoCreate classeResponsDto = mapper.readValue(responseAsStrig, ClasseDtoCreate.class);
 
 		assertThat(classeResponsDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
-		assertThat(classeResponsDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
@@ -92,7 +91,6 @@ public class ClasseControllerTest {
 	@DisplayName("Find by Id Ok")
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
-		// convrtir le DTO en Json
 
 		// test requete
 		String responseAsStrig = mockMvc
@@ -105,10 +103,9 @@ public class ClasseControllerTest {
 	}
 
 	@Test
-	@DisplayName("Test find by Id FAIL")
+	@DisplayName("Test find by Id == 0")
 	public void testFindByIdWithController_ReturnFAIL() throws UnsupportedEncodingException, Exception {
-		int id = 5;
-		// convrtir le DTO en Json
+		int id = 0;
 
 		// test requete
 		String responseAsStrig = mockMvc
