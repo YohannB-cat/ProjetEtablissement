@@ -22,6 +22,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
@@ -39,7 +40,7 @@ public class EtudiantControllerTest {
 	public void testCreatingEtudiantWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
-		EtudiantDtoCreate requestDto = new EtudiantDtoCreate();
+		EtudiantDto requestDto = new EtudiantDto();
 		requestDto.setNom("rembert");
 		requestDto.setPrenom("maxime");
 		requestDto.setVille("Annecy");

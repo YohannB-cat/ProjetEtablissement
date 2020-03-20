@@ -68,6 +68,12 @@ public class EtudiantServiceTest {
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
+	
+	@Test
+	@DisplayName("Recherche d'étudiant par id égal à 0")
+	public void testFindByIdWithZeroId_shouldReturnNull() {
+		assertThat(service.findById(0)).isNull();
+	}
 
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
 			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
