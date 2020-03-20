@@ -6,8 +6,6 @@ import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dao.IExamenDao;
@@ -36,11 +34,6 @@ public class ExamenService implements IExamenService {
 			return dao.save(exam);
 		} catch (DataIntegrityViolationException e) {
 			log.error("DataIntegrityViolationException");
-			return null;
-		}
-
-		catch (ConstraintViolationException er) {
-			log.error("ConstraintViolationException");
 			return null;
 		}
 	}
@@ -85,29 +78,19 @@ public class ExamenService implements IExamenService {
 				log.warn("FAIL delete exam");
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
+		} catch (IllegalArgumentException e) {
 			log.error("ERROR delete exam "+ e.getMessage());
-			return false;
-		} catch (EmptyResultDataAccessException er) {
-			log.error("ERROR delete exam"+er.getMessage());
 			return false;
 		}
 	}
 	
 	@Override
 	public List<Examen> listByMatiere(int idMatiere){
-		List<Examen> list =null;
-		try {
-			if (matiereDao.findById(idMatiere).isPresent()) {
-				log.info("SUCCESS LIST BY Matiere");
-				return list = dao.listByMatiere(idMatiere);
-			}
-		}catch (InvalidDataAccessApiUsageException e) {
-			log.error("ERROR list by Marieres" + e.getMessage());
-		} catch (EmptyResultDataAccessException er) {
-			log.error("ERROR list By Matiere" +er.getMessage());
+		if (matiereDao.findById(idMatiere).isPresent()) {
+			log.info("SUCCESS LIST BY Matiere");
+			return dao.listByMatiere(idMatiere);
 		}
-		return list;
+		return null;
 	}
 
 }
