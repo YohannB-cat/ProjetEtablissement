@@ -68,6 +68,8 @@ public class EtudiantControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 		assertFalse(responseDto.isError());
 	}
+	
+	
 
 	@Test
 	public void testFindByIdInvalid_shouldNotWork() throws UnsupportedEncodingException, Exception {

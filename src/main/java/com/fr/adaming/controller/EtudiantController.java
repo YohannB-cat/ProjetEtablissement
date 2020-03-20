@@ -49,8 +49,6 @@ public class EtudiantController implements IEtudiantController {
 	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto) {
 		EtudiantDtoCreate etu = convertCreate.entiteToDto(service.create(convert.dtoToEntite(dto)));
-		System.out.println("DEBUG THIS"+this);
-		System.out.println("DEBUG RESP"+resp);
 		this.resp.setObject(etu);
 		
 		if (etu != null) {
