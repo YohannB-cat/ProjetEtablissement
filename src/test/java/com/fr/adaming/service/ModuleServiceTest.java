@@ -136,6 +136,9 @@ public class ModuleServiceTest {
 	}
 
 	// Test deleteById
+	/**
+	 * c'est une <b>méthode</b> pour <span>xx</span>
+	 */
 	@Sql (statements = "DELETE FROM Module WHERE nom = 'null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Module WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
