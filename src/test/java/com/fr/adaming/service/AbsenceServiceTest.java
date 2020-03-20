@@ -93,6 +93,12 @@ public class AbsenceServiceTest {
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
+	
+	@Test
+	@DisplayName("Recherche d'Absence par id non existant")
+	public void testFindByIdWithIdZero_shouldReturnNull() {
+		assertThat(service.findById(0)).isNull();
+	}
 
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (1, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -138,6 +144,15 @@ public class AbsenceServiceTest {
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
 		Integer id = 0;
+		assertThat(service.deleteById(id)).isFalse();
+	}
+	
+	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (1, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Absence WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	@DisplayName("Delete avec id = 0")
+	public void testDeleteByIdWithIdInexistant_shouldReturnFalse() {
+		Integer id = 5;
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
