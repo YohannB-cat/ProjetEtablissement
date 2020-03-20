@@ -170,7 +170,7 @@ public class ClasseConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite correct")
 	public void testListDtoToListEntiteWithNullList_shouldReturnEmptyList() {
-		List<ClasseDto> listClasseDto = null;
+		List<ClasseDto> listClasseDto = new ArrayList<>();
 
 		List<Classe> listRetour = convert.listDtoToEntite(listClasseDto);
 
@@ -204,7 +204,7 @@ public class ClasseConverterTest {
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite null")
 	public void testListEntiteToListDtoWithNullList_shouldReturnEmptyList() {
-		List<Classe> listClasse = null;
+		List<Classe> listClasse = new ArrayList<>();
 
 		List<ClasseDto> listRetour = convert.listEntiteToDto(listClasse);
 

@@ -2,6 +2,7 @@ package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,9 +45,9 @@ public class EtudiantServiceTest {
 	// Test findAll
 	@Test
 	@DisplayName("Demande de la liste vide")
-	public void testGetList_shouldReturnNull() {
+	public void testGetList_shouldReturnEmptyList() {
 		System.out.println(service.findAll());
-		assertNull(service.findAll());
+		assertTrue(service.findAll().isEmpty());
 	}
 
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
@@ -66,6 +67,12 @@ public class EtudiantServiceTest {
 	@DisplayName("Recherche d'étudiant par id non existant")
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
+	}
+	
+	@Test
+	@DisplayName("Recherche d'étudiant par id égal à 0")
+	public void testFindByIdWithZeroId_shouldReturnNull() {
+		assertThat(service.findById(0)).isNull();
 	}
 
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "

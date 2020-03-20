@@ -22,6 +22,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
@@ -34,12 +35,12 @@ public class EtudiantControllerTest {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
-	@Sql(statements = "Delete from etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@Sql(statements = "Delete from etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingEtudiantWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
-		EtudiantDtoCreate requestDto = new EtudiantDtoCreate();
+		EtudiantDto requestDto = new EtudiantDto();
 		requestDto.setNom("rembert");
 		requestDto.setPrenom("maxime");
 		requestDto.setVille("Annecy");
@@ -49,10 +50,11 @@ public class EtudiantControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/etudiant/").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(post("http://localhost:8080/etudiant").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
+		
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertNotNull(responseDto);

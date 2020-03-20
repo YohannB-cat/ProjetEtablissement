@@ -80,14 +80,10 @@ public class MatiereController implements IMatiereController {
 		List<MatiereDto> list = matiereDto.listEntiteToDto(service.findAll());
 
 		ResponseDto resp = null;
-		if (list != null) {
-			resp = new ResponseDto(false, WebConstant.SUCCESS, list);
-			log.info("SUCCESS find All matiere");
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(false, WebConstant.FAIL, null);
-		log.warn("FAIL find All matiere");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		resp = new ResponseDto(false, WebConstant.SUCCESS, list);
+		log.info("SUCCESS find All matiere");
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
+
 	}
 
 	// find matiere by module
@@ -97,14 +93,10 @@ public class MatiereController implements IMatiereController {
 
 		ResponseDto resp = null;
 
-		if (listMatiere != null) {
-			resp = new ResponseDto(false, WebConstant.SUCCESS, listMatiere);
-			log.info("SUCCESS find matiere by matieres");
-			return ResponseEntity.status(HttpStatus.OK).body(resp);
-		}
-		resp = new ResponseDto(false, WebConstant.FAIL, null);
-		log.warn("FAIL find matiere by matieres");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		resp = new ResponseDto(false, WebConstant.SUCCESS, listMatiere);
+		log.info("SUCCESS find matiere by matieres");
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
+
 	}
 
 	// udpdate

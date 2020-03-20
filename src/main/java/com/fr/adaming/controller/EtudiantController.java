@@ -41,14 +41,16 @@ public class EtudiantController implements IEtudiantController {
 
 	@Autowired
 	private IConverter<Etudiant, EtudiantDtoCreate> convertCreate;
-	
-	private ResponseDto resp;
+
+	private ResponseDto resp = new ResponseDto(false,null,null);
 
 	// Methode create
 	@Override
 	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody EtudiantDto dto) {
 		EtudiantDtoCreate etu = convertCreate.entiteToDto(service.create(convert.dtoToEntite(dto)));
+		System.out.println("DEBUG THIS"+this);
+		System.out.println("DEBUG RESP"+resp);
 		this.resp.setObject(etu);
 		
 		if (etu != null) {
@@ -67,7 +69,7 @@ public class EtudiantController implements IEtudiantController {
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody EtudiantDtoCreate dto) {
 		boolean result = service.update(convertCreate.dtoToEntite(dto));
-		this.resp = null;
+		this.resp = new ResponseDto(false,null,null);
 
 		if (result) {
 			setResponseSuccess();
@@ -112,7 +114,7 @@ public class EtudiantController implements IEtudiantController {
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
 		boolean result = service.deleteById(id);
-		this.resp = null;
+		this.resp = new ResponseDto(false,null,null);
 
 		if (result) {
 			setResponseSuccess();
