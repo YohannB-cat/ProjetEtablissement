@@ -100,6 +100,12 @@ public class ClasseServiceTest {
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
+	
+	@Test
+	@DisplayName("Recherche d'une classe par id egale à zéro")
+	public void testFindByIdWithIdEqualZero_shouldReturnNull() {
+		assertThat(service.findById(0)).isNull();
+	}
 
 	// Valide !
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)

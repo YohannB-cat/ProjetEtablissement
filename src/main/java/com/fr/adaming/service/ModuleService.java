@@ -3,12 +3,7 @@ package com.fr.adaming.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dao.IModuleDao;
@@ -30,12 +25,8 @@ public class ModuleService implements IModuleService{
 				return null;
 			}
 			return dao.save(module);
-		} catch (DataIntegrityViolationException e) {
+		} catch (Exception e) {
 			log.error("ERROR create module"+e.getMessage());
-			return null;
-		}
-		catch (ConstraintViolationException er) {
-			log.error("ERROR create module "+er.getMessage());
 			return null;
 		}
 	}
@@ -57,7 +48,7 @@ public class ModuleService implements IModuleService{
 			} else {
 				return null;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
+		} catch (Exception e) {
 			log.error("ERROR find by id module" + e.getMessage());
 			return null;
 		}
@@ -72,11 +63,8 @@ public class ModuleService implements IModuleService{
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException er) {
+		} catch (Exception er) {
 			log.error("ERROR update module "+ er.getMessage());
-			return false;
-		} catch (NullPointerException ec) {
-			log.error("ERROR update module"+ec.getMessage());
 			return false;
 		}
 	}
@@ -84,7 +72,7 @@ public class ModuleService implements IModuleService{
 	@Override
 	public boolean deleteById(Integer id) {
 
-			if (dao.existsById(id) && id != null) {
+			if (dao.existsById(id)) {
 				dao.deleteById(id);
 				return true;
 			} else {

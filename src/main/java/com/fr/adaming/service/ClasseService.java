@@ -83,7 +83,7 @@ public class ClasseService implements IClasseService{
 	public boolean deleteById(int id) {
 		try {
 			Optional<Classe> c = dao.findById(id);
-			if (c.isPresent() && id != 0) {
+			if (c.isPresent()) {
 				dao.deleteById(id);
 				return true;
 			} else {
