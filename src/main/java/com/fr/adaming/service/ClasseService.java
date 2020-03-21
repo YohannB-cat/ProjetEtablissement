@@ -17,7 +17,6 @@ import com.fr.adaming.entity.Classe;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@SuppressWarnings("squid:S1148")
 @Service ("classeservice")
 public class ClasseService implements IClasseService{
 	

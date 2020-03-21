@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.UnsupportedEncodingException;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -54,39 +55,55 @@ public class EtudiantControllerTest {
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		
+
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertNotNull(responseDto);
-		
+
 		String etuString = mapper.writeValueAsString(responseDto.getObject());
 		EtudiantDtoCreate respEtudiant = mapper.readValue(etuString, EtudiantDtoCreate.class);
-		
+
 		assertThat(respEtudiant).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
 		assertThat(respEtudiant).isNotNull().hasFieldOrPropertyWithValue("prenom", requestDto.getPrenom());
 		assertThat(respEtudiant).isNotNull().hasFieldOrPropertyWithValue("ville", requestDto.getVille());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 		assertFalse(responseDto.isError());
 	}
-	
-	
+
+	@Test
+	@DisplayName("Creating with no attribute")
+	@Sql(statements = "DELETE FROM Etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreatingEtudiantWithNoAttribute_shouldReturnFail() throws UnsupportedEncodingException, Exception {
+		// preparer le DTO
+		EtudiantDto requestDto = new EtudiantDto();
+		// convrtir le DTO en Json
+		String dtoAsJson = mapper.writeValueAsString(requestDto);
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(post("http://localhost:8080/etudiant").contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
+				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertNotNull(responseDto);
+	}
 
 	@Test
 	public void testFindByIdInvalid_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 58465;
 		// convrtir le DTO en Json
 
-
 		// test requete
-		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/etudiant/" + id ))
-				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		String responseAsStrig = mockMvc.perform(get("http://localhost:8080/etudiant/" + id)).andDo(print())
+				.andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-		
+
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
-	
+
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) VALUES (14,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -97,15 +114,15 @@ public class EtudiantControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/etudiant/" + id ).contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(get("http://localhost:8080/etudiant/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-		
+
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-	
+
 	@Test
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		// test requete
@@ -140,14 +157,15 @@ public class EtudiantControllerTest {
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-		
+
 		assertNotNull(responseDto);
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
-		
+
 	}
-	
+
 	@Test
-	public void testUpdateEtudiantNotExistingWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
+	public void testUpdateEtudiantNotExistingWithController_shouldNotWork()
+			throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
 		EtudiantDtoCreate requestDto = new EtudiantDtoCreate();
@@ -166,10 +184,10 @@ public class EtudiantControllerTest {
 				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-		
+
 		assertNotNull(responseDto);
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
-		
+
 	}
 
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) VALUES (5,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -199,7 +217,7 @@ public class EtudiantControllerTest {
 
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(delete("http://localhost:8080/etudiant/" + id ).contentType(MediaType.APPLICATION_JSON_VALUE)
+				.perform(delete("http://localhost:8080/etudiant/" + id).contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO

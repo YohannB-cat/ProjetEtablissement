@@ -54,17 +54,13 @@ public class ClasseControllerTest {
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ClasseDtoCreate classeResponsDto = mapper.readValue(responseAsStrig, ClasseDtoCreate.class);
-
-		assertThat(classeResponsDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
-
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
-		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "SUCCESS");
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
 	@Test
-	@DisplayName("Test create with FAIL")
+	@DisplayName("Test create with no attribute")
 	public void testCreatingWithFail_SHouldReturn400() throws UnsupportedEncodingException, Exception {
 		// preparer le DTO
 		ClasseDtoCreate requestDto = new ClasseDtoCreate();
@@ -80,7 +76,7 @@ public class ClasseControllerTest {
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
-		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "FAIL");
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 
 	}
 
@@ -89,6 +85,8 @@ public class ClasseControllerTest {
 
 	@Test
 	@DisplayName("Find by Id Ok")
+	@Sql(statements = "INSERT INTO Classe (id,nom) VALUES (5,'sixiemeB')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 
@@ -130,20 +128,7 @@ public class ClasseControllerTest {
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
-		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "SUCCESS");
-	}
-
-	@Test
-	@DisplayName("test Find All bad request")
-	public void testFindAllWithController_ReturnFAIL() throws UnsupportedEncodingException, Exception {
-		// test requete
-		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/classe/all").contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
-		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-
-		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "FAIL");
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
 	// **********************************************************************
@@ -151,8 +136,11 @@ public class ClasseControllerTest {
 
 	@Test
 	@DisplayName("Test Update OK")
+	@Sql(statements = "INSERT INTO Classe (id,nom) VALUES (10,'sixiemeB')",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testUpdateClasseWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		ClasseDtoCreate requestDto = new ClasseDtoCreate();
+		requestDto.setId(10);
 		requestDto.setNom("6B");
 
 		// convrtir le DTO en Json
@@ -167,10 +155,11 @@ public class ClasseControllerTest {
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "SUCCESS");
+		
 	}
 
 	@Test
-	@DisplayName("Test UpdateFAIL")
+	@DisplayName("Test Update FAIL")
 	public void testUpdateClasseWithController_ReturnFAIL() throws UnsupportedEncodingException, Exception {
 		ClasseDtoCreate requestDto = new ClasseDtoCreate();
 
@@ -181,7 +170,7 @@ public class ClasseControllerTest {
 		String responseAsStrig = mockMvc
 				.perform(put("http://localhost:8080/classe/").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
-				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 

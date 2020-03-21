@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.UnsupportedEncodingException;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -54,14 +55,34 @@ public class AbsenceControllerTest {
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertNotNull(responseDto);
-		
+
 		String absString = mapper.writeValueAsString(responseDto.getObject());
 		AbsenceDtoCreate respAbsDtoCreate = mapper.readValue(absString, AbsenceDtoCreate.class);
-		
+
 		assertThat(respAbsDtoCreate).isNotNull().hasFieldOrPropertyWithValue("debut", requestDto.getDebut());
 		assertThat(respAbsDtoCreate).isNotNull().hasFieldOrPropertyWithValue("fin", requestDto.getFin());
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 		assertFalse(responseDto.isError());
+	}
+
+	@Test
+	@DisplayName("test creation absence withtout attribute")
+	@Sql(statements = "delete from Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreatingAbsenceWithoutAttribute_shouldReturnFail() throws UnsupportedEncodingException, Exception {
+		// preparer le DTO
+		AbsenceDtoCreate requestDto = new AbsenceDtoCreate();
+		// convrtir le DTO en Json
+		String dtoAsJson = mapper.writeValueAsString(requestDto);
+
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(post("http://localhost:8080/absence/").contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(dtoAsJson))
+				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+		
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (5, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -82,7 +103,7 @@ public class AbsenceControllerTest {
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-	
+
 	@Test
 	public void testFindByIdInvalid_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
@@ -105,13 +126,13 @@ public class AbsenceControllerTest {
 		// test requete
 		String responseAsStrig = mockMvc
 				.perform(get("http://localhost:8080/absence/all").contentType(MediaType.APPLICATION_JSON_VALUE))
-						.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-	
+
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (5, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -131,11 +152,11 @@ public class AbsenceControllerTest {
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-		
+
 		assertNotNull(responseDto);
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-	
+
 	@Test
 	public void testUpdateAbsenceWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		AbsenceDtoCreate requestDto = new AbsenceDtoCreate();
@@ -153,15 +174,15 @@ public class AbsenceControllerTest {
 				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-		
+
 		assertNotNull(responseDto);
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
-	
+
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (5, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testDeleteByExistingIdWithController_shouldWork () throws UnsupportedEncodingException, Exception {
+	public void testDeleteByExistingIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(id);
@@ -176,9 +197,9 @@ public class AbsenceControllerTest {
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-	
+
 	@Test
-	public void testDeleteByNotExistingIdWithController_shouldNotWork () throws UnsupportedEncodingException, Exception {
+	public void testDeleteByNotExistingIdWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 28;
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(id);
@@ -193,6 +214,5 @@ public class AbsenceControllerTest {
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
-
 
 }

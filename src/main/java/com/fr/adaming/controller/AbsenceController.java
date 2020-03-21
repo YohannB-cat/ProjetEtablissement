@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,8 +39,11 @@ public class AbsenceController implements IAbsenceController {
 
 	@Override
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody AbsenceDtoCreate dto) {
-		AbsenceDtoCreate abs = convertCreate.entiteToDto(service.create(convertCreate.dtoToEntite(dto)));
+		
 
+			AbsenceDtoCreate abs = convertCreate.entiteToDto(service.create(convertCreate.dtoToEntite(dto)));
+		
+		
 		ResponseDto resp = null;
 
 		if (abs != null) {
@@ -47,7 +51,7 @@ public class AbsenceController implements IAbsenceController {
 			log.info("Creation absence Ok");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
-		resp = new ResponseDto(true, "FAIL", abs);
+		resp = new ResponseDto(true, "FAIL", null);
 		log.warn("Creation absence fail");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}

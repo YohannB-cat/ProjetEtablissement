@@ -5,18 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.entity.Absence;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
-@SuppressWarnings("squid:S1148")
+@Slf4j
 public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCreate> {
 
 	@Override
 	public Absence dtoToEntite(AbsenceDtoCreate dto) {
 		try {
-			if (dto == null) {
+			if (dto == null || dto.getDebut() == null) {
 				return null;
 			} else {
 				Absence entite;
@@ -31,6 +34,7 @@ public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCre
 				return entite;
 			}
 		} catch (NullPointerException e) {
+			log.error("ERROR convert dto to entite"+e.getMessage());
 			return null;
 		}
 	}
@@ -55,6 +59,7 @@ public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCre
 			}
 			return liste;
 		} catch (NullPointerException e) {
+			log.error("ERROR convert list dto to entite"+e.getMessage());
 			return new ArrayList<>();
 		}
 	}
@@ -65,11 +70,10 @@ public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCre
 			if (entite == null) {
 				return null;
 			}
-			return new AbsenceDtoCreate(entite.getId(), entite.getDebut().toString(),
-					entite.getFin().toString(), entite.getJustification(), entite.getDescription(),
-					entite.getEtudiant());
+			return new AbsenceDtoCreate(entite.getId(), entite.getDebut().toString(), entite.getFin().toString(),
+					entite.getJustification(), entite.getDescription(), entite.getEtudiant());
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			log.error("ERROR entite to DTO"+e.getMessage());
 			return null;
 		}
 	}
@@ -94,6 +98,7 @@ public class AbsenceCreateConverter implements IConverter<Absence, AbsenceDtoCre
 			}
 			return liste;
 		} catch (NullPointerException e) {
+			log.error("ERROR liste entite to DTO"+e.getMessage());
 			return new ArrayList<>();
 		}
 
