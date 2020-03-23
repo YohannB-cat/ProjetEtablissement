@@ -12,6 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.fr.adaming.dto.ModuleDto;
 import com.fr.adaming.entity.Module;
 
+/**
+ * test converter simple module
+ * @author IN-LY-004
+ *
+ */
 @SpringBootTest
 public class ModuleConverterTest {
 	
@@ -20,6 +25,10 @@ public class ModuleConverterTest {
 	
 	//TEST DTO TO ENTITE
 	
+		/**
+		 * Conversion dto vers entite
+		 * Condition valide
+		 */
 		@Test
 		public void testDtoToEntiteValid_shouldReturnEntite() {
 			ModuleDto dto = new ModuleDto("sixieme");
@@ -30,6 +39,10 @@ public class ModuleConverterTest {
 
 		}
 		
+		/**
+		 * Conversion dto vers entite
+		 * Si dto est sans attribut, le retour est null
+		 */
 		@Test
 		public void testDtoToEntiteWithBlankValue_shouldReturnNull() {
 			ModuleDto dto = new ModuleDto();
@@ -40,6 +53,10 @@ public class ModuleConverterTest {
 			
 		}
 
+		/**
+		 * Conversion dto vers entite
+		 * Si dto est null, l'entite est null
+		 */
 		@Test
 		public void testDtoToEntiteNull_shouldReturnNull() {
 			ModuleDto dto = null;
@@ -50,6 +67,10 @@ public class ModuleConverterTest {
 		
 		//TEST LISTE DTO TO ENTITE
 		
+		/**
+		 * Conversion liste dto vers entite
+		 * Condition valide
+		 */
 		@Test
 		public void testListDtoToEntiteValid_shouldReturnEntite() {
 			List<ModuleDto> listeModuleDto = new ArrayList<>();;
@@ -66,6 +87,10 @@ public class ModuleConverterTest {
 			
 		}
 		
+		/**
+		 * Conversion liste dto vers entite
+		 * Si un élement de la liste est vide, il n'est pas convertit
+		 */
 		@Test
 		public void testListDtoToEntiteWithOneBlankDto_shouldReturnNotBlankListItem() {
 			List<ModuleDto> listeModuleDto = new ArrayList<>();;
@@ -79,6 +104,10 @@ public class ModuleConverterTest {
 			assertThat(listeEntite.get(0)).hasFieldOrPropertyWithValue("nom", dto2.getNom());
 		}
 		
+		/**
+		 * Conversion liste dto vers entite
+		 * Si la liste est null, on retourne est vide
+		 */
 		@Test
 		public void testListDtoToEntiteNull_shouldReturnNull() {
 			List<ModuleDto> listeMatiereDto = null;
@@ -89,6 +118,10 @@ public class ModuleConverterTest {
 		
 		//TEST  ENTITE TO DTO
 		
+		/**
+		 * Conversion  entite vers dto
+		 * Condition valide
+		 */
 		@Test
 		public void testEntiteToDtoValid_shouldReturnDto() {
 			Module module = new Module("sixieme");
@@ -97,6 +130,10 @@ public class ModuleConverterTest {
 			assertThat(dtoMod).hasFieldOrPropertyWithValue("nom", module.getNom());
 		}
 		
+		/**
+		 * Conversion  entite vers dto
+		 * Si l'entite est sans attribut, le dto est null
+		 */
 		@Test
 		public void testEntiteToDtoWithBlanckEntite_shouldReturnNull() {
 			Module modul = new Module();
@@ -106,6 +143,10 @@ public class ModuleConverterTest {
 			assertThat(dtoMod).isNull();
 		}
 		
+		/**
+		 * Conversion  entite vers dto
+		 * Si l'entite est null, le dto est null
+		 */
 		@Test
 		public void testEntiteToDtoWithNullEntite_shouldReturnNull() {
 			Module mat = null;
@@ -117,6 +158,10 @@ public class ModuleConverterTest {
 		
 		//TEST LISTE ENTITE  TO DTO
 		
+		/**
+		 * Conversion liste entite to dto
+		 * Condition valide
+		 */
 		@Test
 		public void testListEntiteToDtoValid_shouldReturnEntite() {
 			List<Module> listeMod = new ArrayList<Module>();
@@ -132,6 +177,10 @@ public class ModuleConverterTest {
 			assertThat(dtoListe.get(1)).hasFieldOrPropertyWithValue("nom", mat2.getNom());
 		}
 		
+		/**
+		 * Conversion liste entite to dto
+		 * Si un element de la liste est sans attribut, il n'est pas convertit
+		 */
 		@Test
 		public void testListEntiteToDtoWithBlankItem_shouldReturnListWithNoBlankItem() {
 			List<Module> listeMod = new ArrayList<>();
@@ -145,6 +194,10 @@ public class ModuleConverterTest {
 			assertThat(dtoLiist.get(0)).hasFieldOrPropertyWithValue("nom", dto2.getNom());
 		}
 
+		/**
+		 * Conversion liste entite to dto
+		 * Si la liste est null, on retourne une liste vide
+		 */
 		@Test
 		public void testListEntiteToDtoWithNullList_shouldReturnNull() {
 			List<Module> listeMod = null;
