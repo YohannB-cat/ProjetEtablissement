@@ -19,7 +19,7 @@ import com.fr.adaming.dto.ResponseDto;
 
 /**
  * <b>Interface Controller Matière</b>
- * méthodes CRUD & Find matieres by modules
+ * méthodes CRUD et Find matieres by modules
  * @author Max
  * @since 1.0.x
  *
