@@ -22,12 +22,6 @@ import com.fr.adaming.service.IAbsenceService;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * Interface IAbsenceController responsable de la couche controller de l'entité absence
- * @author Isaline
- * @since 1.0.X
- *
- */
 @RestController
 @Slf4j
 public class AbsenceController implements IAbsenceController {
