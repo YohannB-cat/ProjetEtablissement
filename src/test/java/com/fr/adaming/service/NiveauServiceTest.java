@@ -19,6 +19,13 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Niveau;
 
+
+/**
+ * description : Tests de la classe NiveauService
+ * @author Flavien
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 public class NiveauServiceTest {
 
@@ -27,6 +34,9 @@ public class NiveauServiceTest {
 
 	// Tests create
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode Creat dans le cas ou le niveau serai null
+	 */
 	@Test
 	@DisplayName("Création d'un niveau null")
 	public void testCreatingNiveauNull_shouldReturnNull() {
@@ -35,6 +45,9 @@ public class NiveauServiceTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode Creat dans le cas ou le niveau aurai des param null
+	 */
 	@Test
 	@DisplayName("Création d'un niveau avec param null")
 	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -44,6 +57,9 @@ public class NiveauServiceTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode Creat dans le cas ou le niveau à des param correct
+	 */
 	@Test
 	@DisplayName("Création d'un niveau avec correct")
 	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -57,6 +73,9 @@ public class NiveauServiceTest {
 
 	// Test findAll
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findAll avec une DB vide
+	 */
 	@Test
 	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@DisplayName("Demande de la liste vide")
@@ -65,6 +84,9 @@ public class NiveauServiceTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findAll avec des données dans la DB
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (19, 'Maternel')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (29, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -77,6 +99,9 @@ public class NiveauServiceTest {
 
 	// Test findById
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findById avec une DB vide
+	 */
 	@Test
 	@DisplayName("Recherche de niveau par id non existant")
 	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -85,6 +110,9 @@ public class NiveauServiceTest {
 	}
 
 	// Valide ! (pb list)
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findById avec un niveau dans la DB
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -97,6 +125,9 @@ public class NiveauServiceTest {
 
 	// Test update
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode update avec un objet null
+	 */
 	@Test
 	@DisplayName("Update d'un niveau null")
 	public void testUpdateNullNiveau_shouldReturnFalse() {
@@ -105,6 +136,9 @@ public class NiveauServiceTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode update avec une DB vide
+	 */
 	@Test
 	@DisplayName("Update d'un niveau inexistant dans la bd")
 	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -120,6 +154,9 @@ public class NiveauServiceTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode update avec objet valide et DB valide
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (2878, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -133,6 +170,9 @@ public class NiveauServiceTest {
 
 	// Test deleteById
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode deleteById avec id egale a 0
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (19, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -142,7 +182,10 @@ public class NiveauServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
-	// VAlide !
+	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode deleteById avec un id valide
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (17, 'Primaire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -153,6 +196,9 @@ public class NiveauServiceTest {
 	}
 	
 	//Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findListClasseByIdNiveau avec un id egale a 0
+	 */
 	@Test
 	@DisplayName("Liste des classes avec id 0")
 	public void testFindListClasseByIdNiveauWithId0_ShouldReturnEmptyList() {
@@ -160,6 +206,9 @@ public class NiveauServiceTest {
 	}
 	
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findListClasseByIdNiveau avec un id valide mais BD vide
+	 */
 	@Test
 	@DisplayName("Liste des classes avec id valide mais avec BD vite")
 	public void testFindListClasseByIdNiveauWithEmptyDB_ShouldReturnEmptyList() {
@@ -168,6 +217,9 @@ public class NiveauServiceTest {
 	}
 	
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findListClasseByIdNiveau avec un id valide et BD rempli
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (2, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude, etudiants_id) "

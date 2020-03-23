@@ -16,6 +16,13 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Etudiant;
 
+
+/**
+ * description : Tests de la classe ClasseService
+ * @author Flavien
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 public class ClasseServiceTest {
 
@@ -24,6 +31,9 @@ public class ClasseServiceTest {
 
 	// Tests create
 	// valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode Creat dans le cas ou le service serai null
+	 */
 	@Test
 	@DisplayName("Création d'une classe null")
 	public void testCreatingClasseNull_shouldReturnNull() {
@@ -32,6 +42,9 @@ public class ClasseServiceTest {
 	}
 
 	// valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode Creat dans le cas ou le service à des param nulls
+	 */
 	@Test
 	@DisplayName("Création d'une classe avec param null")
 	public void testCreatingClasseWithNullName_shouldReturnClasse() {
@@ -40,6 +53,9 @@ public class ClasseServiceTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode Creat avec un service valide
+	 */
 	@Sql(statements = "INSERT INTO Etudiant (id,nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
 			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -69,6 +85,9 @@ public class ClasseServiceTest {
 
 	// Test findAll
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findAll avec BD vide
+	 */
 	@Test
 	@DisplayName("Demande de la liste vide")
 	public void testGetList_shouldReturnEmptyList() {
@@ -76,6 +95,9 @@ public class ClasseServiceTest {
 	}
 
 	// Valide ! (pb avec etudiant)
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findAll avec BD rempli
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (2, 'Terminal2b', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -94,12 +116,18 @@ public class ClasseServiceTest {
 
 	// Test findById
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findById avec une DB vide
+	 */
 	@Test
 	@DisplayName("Recherche d'une classe par id non existant")
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
 	
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findById avec un id de recherche egale a zero
+	 */
 	@Test
 	@DisplayName("Recherche d'une classe par id egale à zéro")
 	public void testFindByIdWithIdEqualZero_shouldReturnNull() {
@@ -107,6 +135,9 @@ public class ClasseServiceTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode findById avec une classe dans la DB
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -121,6 +152,9 @@ public class ClasseServiceTest {
 
 	// Test update
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode update avec un objet null
+	 */
 	@Test
 	@DisplayName("Update d'une classe null")
 	public void testUpdateNullClasse_shouldReturnFalse() {
@@ -129,6 +163,9 @@ public class ClasseServiceTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode update avec une DB vide
+	 */
 	@Test
 	@DisplayName("Update d'une classe inexistant dans la bd")
 	public void testUpdateInexistantClasse_shouldReturnFalse() {
@@ -137,6 +174,9 @@ public class ClasseServiceTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode update avec objet valide et DB valide
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -150,6 +190,9 @@ public class ClasseServiceTest {
 
 	// Test deleteById
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode deleteById avec id egale a 0
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -157,11 +200,13 @@ public class ClasseServiceTest {
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
-		Integer id = 0;
-		assertThat(service.deleteById(id)).isFalse();
+		assertThat(service.deleteById(0)).isFalse();
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode deleteById avec un id valide et donnée dans la BD
+	 */
 	@Sql(statements = "INSERT INTO Niveau (id, nom) VALUES (1, 'TopOfTheTop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Classe (id, nom, id_niveau) VALUES (1, 'Session2020', 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
