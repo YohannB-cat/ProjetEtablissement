@@ -201,8 +201,8 @@ public class AbsenceConverterTest {
 	@Test
 	public void testListEntiteToDtoSansDatesInvalid_shouldReturnEmpty() {
 		List<Absence> liste = new ArrayList<Absence>();
-		String date = "2020-02-20";
-		LocalDate lDate = LocalDate.parse(date);
+		//String date = "2020-02-20";
+		//LocalDate lDate = LocalDate.parse(date);
 		Absence et = new Absence();
 		Absence et2 = new Absence();
 

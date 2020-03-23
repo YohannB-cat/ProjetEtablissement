@@ -52,7 +52,7 @@ public class ModuleConverterTest {
 		
 		@Test
 		public void testListDtoToEntiteValid_shouldReturnEntite() {
-			List<ModuleDto> listeModuleDto = new ArrayList();;
+			List<ModuleDto> listeModuleDto = new ArrayList<>();;
 			ModuleDto dto1 = new ModuleDto("cinquieme");
 			ModuleDto dto2 = new ModuleDto("troisieme");
 			listeModuleDto.add(dto1);
@@ -68,7 +68,7 @@ public class ModuleConverterTest {
 		
 		@Test
 		public void testListDtoToEntiteWithOneBlankDto_shouldReturnNotBlankListItem() {
-			List<ModuleDto> listeModuleDto = new ArrayList();;
+			List<ModuleDto> listeModuleDto = new ArrayList<>();;
 			ModuleDto dto1 = new ModuleDto();
 			ModuleDto dto2 = new ModuleDto("math");
 			listeModuleDto.add(dto1);
@@ -134,7 +134,7 @@ public class ModuleConverterTest {
 		
 		@Test
 		public void testListEntiteToDtoWithBlankItem_shouldReturnListWithNoBlankItem() {
-			List<Module> listeMod = new ArrayList();
+			List<Module> listeMod = new ArrayList<>();
 			Module dto1 = new Module();
 			Module dto2 = new Module("math");
 			listeMod.add(dto1);

@@ -105,7 +105,7 @@ public class AbsenceServiceTest {
 	@Test
 	@DisplayName("Recherche d'Absence par id")
 	public void testFindById_shouldReturnAbsence() {
-		Absence abs = new Absence(1, LocalDate.parse("2020-02-20"), LocalDate.parse("2020-02-20"));
+		//Absence abs = new Absence(1, LocalDate.parse("2020-02-20"), LocalDate.parse("2020-02-20"));
 		assertTrue(service.findById(1).getId() ==1);
 		assertTrue(service.findById(1).getDebut().equals(LocalDate.parse("2020-02-20")));
 		assertTrue(service.findById(1).getFin().equals(LocalDate.parse("2020-02-20")));
