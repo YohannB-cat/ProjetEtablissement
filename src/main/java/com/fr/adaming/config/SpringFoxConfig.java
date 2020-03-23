@@ -10,12 +10,16 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * 
+ *Classe Swagger pour générer la documentation front
+ */
 @Configuration
 @EnableSwagger2
 @Api(value = "Projet etablissement")
 public class SpringFoxConfig {   
 	
-	
+
     @Bean
     public Docket api() { 
         return new Docket(DocumentationType.SWAGGER_2)  
