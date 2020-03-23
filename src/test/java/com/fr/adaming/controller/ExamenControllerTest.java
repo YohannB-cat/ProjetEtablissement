@@ -42,8 +42,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode create avec un examen valide
 	 * Doit retourner une requete de statut 200 contenant l'objet créé et un message success
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Creation Examen")
@@ -70,8 +70,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode create avec un examen non valide (attribut nom avec trop de caractères)
 	 * Doit retourner une requete de statut 400 contenant un objet null et un message d'erreur
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Creation Examen non valide")
@@ -98,8 +98,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode findByID avec l'id d'un examen existant danas la DB
 	 * Doit retourner une requete de statut 200 contenant l'objet examen recherché et un message de succès
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Examen par id valide")
@@ -120,8 +120,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode findById avec l'id d'un examen qui n'existe pas
 	 * Doit retourner une requete de statut 400 contenant un objet null et un message d'erreur
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Examen par id non valide")
@@ -144,8 +144,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode findById avec un id = 0
 	 * Doit retourner une requete de statut 400 contenant un objet null et un message d'erreur
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Examen par id= 0")
@@ -167,8 +167,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode findAll sans examens dans la DB
 	 * Doit retourner une requete de statut 200 contenant une liste vide et un message de succès
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Tous les examens")
@@ -185,8 +185,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode update avec un id inconnue dans la DB
 	 * Doit retourner une requete de statu 400 contenant un objet null et un message d'erreur
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Update d'un examen inexistant")
@@ -212,8 +212,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode update avec un examen qui existe dans la DB
 	 * Doit retourner une requete de statu 200 contenant l'objet modifié et un message de succès
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Update d'un examen existant")
@@ -242,8 +242,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode deleteById avec un examen existant
 	 * Doit retourner une requete de statut 200 contenant un objet null et un message de succès
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Suppression d'un examen existant")
@@ -266,8 +266,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode deleteById avec un id inconnu dans la DB
 	 * Doit retourner une requete de statut 400 contenant un objet null et un message d'erreur
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Suppression d'un examen inexistant")
@@ -290,8 +290,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode ListByMatiere avec une matiere existante et contenant des examens
 	 * Doit retourner une requete de statut 200 contenant une liste d'examens appartenant à la matière demandée et un message de succès
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Liste des examens par matiere existante")
@@ -323,8 +323,8 @@ public class ExamenControllerTest {
 	/**
 	 * Test de la méthode ListByMatiere avec une matiere inexistante
 	 * Doit retourner une requete de statut 400 contenant un objet null et un message d'erreur
-	 * @throws UnsupportedEncodingException
-	 * @throws Exception
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
 	 */
 	@Test
 	@DisplayName("Liste des examens par matiere inexistante")
