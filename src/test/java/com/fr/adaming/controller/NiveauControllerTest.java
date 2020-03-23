@@ -26,7 +26,7 @@ import com.fr.adaming.dto.NiveauDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
 /**
- * description : Tests de la classe NiveauController
+ * Tests de la classe NiveauController
  * @author Flavien
  * @since 1.0.x
  *

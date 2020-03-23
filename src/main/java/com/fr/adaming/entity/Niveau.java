@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * description : modèle de l'entité Niveau
+ * modèle de l'entité Niveau
  * @author Flavien
  * @since 1.0.x
  *

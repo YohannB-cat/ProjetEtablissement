@@ -11,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * description : Dto de l'entité Niveau (sans id)
+ * Dto de l'entité Niveau (sans id)
  * @author Flavien
  * @since 1.0.x
  *

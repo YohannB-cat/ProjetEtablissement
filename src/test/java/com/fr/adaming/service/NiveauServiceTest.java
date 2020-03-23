@@ -21,7 +21,7 @@ import com.fr.adaming.entity.Niveau;
 
 
 /**
- * description : Tests de la classe NiveauService
+ * Tests de la classe NiveauService
  * @author Flavien
  * @since 1.0.x
  *

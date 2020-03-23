@@ -9,7 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 /**
- * description : test de la méthode FindListClasseByIdNiveau de NiveauDao
+ * test de la méthode FindListClasseByIdNiveau de NiveauDao
  * @author Flavien
  * @since 1.0.x
  *

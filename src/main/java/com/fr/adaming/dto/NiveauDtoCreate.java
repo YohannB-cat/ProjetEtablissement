@@ -11,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * description : DtoCreate de l'entité Niveau (avec id)
+ * DtoCreate de l'entité Niveau (avec id)
  * @author Flavien
  * @since 1.0.x
  *

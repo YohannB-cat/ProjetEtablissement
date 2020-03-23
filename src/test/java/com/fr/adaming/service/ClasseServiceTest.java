@@ -18,7 +18,7 @@ import com.fr.adaming.entity.Etudiant;
 
 
 /**
- * description : Tests de la classe ClasseService
+ * Tests de la classe ClasseService
  * @author Flavien
  * @since 1.0.x
  *

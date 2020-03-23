@@ -11,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * description : DtoCreate de l'entité Classe (avec id)
+ * DtoCreate de l'entité Classe (avec id)
  * @author Flavien
  * @since 1.0.x
  *

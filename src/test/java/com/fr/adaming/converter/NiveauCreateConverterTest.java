@@ -18,7 +18,7 @@ import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Niveau;
 
 /**
- * description : Tests de la classe NiveauCreateConverter
+ * Tests de la classe NiveauCreateConverter
  * @author Flavien
  * @since 1.0.x
  *

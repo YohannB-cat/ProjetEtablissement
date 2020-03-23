@@ -18,7 +18,7 @@ import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Etudiant;
 
 /**
- * description : Tests de la classe ClasseCreateConverter
+ * Tests de la classe ClasseCreateConverter
  * @author Flavien
  * @since 1.0.x
  *

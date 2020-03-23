@@ -25,7 +25,7 @@ import com.fr.adaming.dto.ClasseDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
 /**
- * description : Tests de la classe ClasseController
+ * Tests de la classe ClasseController
  * @author Flavien
  * @since 1.0.x
  *
