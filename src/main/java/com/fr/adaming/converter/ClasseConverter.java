@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.ClasseDto;
 import com.fr.adaming.entity.Classe;
+
 @Component
 public class ClasseConverter implements IConverter<Classe, ClasseDto> {
 
 	@Override
 	public Classe dtoToEntite(ClasseDto dto) {
-		if(dto==null ) {
+		if (dto == null) {
 			return null;
 		}
 		return new Classe(0, dto.getNom(), dto.getListe());
@@ -29,7 +30,7 @@ public class ClasseConverter implements IConverter<Classe, ClasseDto> {
 
 	@Override
 	public ClasseDto entiteToDto(Classe entite) {
-		if(entite==null) {
+		if (entite == null) {
 			return null;
 		}
 		return new ClasseDto(entite.getNom(), entite.getEtudiants());
@@ -38,10 +39,15 @@ public class ClasseConverter implements IConverter<Classe, ClasseDto> {
 	@Override
 	public List<ClasseDto> listEntiteToDto(List<Classe> entite) {
 		List<ClasseDto> liste = new ArrayList<>();
+		if (entite == null) {
+			return liste;
+		}
 		for (Classe c : entite) {
-			liste.add(new ClasseDto(c.getNom(), c.getEtudiants()));
+			if (c.getNom() != null || c.getEtudiants() != null) {
+				liste.add(new ClasseDto(c.getNom(), c.getEtudiants()));
+			}
 		}
 		return liste;
 	}
-	
+
 }

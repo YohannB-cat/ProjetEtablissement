@@ -16,10 +16,10 @@ public class AbsenceDtoCreate {
 	
 	private int id;
 	
-	@NotNull
+//	@NotNull
 	private String debut;
 
-	@NotNull
+//	@NotNull
 	private String fin;
 
 	private String justification;

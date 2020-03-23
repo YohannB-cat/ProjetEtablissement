@@ -71,11 +71,11 @@ public class ClasseController implements IClasseController {
 
 		if (result) {
 			log.info("ClassUpdate OK");
-			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		log.warn("ClassUpdate FAIL");
-		resp = new ResponseDto(false, WebConstant.FAIL, null);
+		resp = new ResponseDto(true, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 

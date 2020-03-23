@@ -34,6 +34,8 @@ public class MatiereController implements IMatiereController {
 	@Autowired
 	private IConverter<Matiere, MatiereDto> matiereDto;
 
+	
+	
 	// create matiere
 	@Override
 	public ResponseEntity<ResponseDto> create(@Valid MatiereDtoCreate dto) {
@@ -79,8 +81,7 @@ public class MatiereController implements IMatiereController {
 	public ResponseEntity<ResponseDto> findAll() {
 		List<MatiereDto> list = matiereDto.listEntiteToDto(service.findAll());
 
-		ResponseDto resp = null;
-		resp = new ResponseDto(false, WebConstant.SUCCESS, list);
+		 ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 		log.info("SUCCESS find All matiere");
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 

@@ -61,8 +61,6 @@ public class ClasseControllerTest {
 		ClasseDtoCreate classeResponsDto = mapper.readValue(absString, ClasseDtoCreate.class);
 
 		assertThat(classeResponsDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
-
-
 		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
@@ -113,8 +111,7 @@ public class ClasseControllerTest {
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-
-		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "SUCCESS");
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
 	// **********************************************************************
@@ -141,6 +138,7 @@ public class ClasseControllerTest {
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "SUCCESS");
+		
 	}
 
 	@Test

@@ -34,7 +34,7 @@ public class EtudiantCreateConverter implements IConverter<Etudiant, EtudiantDto
 
 	@Override
 	public EtudiantDtoCreate entiteToDto(Etudiant entite) {
-		if(entite==null) {
+		if(entite==null || entite.getNom() == null) {
 			return null;
 		}
 

@@ -53,7 +53,7 @@ public class MatiereCreateConverterTest {
 		
 		@Test
 		public void testListDtoToEntiteValid_shouldReturnEntite() {
-			List<MatiereDtoCreate> listeMatiereDto = new ArrayList();;
+			List<MatiereDtoCreate> listeMatiereDto = new ArrayList<>();;
 			MatiereDtoCreate dto1 = new MatiereDtoCreate("math");
 			MatiereDtoCreate dto2 = new MatiereDtoCreate("français");
 			listeMatiereDto.add(dto1);
@@ -69,7 +69,7 @@ public class MatiereCreateConverterTest {
 		
 		@Test
 		public void testListDtoToEntiteWithOneBlankDto_shouldReturnNotBlankListItem() {
-			List<MatiereDtoCreate> listeMatiereDto = new ArrayList();;
+			List<MatiereDtoCreate> listeMatiereDto = new ArrayList<>();;
 			MatiereDtoCreate dto1 = new MatiereDtoCreate();
 			MatiereDtoCreate dto2 = new MatiereDtoCreate("math");
 			listeMatiereDto.add(dto1);
@@ -135,7 +135,7 @@ public class MatiereCreateConverterTest {
 		
 		@Test
 		public void testListEntiteToDtoWithBlankItem_shouldReturnListWithNoBlankItem() {
-			List<Matiere> listeMat = new ArrayList();
+			List<Matiere> listeMat = new ArrayList<>();
 			Matiere dto1 = new Matiere();
 			Matiere dto2 = new Matiere("math");
 			listeMat.add(dto1);

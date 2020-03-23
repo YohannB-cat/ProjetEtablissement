@@ -84,12 +84,9 @@ public class ExamenControllerTest {
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		Integer id = 5;
-		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(id);
 		// test requete
 		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/examen/"+id).contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
+				.perform(get("http://localhost:8080/examen/"+id).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
@@ -113,6 +110,23 @@ public class ExamenControllerTest {
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
+	
+	@Test
+	@DisplayName("Examen par id= 0")
+	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into examen(id,date,type,coefficient) values(1,'1994-02-03','ds',2.2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testFindByIdWithoutControllerNULLId_ShouldReturnFail() throws UnsupportedEncodingException, Exception {
+		// test requete
+		String responseAsStrig = mockMvc
+				.perform(get("http://localhost:8080/examen/"+0).contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		// convertir la reponse JSON en DTO
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
+	}
+	
 
 	@Test
 	@DisplayName("Tous les examens")
