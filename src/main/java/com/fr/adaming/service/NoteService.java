@@ -120,7 +120,7 @@ public class NoteService implements INoteService {
 		try {
 			if (etudiantDao.findById(idetudiant).isPresent()) {
 				log.info("SUCCESS lsit by etudiant");
-				 return listNote = noteDao.listByEtudiant(idetudiant);
+				 return  noteDao.listByEtudiant(idetudiant);
 			}
 		}catch (InvalidDataAccessApiUsageException e) {
 			log.error("ERROR list by etudiant"+e.getMessage());

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * description : modèle du dto EtudiantDto (similaire à étudiant mais sans id)
+ * Modèle du dto EtudiantDto (similaire à étudiant mais sans id)
  * @author clara
  * @since 1.0.x
  */
