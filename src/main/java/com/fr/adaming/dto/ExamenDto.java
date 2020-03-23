@@ -8,6 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * @author Yohann
+ * @since 1.0.x 
+ * Entité de transfert d'objet Examen côté controller avec getter et setter
+ * Constructeur Vide : ExamenDto()
+ * Constructeur Plein : ExamenDto(<b>int</b> id,<b>LocalDate</b> date, <b>String</b> type,  <b>Double</b> coefficient)
+ *
+ */
 @Getter @Setter @ToString @NoArgsConstructor @AllArgsConstructor
 public class ExamenDto {
 	

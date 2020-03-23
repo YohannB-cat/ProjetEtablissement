@@ -5,14 +5,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * 
- * Application de démarrage
+ * Application de démarrage de SpringBootApplication
  *
  */
 @SpringBootApplication
 public class ProjetEtablissementApplication {
 
 	/**
-	 * Méthode main
+	 * Méthode main de l'application
+	 * @param args args
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetEtablissementApplication.class, args);

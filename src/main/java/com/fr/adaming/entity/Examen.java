@@ -13,6 +13,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+/**
+ * @author Yohann
+ * @since 1.0.x
+ * Entité Examen avec Getter, Setter
+ * Constructeur Vide : Examen()
+ * Constructeur Plein : Examen(<b>int</b> id,<b>LocalDate</b> date, <b>String</b> type,  <b>Double</b> coefficient)
+ */
 @Entity
 @Getter
 @Setter

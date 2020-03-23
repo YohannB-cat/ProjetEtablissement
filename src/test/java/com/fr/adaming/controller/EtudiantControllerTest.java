@@ -27,6 +27,12 @@ import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.dto.EtudiantDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
+/**
+ * Classe test de la couche controller pour l'entité Etudiant
+ * @author Yohann
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class EtudiantControllerTest {
@@ -36,6 +42,12 @@ public class EtudiantControllerTest {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
+	/**
+	 * Test de la méthode create avec un etudiant valide
+	 * Doit retourner une requete de statut 200 contenant l'objet etudiant créé et un message de succès
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Test
 	@Sql(statements = "Delete from etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingEtudiantWithController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -71,6 +83,12 @@ public class EtudiantControllerTest {
 	}
 
 
+	/**
+	 * Test de la méthode findById  avec un etudiant inexistant
+	 * Doit retourner une requete de statut 400 contenant un objet null et un mesasge d'erreur
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Test
 	public void testFindByIdInvalid_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 58465;
@@ -85,6 +103,12 @@ public class EtudiantControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
+	/**
+	 * Test de la méthode findById  avec un etudiant existant
+	 * Doit retourner une requete de statut 200 contenant l'objet recherché et un mesasge de succès
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) VALUES (14,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -103,7 +127,12 @@ public class EtudiantControllerTest {
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-
+	/**
+	 * Test de la méthode findAll  sans etudiants enregistrés
+	 * Doit retourner une requete de statut 200 contenant une liste vide et un mesasge de succès
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Test
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		// test requete
@@ -115,7 +144,12 @@ public class EtudiantControllerTest {
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
-
+	/**
+	 * Test de la méthode update  avec un etudiant existant
+	 * Doit retourner une requete de statut 200 contenant un objet null et un mesasge de succès
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) VALUES (14,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -144,6 +178,12 @@ public class EtudiantControllerTest {
 
 	}
 
+	/**
+	 * Test de la méthode update  avec un etudiant inexistant
+	 * Doit retourner une requete de statut 400 contenant un objet null et un mesasge d'erreur
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Test
 	public void testUpdateEtudiantNotExistingWithController_shouldNotWork()
 			throws UnsupportedEncodingException, Exception {
@@ -171,6 +211,12 @@ public class EtudiantControllerTest {
 
 	}
 
+	/**
+	 * Test de la méthode delete  avec un etudiant existant
+	 * Doit retourner une requete de statut 200 contenant un objet null et un mesasge de succès
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) VALUES (5,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Delete from etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -190,6 +236,12 @@ public class EtudiantControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	/**
+	 * Test de la méthode delete  avec un etudiant inexistant
+	 * Doit retourner une requete de statut 400 contenant un objet null et un mesasge d'erreur
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Test
 	public void testDeleteByNotExistingIdWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 28;

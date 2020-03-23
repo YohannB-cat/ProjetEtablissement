@@ -24,6 +24,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fr.adaming.dto.ExamenDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
+/**
+ * Classe test de la couche controller de l'entité Examen
+ * @author Yohann
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ExamenControllerTest {
@@ -33,6 +39,12 @@ public class ExamenControllerTest {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
+	/**
+	 * Test de la méthode create avec un examen valide
+	 * Doit retourner une requete de statut 200 contenant l'objet créé et un message success
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Creation Examen")
 	public void testCreatingExamenWithController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -55,6 +67,12 @@ public class ExamenControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 
 	}
+	/**
+	 * Test de la méthode create avec un examen non valide (attribut nom avec trop de caractères)
+	 * Doit retourner une requete de statut 400 contenant un objet null et un message d'erreur
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Creation Examen non valide")
 	public void testCreatingNonValidExamenWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
@@ -77,6 +95,12 @@ public class ExamenControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
+	/**
+	 * Test de la méthode findByID avec l'id d'un examen existant danas la DB
+	 * Doit retourner une requete de statut 200 contenant l'objet examen recherché et un message de succès
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Examen par id valide")
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -93,6 +117,12 @@ public class ExamenControllerTest {
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
+	/**
+	 * Test de la méthode findById avec l'id d'un examen qui n'existe pas
+	 * Doit retourner une requete de statut 400 contenant un objet null et un message d'erreur
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Examen par id non valide")
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -111,6 +141,12 @@ public class ExamenControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 	
+	/**
+	 * Test de la méthode findById avec un id = 0
+	 * Doit retourner une requete de statut 400 contenant un objet null et un message d'erreur
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Examen par id= 0")
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -128,6 +164,12 @@ public class ExamenControllerTest {
 	}
 	
 
+	/**
+	 * Test de la méthode findAll sans examens dans la DB
+	 * Doit retourner une requete de statut 200 contenant une liste vide et un message de succès
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Tous les examens")
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -140,6 +182,12 @@ public class ExamenControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	/**
+	 * Test de la méthode update avec un id inconnue dans la DB
+	 * Doit retourner une requete de statu 400 contenant un objet null et un message d'erreur
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Update d'un examen inexistant")
 	@Sql(statements = "delete from examen",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -161,6 +209,12 @@ public class ExamenControllerTest {
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
+	/**
+	 * Test de la méthode update avec un examen qui existe dans la DB
+	 * Doit retourner une requete de statu 200 contenant l'objet modifié et un message de succès
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Update d'un examen existant")
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -185,6 +239,12 @@ public class ExamenControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	/**
+	 * Test de la méthode deleteById avec un examen existant
+	 * Doit retourner une requete de statut 200 contenant un objet null et un message de succès
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Suppression d'un examen existant")
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -203,6 +263,12 @@ public class ExamenControllerTest {
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
+	/**
+	 * Test de la méthode deleteById avec un id inconnu dans la DB
+	 * Doit retourner une requete de statut 400 contenant un objet null et un message d'erreur
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Suppression d'un examen inexistant")
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -221,6 +287,12 @@ public class ExamenControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 	
+	/**
+	 * Test de la méthode ListByMatiere avec une matiere existante et contenant des examens
+	 * Doit retourner une requete de statut 200 contenant une liste d'examens appartenant à la matière demandée et un message de succès
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Liste des examens par matiere existante")
 	@Sql(statements = "DELETE FROM Note", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -248,6 +320,12 @@ public class ExamenControllerTest {
 
 				assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}	
+	/**
+	 * Test de la méthode ListByMatiere avec une matiere inexistante
+	 * Doit retourner une requete de statut 400 contenant un objet null et un message d'erreur
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@DisplayName("Liste des examens par matiere inexistante")
 	public void testListByMatiereControllerWithoutExistingId_shouldNotWork() throws UnsupportedEncodingException, Exception {
