@@ -24,6 +24,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fr.adaming.dto.ClasseDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
+/**
+ * description : Tests de la classe ClasseController
+ * @author Flavien
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ClasseControllerTest {
@@ -36,6 +42,11 @@ public class ClasseControllerTest {
 	// **********************************************************************
 	// TEST CREATE
 
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode CreatingClasseWithController
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur général
+	 */
 	@Test
 	@DisplayName("Test create OK")
 	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -67,6 +78,11 @@ public class ClasseControllerTest {
 	// **********************************************************************
 	// TEST FIND BY
 
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode FindByIdWithController
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur général
+	 */
 	@Test
 	@DisplayName("Find by Id Ok")
 	@Sql(statements = "INSERT INTO Classe (id,nom) VALUES (5,'sixiemeB')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -84,6 +100,11 @@ public class ClasseControllerTest {
 		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode FindByIdWithController
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur général
+	 */
 	@Test
 	@DisplayName("Test find by Id == 0")
 	public void testFindByIdWithController_ReturnFAIL() throws UnsupportedEncodingException, Exception {
@@ -102,6 +123,11 @@ public class ClasseControllerTest {
 	// **********************************************************************
 	// TEST FIND ALL
 
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode FindAllWithController
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur général
+	 */
 	@Test
 	@DisplayName("test Find All OK")
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -117,6 +143,11 @@ public class ClasseControllerTest {
 	// **********************************************************************
 	// TEST UPDATE
 
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode UpdateClasseWithController
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur général
+	 */
 	@Test
 	@DisplayName("Test Update OK")
 	@Sql(statements = "INSERT INTO Classe (id,nom) VALUES (5,'sixiemeB')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -141,6 +172,11 @@ public class ClasseControllerTest {
 		
 	}
 
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode UpdateClasseWithController
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur général
+	 */
 	@Test
 	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@DisplayName("Test UpdateFAIL")
@@ -165,6 +201,11 @@ public class ClasseControllerTest {
 
 	// **********************************************************************
 	// TEST DELETE
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode DeleteByIdWithController
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur général
+	 */
 	@Sql(statements = "INSERT INTO Classe (id,nom) VALUES (5,'sixiemeB')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -183,6 +224,11 @@ public class ClasseControllerTest {
 		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode DeleteByIdWithController
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'erreur général
+	 */
 	@Test
 	@DisplayName("Test Delete by NOT OK")
 	public void testDeleteByIdWithController_ReturnFAIL() throws UnsupportedEncodingException, Exception {
@@ -198,5 +244,4 @@ public class ClasseControllerTest {
 
 		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "FAIL");
 	}
-
 }
