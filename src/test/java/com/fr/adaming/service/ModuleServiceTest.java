@@ -2,6 +2,7 @@ package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,23 +45,15 @@ public class ModuleServiceTest {
 	}
 
 	@Test
-	@DisplayName("Création d'un Module avec correct")
-	@Sql(statements = "DELETE FROM Module WHERE nom='null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Matiere WHERE nom ='Matiere4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE nom ='JAVA4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@DisplayName("Création d'un Module correct")
+	@Sql(statements = "DELETE FROM Module",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Matiere",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Matiere", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingCorrectModule_shouldReturnModule() {
-		Matiere mat = new Matiere(1,"Matiere4Test");
-
-		List<Matiere> list = new ArrayList<>();
-		list.add(mat);
-		matService.create(mat);
-		Module m = new Module(1, "JAVA4Test", list);
-		Module mcreate = service.create(m);
-		
-//		assertThat(mcreate).hasFieldOrPropertyWithValue("id", m.getId());
-		assertThat(mcreate).hasFieldOrPropertyWithValue("nom", m.getNom());
-		assertThat(mcreate.getMatieres()).asList().hasSize(1);
-		assertThat(mcreate.getMatieres().get(0)).hasFieldOrPropertyWithValue("nom", "Matiere4Test");
+		Module m = new Module(1, "JAVA4Test", null);
+		Module cm = service.create(m);
+		assertEquals(cm.getNom(),m.getNom());
 	}
 
 	// Test findAll

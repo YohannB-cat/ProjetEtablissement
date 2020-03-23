@@ -48,16 +48,8 @@ public class NiveauService implements INiveauService {
 
 	@Override
 	public Niveau findById(int id) {
-		try {
-			if (id != 0) {
-				return dao.findById(id).orElse(null);
-			} else {
-				return null;
-			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			log.warn(e.getMessage());
-			return null;
-		}
+		log.info("Recuperation d'un Niveau");
+		return dao.findById(id).orElse(null);
 	}
 
 	@Override

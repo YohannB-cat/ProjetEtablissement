@@ -56,8 +56,7 @@ public class EtudiantServiceTest {
 			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
 			+ "VALUES (2,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Etudiant WHERE id = 2", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Demande de la liste de 2 chats")
 	public void testGetList_shouldReturnList() {
@@ -114,9 +113,9 @@ public class EtudiantServiceTest {
 		assertThat(service.update(etu)).isFalse();
 	}
 
-	@Sql(statements = "INSERT INTO Etudiant (nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
-			+ "VALUES ('Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Etudiant (id,nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
+			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un etudiant enregistrer dans la BD")
 	public void testUpdateEtudiantWithId_shouldReturnTrue() {

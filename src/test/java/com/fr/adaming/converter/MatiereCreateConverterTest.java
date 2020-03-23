@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.fr.adaming.dto.MatiereDto;
 import com.fr.adaming.dto.MatiereDtoCreate;
 import com.fr.adaming.entity.Matiere;
 

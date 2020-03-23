@@ -99,21 +99,19 @@ public class ExamenControllerTest {
 	@Test
 	@DisplayName("Examen par id non valide")
 	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into examen(id,date,type,coefficient) values(1,'1994-02-03','ds',2.2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "delete from examen", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testFindByIdWithoutController_shouldNotWork() throws UnsupportedEncodingException, Exception {
-		Integer id = 1;
+		Integer id = 10;
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(id);
 		// test requete
 		String responseAsStrig = mockMvc
 				.perform(get("http://localhost:8080/examen/"+id).contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
-				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+				.andDo(print()).andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
-		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
+		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
 	@Test

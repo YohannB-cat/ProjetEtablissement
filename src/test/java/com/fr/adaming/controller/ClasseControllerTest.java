@@ -38,6 +38,7 @@ public class ClasseControllerTest {
 
 	@Test
 	@DisplayName("Test create OK")
+	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingClasseWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
@@ -54,34 +55,15 @@ public class ClasseControllerTest {
 						.content(dtoAsJson))
 				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
-		ClasseDtoCreate classeResponsDto = mapper.readValue(responseAsStrig, ClasseDtoCreate.class);
+		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
+
+		String absString = mapper.writeValueAsString(responseDto.getObject());
+		ClasseDtoCreate classeResponsDto = mapper.readValue(absString, ClasseDtoCreate.class);
 
 		assertThat(classeResponsDto).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
 
-		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "SUCCESS");
-	}
-
-	@Test
-	@DisplayName("Test create with FAIL")
-	public void testCreatingWithFail_SHouldReturn400() throws UnsupportedEncodingException, Exception {
-		// preparer le DTO
-		ClasseDtoCreate requestDto = new ClasseDtoCreate();
-
-		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(requestDto);
-
-		// test requete
-		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/classe/").contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
-				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
-		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-
-		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "FAIL");
-
 	}
 
 	// **********************************************************************
@@ -89,6 +71,8 @@ public class ClasseControllerTest {
 
 	@Test
 	@DisplayName("Find by Id Ok")
+	@Sql(statements = "INSERT INTO Classe (id,nom) VALUES (5,'sixiemeB')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 
@@ -133,27 +117,17 @@ public class ClasseControllerTest {
 		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
-	@Test
-	@DisplayName("test Find All bad request")
-	public void testFindAllWithController_ReturnFAIL() throws UnsupportedEncodingException, Exception {
-		// test requete
-		String responseAsStrig = mockMvc
-				.perform(get("http://localhost:8080/classe/all").contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
-		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-
-		assertThat(responseDto).hasFieldOrPropertyWithValue("message", "FAIL");
-	}
-
 	// **********************************************************************
 	// TEST UPDATE
 
 	@Test
 	@DisplayName("Test Update OK")
+	@Sql(statements = "INSERT INTO Classe (id,nom) VALUES (5,'sixiemeB')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testUpdateClasseWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		ClasseDtoCreate requestDto = new ClasseDtoCreate();
 		requestDto.setNom("6B");
+		requestDto.setId(5);
 
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
@@ -170,9 +144,12 @@ public class ClasseControllerTest {
 	}
 
 	@Test
+	@Sql(statements = "DELETE FROM Classe", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@DisplayName("Test UpdateFAIL")
 	public void testUpdateClasseWithController_ReturnFAIL() throws UnsupportedEncodingException, Exception {
 		ClasseDtoCreate requestDto = new ClasseDtoCreate();
+		requestDto.setNom("6B");
+		requestDto.setId(5);
 
 		// convrtir le DTO en Json
 		String dtoAsJson = mapper.writeValueAsString(requestDto);
@@ -181,7 +158,7 @@ public class ClasseControllerTest {
 		String responseAsStrig = mockMvc
 				.perform(put("http://localhost:8080/classe/").contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(dtoAsJson))
-				.andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+				.andDo(print()).andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 

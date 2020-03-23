@@ -42,6 +42,7 @@ public class ModuleControllerTest {
 	// Unable to fnd entite.Matiere with id = 1
 	@Test
 	@DisplayName("Creation module")
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingModuleWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
@@ -74,6 +75,7 @@ public class ModuleControllerTest {
 
 	@Test
 	@DisplayName("Création module avec champ null")
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingModuleWithNullAttribute_ShouldReturnError() throws UnsupportedEncodingException, Exception {
 
 		// preparer le DTO
@@ -99,8 +101,8 @@ public class ModuleControllerTest {
 	// **********************************************************************
 	// TEST FIND BY ID MODULE
 
-	@Sql(statements = "INSERT INTO Module VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE id = 5", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module(id,nom) VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Find one module")
 	public void testFindByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -134,9 +136,9 @@ public class ModuleControllerTest {
 	// **********************************************************************
 	// TEST FIND ALL MODULE
 
-	@Sql(statements = "INSERT INTO Module VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Module VALUES (6,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE name = 'sixieme'", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module(id,nom) VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module(id,nom) VALUES (6,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Find all module")
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -153,8 +155,8 @@ public class ModuleControllerTest {
 	// **********************************************************************
 	// TEST UPDATE MODULE
 
-	@Sql(statements = "INSERT INTO Module VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE id = '5'", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module(id,nom) VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update module")
 	public void testUpdateModuleWithController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -179,16 +181,10 @@ public class ModuleControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 		assertFalse(responseDto.isError());
 
-		String modString = mapper.writeValueAsString(responseDto.getObject());
-		ModuleDtoCreate respModule = mapper.readValue(modString, ModuleDtoCreate.class);
-
-		assertThat(respModule).isNotNull().hasFieldOrPropertyWithValue("nom", requestDto.getNom());
-		assertThat(respModule).isNotNull().hasFieldOrPropertyWithValue("matiere", requestDto.getMatiere());
-
 	}
 
 	@Test
-	@DisplayName("Update matiere with no")
+	@DisplayName("Update without existing module")
 	public void testUpdateModuleWithNoEntityDb_ShouldReturnFail() throws UnsupportedEncodingException, Exception {
 
 		// preparer le dto
@@ -208,15 +204,15 @@ public class ModuleControllerTest {
 		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
 
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
-		assertFalse(responseDto.isError());
+		assertTrue(responseDto.isError());
 
 	}
 
 	// **********************************************************************
 	// TEST DELETE MODULE
 
-	@Sql(statements = "INSERT INTO Module VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE id = 5", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Module(id,nom) VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete module")
 	public void testDeleteByIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {

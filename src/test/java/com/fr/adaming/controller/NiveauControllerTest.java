@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.UnsupportedEncodingException;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -64,6 +65,7 @@ public class NiveauControllerTest {
 	@Sql(statements = "INSERT INTO niveau (id, nom) VALUES (5, 'premiere')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@DisplayName("Find by valid id")
 	public void testFindByExistingIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
@@ -81,6 +83,8 @@ public class NiveauControllerTest {
 	}
 
 	@Test
+	@DisplayName("Find by not existing id")
+	@Sql(statements = "DELETE FROM niveau", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void testFindByNotExistingIdWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
@@ -112,6 +116,7 @@ public class NiveauControllerTest {
 	@Sql(statements = "INSERT INTO niveau (id, nom) VALUES (156165, 'premiere')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@DisplayName("Update by existing id")
 	public void testUpdateNiveauExistingWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		NiveauDtoCreate requestDto = new NiveauDtoCreate();
 		requestDto.setNom("sixième");
@@ -131,6 +136,7 @@ public class NiveauControllerTest {
 	}
 
 	@Test
+	@DisplayName("Find by not existing id")
 	public void testUpdateNiveauNotExistingWithController_shouldNotWork()
 			throws UnsupportedEncodingException, Exception {
 		NiveauDtoCreate requestDto = new NiveauDtoCreate();
@@ -153,6 +159,7 @@ public class NiveauControllerTest {
 	@Sql(statements = "INSERT INTO niveau (id, nom) VALUES (5, 'premiere')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@DisplayName("Delete by existing id")
 	public void testDeleteByExistingIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
@@ -170,6 +177,7 @@ public class NiveauControllerTest {
 	}
 
 	@Test
+	@DisplayName("Delete by not existing id")
 	public void testDeleteByNotExistingIdWithController_shouldNNotWork()
 			throws UnsupportedEncodingException, Exception {
 		int id = 5;
@@ -193,6 +201,7 @@ public class NiveauControllerTest {
 	@Sql(statements = "DELETE FROM classe", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM niveau", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@DisplayName("Find niveau by existing classe")
 	public void testFindClassByExistingIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
 		// convrtir le DTO en Json
@@ -209,6 +218,7 @@ public class NiveauControllerTest {
 	@Test
 	@Sql(statements = "DELETE FROM classe", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM niveau", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@DisplayName("Find niveau by not existing classe")
 	public void testFindClassByNotExistingIdWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 50;
 		// convrtir le DTO en Json
