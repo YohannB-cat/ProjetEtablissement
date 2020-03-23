@@ -15,6 +15,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Entité Module
+ * 
+ * @author IN-LY-004
+ * @since 1.0.x
+ */
 @Entity
 @Getter
 @Setter
@@ -29,26 +35,39 @@ public class Module {
 	@OneToMany
 	@JoinColumn(name = "module_id")
 	private List<Matiere> matieres;
-	
+
+	/**
+	 * Constructeur sans id
+	 * 
+	 * @param nom      correspond au nom du module
+	 * @param matieres correspond à la lsite des matières du module
+	 */
 	public Module(String nom, List<Matiere> matieres) {
 		super();
 		this.nom = nom;
 		this.matieres = matieres;
 	}
 
+	/**
+	 * Constructeur sans id, sans liste des matières
+	 * 
+	 * @param nom correspond au nom du module
+	 */
 	public Module(String nom) {
 		super();
 		this.nom = nom;
 	}
 
+	/**
+	 * Constructeur sans liste des matières
+	 * 
+	 * @param id  correspond à l'id du module
+	 * @param nom correspond au nom du module
+	 */
 	public Module(Integer id, String nom) {
 		super();
 		this.id = id;
 		this.nom = nom;
 	}
 
-
-
-	
-	
 }
