@@ -12,6 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.fr.adaming.dto.MatiereDtoCreate;
 import com.fr.adaming.entity.Matiere;
 
+/**
+ * Test de converter create matière
+ * @author IN-LY-004
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 public class MatiereCreateConverterTest {
 	
@@ -20,6 +26,10 @@ public class MatiereCreateConverterTest {
 	
 	//TEST DTO TO ENTITE
 	
+		/**
+		 * Conversion d'un dto vers une entite
+		 * Condition valide
+		 */
 		@Test
 		public void testDtoToEntiteValid_shouldReturnEntite() {
 			MatiereDtoCreate dto = new MatiereDtoCreate("math");
@@ -31,6 +41,10 @@ public class MatiereCreateConverterTest {
 
 		}
 		
+		/**
+		 * Conversion d'un dto vers une entite
+		 * Si le dto n'a pas d'attribut, l'entite est null
+		 */
 		@Test
 		public void testDtoToEntiteWithBlankValue_shouldReturnNull() {
 			MatiereDtoCreate dto = new MatiereDtoCreate();
@@ -41,6 +55,10 @@ public class MatiereCreateConverterTest {
 			
 		}
 
+		/**
+		 * Conversion d'un dto vers une entite
+		 * Si le dto est null, l'entite est null
+		 */
 		@Test
 		public void testDtoToEntiteNull_shouldReturnNull() {
 			MatiereDtoCreate dto = null;
@@ -51,6 +69,10 @@ public class MatiereCreateConverterTest {
 		
 		//TEST LISTE DTO TO ENTITE
 		
+		/**
+		 * Conversion d'une liste dto vers une liste d'entite
+		 * Condition valide
+		 */
 		@Test
 		public void testListDtoToEntiteValid_shouldReturnEntite() {
 			List<MatiereDtoCreate> listeMatiereDto = new ArrayList<>();;
@@ -67,6 +89,10 @@ public class MatiereCreateConverterTest {
 			
 		}
 		
+		/**
+		 * Conversion d'une liste dto vers une liste d'entite
+		 * Si un element de la liste est vide, il n'est pas convertit
+		 */
 		@Test
 		public void testListDtoToEntiteWithOneBlankDto_shouldReturnNotBlankListItem() {
 			List<MatiereDtoCreate> listeMatiereDto = new ArrayList<>();;
@@ -80,6 +106,10 @@ public class MatiereCreateConverterTest {
 			assertThat(listeEntite.get(0)).hasFieldOrPropertyWithValue("nom", dto2.getNom());
 		}
 		
+		/**
+		 * Conversion d'une liste dto vers une liste d'entite
+		 * Si la liste dto est null, la liste entite est vide
+		 */
 		@Test
 		public void testListDtoToEntiteNull_shouldReturnNull() {
 			List<MatiereDtoCreate> listeMatiereDto = null;
@@ -90,6 +120,10 @@ public class MatiereCreateConverterTest {
 		
 		//TEST  ENTITE TO DTO
 		
+		/**
+		 * Conversion d'une entite vers un dto
+		 * Condition valide
+		 */
 		@Test
 		public void testEntiteToDtoValid_shouldReturnDto() {
 			Matiere mat = new Matiere("math");
@@ -98,6 +132,10 @@ public class MatiereCreateConverterTest {
 			assertThat(dtoMAt).hasFieldOrPropertyWithValue("nom", mat.getNom());
 		}
 		
+		/**
+		 * Conversion d'une entite vers un dto
+		 * Si l'entite est sans attribut, le dto est null
+		 */
 		@Test
 		public void testEntiteToDtoWithBlanckEntite_shouldReturnNull() {
 			Matiere mat = new Matiere();
@@ -107,6 +145,10 @@ public class MatiereCreateConverterTest {
 			assertThat(dtoMat).isNull();
 		}
 		
+		/**
+		 * Conversion d'une entite vers un dto
+		 * Si l'entite est null, le dto est null
+		 */
 		@Test
 		public void testEntiteToDtoWithNullEntite_shouldReturnNull() {
 			Matiere mat = null;
@@ -118,6 +160,10 @@ public class MatiereCreateConverterTest {
 		
 		//TEST LISTE ENTITE  TO DTO
 		
+		/**
+		 * Conversion d'une liste d'entite vers dto
+		 * Condition valide
+		 */
 		@Test
 		public void testListEntiteToDtoValid_shouldReturnEntite() {
 			List<Matiere> listeMat = new ArrayList<Matiere>();
@@ -133,6 +179,10 @@ public class MatiereCreateConverterTest {
 			assertThat(dtoListe.get(1)).hasFieldOrPropertyWithValue("nom", mat2.getNom());
 		}
 		
+		/**
+		 * Conversion d'une liste d'entite vers dto
+		 * Si un élement de la liste n'a pas d'attribut, il n'est pas convertit
+		 */
 		@Test
 		public void testListEntiteToDtoWithBlankItem_shouldReturnListWithNoBlankItem() {
 			List<Matiere> listeMat = new ArrayList<>();
@@ -146,6 +196,10 @@ public class MatiereCreateConverterTest {
 			assertThat(dtoLiist.get(0)).hasFieldOrPropertyWithValue("nom", dto2.getNom());
 		}
 
+		/**
+		 * Conversion d'une liste d'entite vers dto
+		 * Si la liste est null, la liste retournée est vide
+		 */
 		@Test
 		public void testListEntiteToDtoWithNullList_shouldReturnNull() {
 			List<Matiere> listeMat = null;

@@ -13,12 +13,22 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.entity.Matiere;
 
+/**
+ * Classe test de la couche dao de l'entite matière
+ * @author IN-LY-004
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 public class MatiereDaoTest {
 
 	@Autowired
 	private IMatiereDao daoMatiere;
 
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode FindMatieresByModule (liste des matières d'un module) de la couche DAO de l'entité matieres
+	 * En conditions VALIDES (id d'un module existant et matières dans la BD)
+	 */
 	@Sql(statements = "INSERT INTO Module VALUES (5,'sixieme')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Matiere VALUES (1,'math',5)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Matiere VALUES (2,'francais',5)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
