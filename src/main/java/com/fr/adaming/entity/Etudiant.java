@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * description : modèle de l'entité Etudiant
+ * Modèle de l'entité Etudiant
  * 
  * @author clara
  * @since 1.0.x
@@ -44,7 +44,7 @@ public class Etudiant {
 	private int telephone;
 	
 	/**
-	 * description : champ pour le sexe : true pour femme, false pour homme
+	 * Champ pour le sexe : true pour femme, false pour homme
 	 */
 	@Column
 	private boolean sexe;
