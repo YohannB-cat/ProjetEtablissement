@@ -1,7 +1,6 @@
 package com.fr.adaming.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -15,13 +14,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.fr.adaming.dto.EtudiantDto;
 import com.fr.adaming.entity.Etudiant;
 
+/**
+ * Classe test de la couche converter du dto NoteDtoCreate
+ * @author clara
+ * @since 1.0.X
+ */
 @SpringBootTest
 public class EtudiantConverterTest{
 
 	@Autowired
 	public IConverter<Etudiant, EtudiantDto> convert;
 
-	
+	/**
+	 * Vérification conversion de dto à entite ok
+	 */
 	@Test
 	public void testDtoToEntiteValid_shouldReturnEntite() {
 		EtudiantDto dto = new EtudiantDto("nom", "prenom", "adresse", 69003, "blabla", true, 19865156, 20510620,
@@ -43,33 +49,18 @@ public class EtudiantConverterTest{
 
 	}
 
-	
-	@Test
-	public void testDtoToEntiteNotValid_shouldReturnNull() {
-		EtudiantDto dto = new EtudiantDto(null,null,null,0,null,false,0,0,null,false);
-		Etudiant et = convert.dtoToEntite(dto);
-
-		assertTrue(et.getId()==0);
-		assertNull(et.getAdresse());
-		assertNull(et.getPrenom());
-		assertNull(et.getNom());
-		assertTrue(et.getCodePostale() == 0);
-		assertNull(et.getVille());
-		assertFalse(et.isSexe());
-		assertFalse(et.isEnEtude());
-		assertTrue(et.getCni() == 0);
-		assertTrue(et.getTelephone() == 0);
-		assertNull(et.getEmail());
-	}
-
-	
+	/**
+	 * Vérification conversion de dto null retourne une entite null 
+	 */
 	@Test
 	public void testDtoToEntiteNull_shouldReturnNull() {
 		assertNull(convert.dtoToEntite(null));
 
 	}
 
-	
+	/**
+	 * Vérification conversion de dto null retourne une entite null 
+	 */
 	@Test
 	public void testEntiteToDtoValid_shouldReturnEntite() {
 		Etudiant et = new Etudiant(1,"nom","prenom","adresse","ville","email",69003,123,06,true,true);
@@ -89,34 +80,18 @@ public class EtudiantConverterTest{
 
 	}
 
-	
-	@Test
-	public void testEntiteToDtoNotValid_shouldReturnNull() {
-		Etudiant et = new Etudiant(0, null, null, null, null, null, 0, 0, 0, false, false);
-
-		EtudiantDto dto = convert.entiteToDto(et);
-
-		assertTrue(dto.getCodePostal() == 0);
-		assertFalse(dto.isSexe());
-		assertFalse(dto.isEnEtude());
-		assertTrue(dto.getCni() == 0);
-		assertTrue(dto.getTelephone() == 0);
-		assertNull(dto.getAdresse());
-		assertNull(dto.getEmail());
-		assertNull(dto.getNom());
-		assertNull(dto.getPrenom());
-		assertNull(dto.getVille());
-
-	}
-
-	
+	/**
+	 * Vérification conversion de entite null retourne dto null
+	 */
 	@Test
 	public void testEntiteToDtoNull_shouldReturnNull() {
 		assertNull(convert.entiteToDto(null));
 
 	}
 
-	
+	/**
+	 * Vérification conversion listeDto à liste entité ok
+	 */
 	@Test
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
 		List<EtudiantDto> listedto = new ArrayList<EtudiantDto>();
@@ -132,7 +107,9 @@ public class EtudiantConverterTest{
 
 	}
 
-	
+	/**
+	 * Vérification conversion listeDto avec dtos null retourne une liste entité avec entités nulles
+	 */
 	@Test
 	public void testListDtoToEntiteObjectNull_shouldReturnListObjectNull() {
 		List<EtudiantDto> listedto = new ArrayList<EtudiantDto>();
@@ -145,14 +122,18 @@ public class EtudiantConverterTest{
 		
 	}
 
-	
+	/**
+	 * Vérification conversion listeDto null retourne liste entite vide 
+	 */
 	@Test
 	public void testListDtoToEntiteNull_shouldReturnEmptyList() {
 		assertTrue(convert.listDtoToEntite(null).isEmpty());
 
 	}
 
-	
+	/**
+	 * Vérification conversion listeEntite à listeDto ok
+	 */
 	@Test
 	public void testListEntiteToDtoValid_shouldReturnEntite() {
 		List<Etudiant> liste = new ArrayList<Etudiant>();
@@ -166,7 +147,9 @@ public class EtudiantConverterTest{
 
 	}
 
-	
+	/**
+	 * Vérification conversion liste entité avec entités null retourne une listeDto avec dtos null
+	 */
 	@Test
 	public void testListEntiteToDtoObjectNull_shouldReturnListObjectNull() {
 		List<Etudiant> liste = new ArrayList<Etudiant>();
@@ -179,7 +162,9 @@ public class EtudiantConverterTest{
 
 	}
 
-	
+	/**
+	 * Vérification conversion listeEntite null retourne listeDto vide
+	 */
 	@Test
 	public void testListEntiteToDtoNull_shouldReturnEmptyList() {
 		assertTrue(convert.listEntiteToDto(null).isEmpty());

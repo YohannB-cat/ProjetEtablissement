@@ -18,12 +18,20 @@ import com.fr.adaming.entity.Examen;
 import com.fr.adaming.entity.Module;
 import com.fr.adaming.entity.Note;
 
+/**
+ * Classe test de la couche converter du dto NoteDto
+ * @author clara
+ * @since 1.0.X
+ */
 @SpringBootTest
 public class NoteConverterTest {
 
 	@Autowired
 	public IConverter<Note, NoteDto> convert;
 
+	/**
+	 * Vérification conversion de dto à entite ok
+	 */
 	@Test
 	@DisplayName("test 1")
 	public void testDtoToEntiteValid_shouldReturnEntite() {
@@ -37,6 +45,9 @@ public class NoteConverterTest {
 	}
 
 
+	/**
+	 * Vérification conversion de dto null retourne une entite null 
+	 */
 	@Test
 	@DisplayName("test 3")
 	public void testDtoToEntiteNull_shouldReturnNull() {
@@ -44,6 +55,9 @@ public class NoteConverterTest {
 
 	}
 
+	/**
+	 * Vérification conversion de entite à dto ok
+	 */
 	@Test
 	@DisplayName("test 4")
 	public void testEntiteToDtoValid_shouldReturnEntite() {
@@ -56,6 +70,10 @@ public class NoteConverterTest {
 	}
 
 
+
+	/**
+	 * Vérification conversion de entite null retourne dto null
+	 */
 	@Test
 	@DisplayName("test 6")
 	public void testEntiteToDtoNull_shouldReturnNull() {
@@ -63,6 +81,9 @@ public class NoteConverterTest {
 
 	}
 
+	/**
+	 * Vérification conversion listeDto à liste entité ok
+	 */
 	@Test
 	@DisplayName("test 7")
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
@@ -78,6 +99,9 @@ public class NoteConverterTest {
 	}
 
 
+	/**
+	 * Vérification conversion listeDto null retourne liste entite vide 
+	 */
 	@Test
 	@DisplayName("test 9")
 	public void testListDtoToEntiteNull_shouldReturnNull() {
@@ -85,6 +109,9 @@ public class NoteConverterTest {
 
 	}
 
+	/**
+	 * Vérification conversion listeEntite à listeDto ok
+	 */
 	@Test
 	@DisplayName("test 10")
 	public void testListEntiteToDtoValid_shouldReturnEntite() {
@@ -99,6 +126,9 @@ public class NoteConverterTest {
 
 	}
 
+	/**
+	 * Vérification conversion listeEntite null retourne listeDto vide
+	 */
 	@Test
 	@DisplayName("test 12")
 	public void testListEntiteToDtoNull_shouldReturnNull() {

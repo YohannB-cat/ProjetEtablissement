@@ -13,6 +13,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Modèle de l'entité Note
+ * @author clara
+ * @since 1.0.x
+ */
 @Entity
 @Getter
 @Setter

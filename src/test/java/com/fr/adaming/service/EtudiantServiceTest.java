@@ -13,7 +13,11 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.entity.Etudiant;
-
+/**
+ * Classe test de la couche service de l'entité etudiant
+ * @author clara
+ * @since 1.0.X
+ */
 @SpringBootTest
 public class EtudiantServiceTest {
 
@@ -21,6 +25,9 @@ public class EtudiantServiceTest {
 	private IEtudiantService service;
 
 	// Tests create
+	/**
+	 * Vérification que la création d'un étudiant null renvoie null 
+	 */
 	@Test
 	@DisplayName("Création d'un etudiant null")
 	public void testCreatingEtudiantNull_shouldReturnNull() {
@@ -28,6 +35,9 @@ public class EtudiantServiceTest {
 		assertNull(service.create(etu));
 	}
 
+	/**
+	 * Vérifiation que la création d'un étudiant (attribut valides, mais null) fonctionne
+	 */
 	@Test
 	@DisplayName("Création d'un etudiant avec param null")
 	public void testCreatingEtudiantWithNullName_shouldReturnEtudiant() {
@@ -35,6 +45,9 @@ public class EtudiantServiceTest {
 		assertThat(service.create(etu)).isEqualTo(etu);
 	}
 
+	/**
+	 * Vérifiation que la création d'un étudiant (attribut valides) fonctionne
+	 */
 	@Test
 	@DisplayName("Création d'un etudiant avec correct")
 	public void testCreatingCorrectEtudiant_shouldReturnEtudiant() {
@@ -44,6 +57,9 @@ public class EtudiantServiceTest {
 	}
 
 	// Test findAll
+	/**
+	 * Vérification que findAll retourne une liste vide quand il n'y en a pas dans la base de données
+	 */
 	@Test
 	@Sql(statements = "DELETE FROM Etudiant", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@DisplayName("Demande de la liste vide")
@@ -52,6 +68,9 @@ public class EtudiantServiceTest {
 		assertTrue(service.findAll().isEmpty());
 	}
 
+	/**
+	 * Vérification que findAll retourne une liste d'étudiant de ceux présentes dans la base de données
+	 */
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
 			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
@@ -64,18 +83,27 @@ public class EtudiantServiceTest {
 	}
 
 	// Test findById
+	/**
+	 * Vérification que le retour de findById avec id inexistant soit null
+	 */
 	@Test
 	@DisplayName("Recherche d'étudiant par id non existant")
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
 	
+	/**
+	 * Vérification que le retour de findById avec id inexistant soit null
+	 */
 	@Test
 	@DisplayName("Recherche d'étudiant par id égal à 0")
 	public void testFindByIdWithZeroId_shouldReturnNull() {
 		assertThat(service.findById(0)).isNull();
 	}
 
+	/**
+	 * Vérification que le retour de findById soit le bon objet
+	 */
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
 			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -98,6 +126,9 @@ public class EtudiantServiceTest {
 	}
 
 	// Test update
+	/**
+	 * Vérification que l'update d'un étudiant null ne fonctionne pas
+	 */
 	@Test
 	@DisplayName("Update d'un etudiant null")
 	public void testUpdateNullEtudiant_shouldReturnFalse() {
@@ -105,6 +136,9 @@ public class EtudiantServiceTest {
 		assertThat(service.update(etu)).isFalse();
 	}
 
+	/**
+	 * Vérification que l'update d'une note n'existant pas dans la base de donnée ne fonctionne pas
+	 */
 	@Test
 	@DisplayName("Update d'un etudiant inexistant dans la bd")
 	public void testUpdateInexistantEtudiant_shouldReturnFalse() {
@@ -113,6 +147,9 @@ public class EtudiantServiceTest {
 		assertThat(service.update(etu)).isFalse();
 	}
 
+	/**
+	 * Vérification que l'update fonctionne
+	 */
 	@Sql(statements = "INSERT INTO Etudiant (id,nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
 			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -125,6 +162,9 @@ public class EtudiantServiceTest {
 	}
 
 	// Test deleteById
+	/**
+	 * Vérification que la suppression avec id invalide ne fonctionne pas
+	 */
 	@Sql(statements = "INSERT INTO Etudiant (nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
 			+ "VALUES ('Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -135,6 +175,9 @@ public class EtudiantServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
+	/**
+	 * Vérification que la suppression avec id valide fontionne 
+	 */
 	@Sql(statements = "INSERT INTO Etudiant (id, nom, prenom, adresse, ville, email, code_postale, cni, telephone, sexe, en_etude) "
 			+ "VALUES (1,'Bob', 'Marley', '3eme nuage a gauche', 'paradis', 'jamin@with.you', 0, 0, 0, true, true)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Etudiant WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)

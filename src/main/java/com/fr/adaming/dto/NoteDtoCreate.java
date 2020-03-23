@@ -10,6 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Modèle du dto NoteDtoCreate (similaire à l'entité Note, mais sans id)
+ * @author clara
+ * @since 1.0.x
+ */
 @Getter @Setter @ToString @NoArgsConstructor @AllArgsConstructor
 public class NoteDtoCreate {
 	

@@ -17,12 +17,20 @@ import com.fr.adaming.entity.Examen;
 import com.fr.adaming.entity.Module;
 import com.fr.adaming.entity.Note;
 
+/**
+ * Classe test de la couche converter du dto NoteDtoCreate
+ * @author clara
+ * @since 1.0.X
+ */
 @SpringBootTest
 public class NoteCreateConverterTest {
 
 	@Autowired
 	public IConverter<Note, NoteDtoCreate> convert;
 
+	/**
+	 * Vérification conversion de dto à entite ok
+	 */
 	@Test
 	@DisplayName("test 1")
 	public void testDtoToEntiteValid_shouldReturnEntite() {
@@ -36,6 +44,10 @@ public class NoteCreateConverterTest {
 
 	}
 
+	
+	/**
+	 * Vérification conversion de dto null retourne une entite null 
+	 */
 	@Test
 	@DisplayName("test 2")
 	public void testDtoToEntiteNull_shouldReturnNull() {
@@ -43,6 +55,9 @@ public class NoteCreateConverterTest {
 
 	}
 
+	/**
+	 * Vérification conversion de entite à dto ok
+	 */
 	@Test
 	@DisplayName("test 3")
 	public void testEntiteToDtoValid_shouldReturnEntite() {
@@ -55,7 +70,9 @@ public class NoteCreateConverterTest {
 
 	}
 
-
+	/**
+	 * Vérification conversion de entite null retourne dto null
+	 */
 	@Test
 	@DisplayName("test 4")
 	public void testEntiteToDtoNull_shouldReturnNull() {
@@ -63,6 +80,9 @@ public class NoteCreateConverterTest {
 
 	}
 
+	/**
+	 * Vérification conversion listeDto à liste entité ok
+	 */
 	@Test
 	@DisplayName("test 5")
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
@@ -77,6 +97,10 @@ public class NoteCreateConverterTest {
 
 	}
 
+
+	/**
+	 * Vérification conversion listeDto null retourne liste entite vide 
+	 */
 	@Test
 	@DisplayName("test 6")
 	public void testListDtoToEntiteNull_shouldReturnNull() {
@@ -84,6 +108,9 @@ public class NoteCreateConverterTest {
 
 	}
 
+	/**
+	 * Vérification conversion listeEntite à listeDto ok
+	 */
 	@Test
 	@DisplayName("test 7")
 	public void testListEntiteToDtoValid_shouldReturnEntite() {
@@ -98,6 +125,9 @@ public class NoteCreateConverterTest {
 
 	}
 
+	/**
+	 * Vérification conversion listeEntite null retourne listeDto vide
+	 */
 	@Test
 	@DisplayName("test 8")
 	public void testListEntiteToDtoNull_shouldReturnNull() {
