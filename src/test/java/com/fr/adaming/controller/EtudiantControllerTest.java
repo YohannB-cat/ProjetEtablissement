@@ -70,25 +70,6 @@ public class EtudiantControllerTest {
 		assertFalse(responseDto.isError());
 	}
 
-	@Test
-	@DisplayName("Creating with no attribute")
-	@Sql(statements = "DELETE FROM Etudiant", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void testCreatingEtudiantWithNoAttribute_shouldReturnFail() throws UnsupportedEncodingException, Exception {
-		// preparer le DTO
-		EtudiantDto requestDto = new EtudiantDto();
-		// convrtir le DTO en Json
-		String dtoAsJson = mapper.writeValueAsString(requestDto);
-		// test requete
-		String responseAsStrig = mockMvc
-				.perform(post("http://localhost:8080/etudiant").contentType(MediaType.APPLICATION_JSON_VALUE)
-						.content(dtoAsJson))
-				.andDo(print()).andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
-		
-		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsStrig, ResponseDto.class);
-
-		assertNotNull(responseDto);
-	}
 
 	@Test
 	public void testFindByIdInvalid_shouldNotWork() throws UnsupportedEncodingException, Exception {

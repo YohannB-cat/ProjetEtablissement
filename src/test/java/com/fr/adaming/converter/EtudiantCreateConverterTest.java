@@ -90,12 +90,11 @@ public class EtudiantCreateConverterTest{
 
 	@Test
 	public void testEntiteToDtoNotValid_shouldReturnEntite() {
-		Etudiant et = new Etudiant(0, null, null, null, null, null, 0, 0, 0, false, false);
+		Etudiant et = new Etudiant(1, null, null, null, null, null, 0, 0, 0, false, false);
 
 		EtudiantDtoCreate dto = convert.entiteToDto(et);
 
 		
-		assertTrue(dto.getId()==0);
 		assertTrue(dto.getCodePostal() == 0);
 		assertFalse(dto.isSexe());
 		assertFalse(dto.isEnEtude());
