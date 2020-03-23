@@ -16,12 +16,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.entity.Examen;
+/**
+ * Classe test de la conversion des données entre Examen et ExamenDto
+ * @author Yohann
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 public class ExamenConverterTest {
 
 	@Autowired
 	public IConverter<Examen, ExamenDto> convert;
 
+	/**
+	 * Test de la conversion d'une dto valide en entité
+	 * Doit retourner une entité valide
+	 */
 	@Test
 	public void testDtoToEntiteValid_shouldReturnEntite() {
 		String date = "2020-02-20";
@@ -37,12 +47,20 @@ public class ExamenConverterTest {
 		assertTrue(abs.getCoefficient()==2.2d);
 	}
 	
+	/**
+	 * Test de la conversion d'une dto null à une entité
+	 * Doit retourner null
+	 */
 	@Test
 	public void testDtoToEntiteNull_shouldReturnNull() {
 		assertNull(convert.dtoToEntite(null));
 	}
 
 	
+	/**
+	 * Test de la conversion d'une entité valide en dto
+	 * Doit retourner un dto valide
+	 */
 	@Test
 	public void testEntiteToDtoValid_shouldReturnEntite() {
 		String date = "2020-02-20";
@@ -59,6 +77,10 @@ public class ExamenConverterTest {
 	}
 
 	
+	/**
+	 * Test de la conversion d'une liste de dto valides en liste d'entités valides
+	 * Doit retourner une liste d'entités
+	 */
 	@Test
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
 		List<ExamenDto> listeDto = new ArrayList<ExamenDto>();
@@ -75,6 +97,10 @@ public class ExamenConverterTest {
 	
 	
 	
+	/**
+	 * Test de la conversion d'une liste de dto vide en liste d'entité
+	 * Doit retourner une liste vide
+	 */
 	@Test
 	public void testListDtoToEntiteEmpty_shouldReturnEmpty() {
 		assertTrue((convert.listDtoToEntite(new ArrayList<ExamenDto>())).isEmpty());
@@ -82,6 +108,10 @@ public class ExamenConverterTest {
 	}
 
 	
+	/**
+	 * Test de la conversion d'une liste d'entités valides en liste de dto
+	 * Doit retourner une liste de dto valides
+	 */
 	@Test
 	public void testListEntiteToDtoValid_shouldReturnDto() {
 		List<Examen> liste = new ArrayList<Examen>();
@@ -100,6 +130,10 @@ public class ExamenConverterTest {
 	}
 
 	
+	/**
+	 * Test de la conversion d'une liste d'entités vide en liste de dto
+	 * Doit retourner une liste vide
+	 */
 	@Test
 	public void testListEntiteToDtoEmpty_shouldReturnEmpty() {
 		assertTrue(convert.listEntiteToDto(new ArrayList<Examen>()).isEmpty());

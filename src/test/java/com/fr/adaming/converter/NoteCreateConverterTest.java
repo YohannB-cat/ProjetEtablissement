@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,34 +17,49 @@ import com.fr.adaming.entity.Examen;
 import com.fr.adaming.entity.Module;
 import com.fr.adaming.entity.Note;
 
+/**
+ * Classe test de la couche converter du dto NoteDtoCreate
+ * @author clara
+ * @since 1.0.X
+ */
 @SpringBootTest
-public class NoteCreateConverterTest implements IConverterTest {
+public class NoteCreateConverterTest {
 
 	@Autowired
 	public IConverter<Note, NoteDtoCreate> convert;
 
-	@Override
+	/**
+	 * Vérification conversion de dto à entite ok
+	 */
 	@Test
+	@DisplayName("test 1")
 	public void testDtoToEntiteValid_shouldReturnEntite() {
 		NoteDtoCreate dto = new NoteDtoCreate(3, new Module(),15.3f,new Etudiant(),new Examen());
 
 		Note abs = convert.dtoToEntite(dto);
 
-		assertTrue(abs.getId()==30);
+		assertTrue(abs.getId()==3);
 		assertTrue(abs.getValeur()==15.3f);
 
 
 	}
 
-	@Override
+	
+	/**
+	 * Vérification conversion de dto null retourne une entite null 
+	 */
 	@Test
+	@DisplayName("test 2")
 	public void testDtoToEntiteNull_shouldReturnNull() {
 		assertNull(convert.dtoToEntite(null));
 
 	}
 
-	@Override
+	/**
+	 * Vérification conversion de entite à dto ok
+	 */
 	@Test
+	@DisplayName("test 3")
 	public void testEntiteToDtoValid_shouldReturnEntite() {
 		Note abs = new Note(5, new Module(),18.4f, new Etudiant(),new Examen());
 
@@ -54,22 +70,21 @@ public class NoteCreateConverterTest implements IConverterTest {
 
 	}
 
-	@Override
+	/**
+	 * Vérification conversion de entite null retourne dto null
+	 */
 	@Test
-	public void testEntiteToDtoNotValid_shouldReturnNull() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	@Test
+	@DisplayName("test 4")
 	public void testEntiteToDtoNull_shouldReturnNull() {
 		assertNull(convert.entiteToDto(null));
 
 	}
 
-	@Override
+	/**
+	 * Vérification conversion listeDto à liste entité ok
+	 */
 	@Test
+	@DisplayName("test 5")
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
 		List<NoteDtoCreate> listedto = new ArrayList<NoteDtoCreate>();
 		NoteDtoCreate dto = new NoteDtoCreate(4,new Module(),15.3f,new Etudiant(),new Examen());
@@ -82,15 +97,22 @@ public class NoteCreateConverterTest implements IConverterTest {
 
 	}
 
-	@Override
+
+	/**
+	 * Vérification conversion listeDto null retourne liste entite vide 
+	 */
 	@Test
+	@DisplayName("test 6")
 	public void testListDtoToEntiteNull_shouldReturnNull() {
 		assertTrue(convert.listDtoToEntite(null).isEmpty());
 
 	}
 
-	@Override
+	/**
+	 * Vérification conversion listeEntite à listeDto ok
+	 */
 	@Test
+	@DisplayName("test 7")
 	public void testListEntiteToDtoValid_shouldReturnEntite() {
 		List<Note> liste = new ArrayList<Note>();
 		Note et = new Note(5, new Module(),18.4f, new Etudiant(),new Examen());
@@ -103,29 +125,15 @@ public class NoteCreateConverterTest implements IConverterTest {
 
 	}
 
-	@Override
+	/**
+	 * Vérification conversion listeEntite null retourne listeDto vide
+	 */
 	@Test
+	@DisplayName("test 8")
 	public void testListEntiteToDtoNull_shouldReturnNull() {
 		assertTrue(convert.listEntiteToDto(null).isEmpty());
 
 	}
 
-	@Override
-	public void testDtoToEntiteNotValid_shouldReturnNull() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void testListDtoToEntiteNotValid_shouldReturnNull() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void testListEntiteToDtoNotValid_shouldReturnNull() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

@@ -50,7 +50,7 @@ public class ClasseController implements IClasseController {
 			
 		ResponseDto resp = null;
 		
-		if (etu != null && etu.getId() != 0) {
+		if (etu != null) {
 			log.info("ClassCreate OK");
 			resp = new ResponseDto(false, WebConstant.SUCCESS, etu);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -69,13 +69,13 @@ public class ClasseController implements IClasseController {
 		boolean result = service.update(convertCreate.dtoToEntite(dto));
 		ResponseDto resp = null;
 
-		if (!result) {
+		if (result) {
 			log.info("ClassUpdate OK");
-			resp = new ResponseDto(true, WebConstant.SUCCESS, null);
+			resp = new ResponseDto(false, WebConstant.SUCCESS, null);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
 		log.warn("ClassUpdate FAIL");
-		resp = new ResponseDto(false, WebConstant.FAIL, null);
+		resp = new ResponseDto(true, WebConstant.FAIL, null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 
@@ -96,7 +96,7 @@ public class ClasseController implements IClasseController {
 	}
 
 	@Override
-	@GetMapping
+	@GetMapping(path = "/all")
 	public ResponseEntity<ResponseDto> findAll() {
 		List<ClasseDto> list = convert.listEntiteToDto(service.findAll());
 		

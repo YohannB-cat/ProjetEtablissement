@@ -12,6 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.fr.adaming.dto.ModuleDtoCreate;
 import com.fr.adaming.entity.Module;
 
+/**
+ * Test converter create module
+ * @author IN-LY-004
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 public class ModuleCreateConverterTest {
 
@@ -21,6 +27,10 @@ public class ModuleCreateConverterTest {
 	
 	// TEST DTO TO ENTITE
 
+	/**
+	 * Conversion d'un dto vers une entite
+	 * Condition valide
+	 */
 	@Test
 	public void testDtoToEntiteValid_shouldReturnEntite() {
 		ModuleDtoCreate dto = new ModuleDtoCreate("math");
@@ -31,6 +41,10 @@ public class ModuleCreateConverterTest {
 
 	}
 
+	/**
+	 * Conversion d'un dto vers une entite
+	 * Si le dto est sans attibut, l'entite est null
+	 */
 	@Test
 	public void testDtoToEntiteWithBlankValue_shouldReturnNull() {
 		ModuleDtoCreate dto = new ModuleDtoCreate();
@@ -41,6 +55,10 @@ public class ModuleCreateConverterTest {
 
 	}
 
+	/**
+	 * Conversion d'un dto vers une entite
+	 * Si le dto est null, l'entite est null
+	 */
 	@Test
 	public void testDtoToEntiteNull_shouldReturnNull() {
 		ModuleDtoCreate dto = null;
@@ -51,6 +69,10 @@ public class ModuleCreateConverterTest {
 
 	// TEST LISTE DTO TO ENTITE
 
+	/**
+	 * Conversion liste dto vers une liste d'entite
+	 * Condition valide
+	 */
 	@Test
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
 		List<ModuleDtoCreate> listeModuleDto = new ArrayList<>();
@@ -68,6 +90,10 @@ public class ModuleCreateConverterTest {
 
 	}
 
+	/**
+	 * Conversion liste dto vers une liste d'entite
+	 * Si l'un des elements de la liste est vide, il n'est pas convertit
+	 */
 	@Test
 	public void testListDtoToEntiteWithOneBlankDto_shouldReturnNotBlankListItem() {
 		List<ModuleDtoCreate> listeModuleDto = new ArrayList<>();
@@ -82,6 +108,10 @@ public class ModuleCreateConverterTest {
 		assertThat(listeEntite.get(0)).hasFieldOrPropertyWithValue("nom", dto2.getNom());
 	}
 
+	/**
+	 * Conversion liste dto vers une liste d'entite
+	 * Si la liste est null, on renvoie une liste d'entite vide
+	 */
 	@Test
 	public void testListDtoToEntiteNull_shouldReturnNull() {
 		List<ModuleDtoCreate> listeModuleDto = null;
@@ -92,6 +122,10 @@ public class ModuleCreateConverterTest {
 
 	// TEST ENTITE TO DTO
 
+	/**
+	 * Conversion  dto vers entite
+	 * Condition valide
+	 */
 	@Test
 	public void testEntiteToDtoValid_shouldReturnDto() {
 		Module mod = new Module(10,"math");
@@ -100,6 +134,10 @@ public class ModuleCreateConverterTest {
 		assertThat(dtoMod).hasFieldOrPropertyWithValue("nom", mod.getNom());
 	}
 
+	/**
+	 * Conversion  dto vers entite
+	 * Si l'entite est sans attribut, le dto est null
+	 */
 	@Test
 	public void testEntiteToDtoWithBlanckEntite_shouldReturnNull() {
 		Module mod = new Module();
@@ -109,6 +147,10 @@ public class ModuleCreateConverterTest {
 		assertThat(dtoMat).isNull();
 	}
 
+	/**
+	 * Conversion  dto vers entite
+	 * Si l'entite est null, le dto est null
+	 */
 	@Test
 	public void testEntiteToDtoWithNullEntite_shouldReturnNull() {
 		Module mod = null;
@@ -120,6 +162,10 @@ public class ModuleCreateConverterTest {
 
 	// TEST LISTE ENTITE TO DTO
 
+	/**
+	 * Conversion liste entite vers liste dto
+	 * Condition valide
+	 */
 	@Test
 	public void testListEntiteToDtoValid_shouldReturnEntite() {
 		List<Module> listeMod = new ArrayList<Module>();
@@ -135,6 +181,10 @@ public class ModuleCreateConverterTest {
 		assertThat(dtoListe.get(1)).hasFieldOrPropertyWithValue("nom", mod2.getNom());
 	}
 
+	/**
+	 * Conversion liste entite vers liste dto
+	 * Si un element de la liste est sans attribut, il n'est pas convertit
+	 */
 	@Test
 	public void testListEntiteToDtoWithBlankItem_shouldReturnListWithNoBlankItem() {
 		List<Module> listeMod = new ArrayList<>();
@@ -148,6 +198,10 @@ public class ModuleCreateConverterTest {
 		assertThat(dtoLiist.get(0)).hasFieldOrPropertyWithValue("nom", dto2.getNom());
 	}
 
+	/**
+	 * Conversion liste entite vers liste dto
+	 * Si la liste est null, on renvoie une liste de dto vide
+	 */
 	@Test
 	public void testListEntiteToDtoWithNullList_shouldReturnNull() {
 		List<Module> listeMod = null;

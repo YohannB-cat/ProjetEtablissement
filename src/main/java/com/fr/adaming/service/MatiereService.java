@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import com.fr.adaming.dao.IMatiereDao;
 import com.fr.adaming.entity.Matiere;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service("matiereservice")
+@Slf4j
 public class MatiereService implements IMatiereService {
 
 	@Autowired
@@ -47,11 +50,15 @@ public class MatiereService implements IMatiereService {
 
 	@Override
 	public Boolean update(Matiere matiere) {
-
-		if (matDao.existsById(matiere.getId())) {
-			matDao.save(matiere);
-			return true;
-		} else {
+		try {
+			if (matDao.existsById(matiere.getId())) {
+				matDao.save(matiere);
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception er) {
+			log.error("ERROR update matiere "+ er.getMessage());
 			return false;
 		}
 

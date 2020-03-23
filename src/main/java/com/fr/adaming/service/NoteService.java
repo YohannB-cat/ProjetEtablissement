@@ -42,6 +42,9 @@ public class NoteService implements INoteService {
 		}catch (ConstraintViolationException er) {
 			log.error("ConstraintViolationException");
 			return null;
+		}catch (InvalidDataAccessApiUsageException err) {
+			log.error("InvalidDataAccessApiUsageException : utilisation d'un objet en attribut qui n'existe pas dans la DB");
+			return null;
 		}
 	}
 
@@ -117,7 +120,7 @@ public class NoteService implements INoteService {
 		try {
 			if (etudiantDao.findById(idetudiant).isPresent()) {
 				log.info("SUCCESS lsit by etudiant");
-				 return listNote = noteDao.listByEtudiant(idetudiant);
+				 return  noteDao.listByEtudiant(idetudiant);
 			}
 		}catch (InvalidDataAccessApiUsageException e) {
 			log.error("ERROR list by etudiant"+e.getMessage());

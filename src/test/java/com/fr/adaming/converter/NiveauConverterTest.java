@@ -17,6 +17,12 @@ import com.fr.adaming.dto.NiveauDto;
 import com.fr.adaming.entity.Classe;
 import com.fr.adaming.entity.Niveau;
 
+/**
+ * Tests de la classe NiveauConverter
+ * @author Flavien
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 public class NiveauConverterTest {
 
@@ -24,6 +30,9 @@ public class NiveauConverterTest {
 	public IConverter<Niveau, NiveauDto> convert;
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode dtoToEntite avec un dto valide
+	 */
 	@Test
 	@DisplayName("Convertion DtoToEntite correct")
 	public void testDtoToEntiteValid_shouldReturnEntite() {
@@ -42,6 +51,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode dtoToEntite avec un dto possedant une liste null
+	 */
 	@Test
 	@DisplayName("Convertion DtoToEntite avec listNull")
 	public void testDtoToEntiteWithNullClasseList_shouldReturnEntite() {
@@ -55,6 +67,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode dtoToEntite avec un dto possedant un nom null
+	 */
 	@Test
 	@DisplayName("Convertion DtoToEntite avec nomNull")
 	public void testDtoToEntiteWithNullNom_shouldReturnEntite() {
@@ -73,6 +88,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode dtoToEntite avec un dto null
+	 */
 	@Test
 	@DisplayName("Convertion DtoToEntite dtoNull")
 	public void testDtoToEntiteWithNullEntite_shouldReturnNull() {
@@ -84,6 +102,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode entiteToDto avec une entite valide
+	 */
 	@Test
 	@DisplayName("Convertion EntiteToDto correct")
 	public void testEntiteToDtoValid_shouldReturnDto() {
@@ -102,6 +123,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode entiteToDto avec une entite possedant une liste null
+	 */
 	@Test
 	@DisplayName("Convertion EntiteToDto avec listNull")
 	public void testEntiteToDtoWithNullClasseList_shouldReturnDto() {
@@ -115,6 +139,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode entiteToDto avec une entite possedant un nom null
+	 */
 	@Test
 	@DisplayName("Convertion EntiteToDto avec nomNull")
 	public void testEntiteToDtoWithNullNom_shouldReturnDto() {
@@ -133,6 +160,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode entiteToDto avec une entite null
+	 */
 	@Test
 	@DisplayName("Convertion EntiteToDto dtoNull")
 	public void testEntiteToDtoWithNullEntite_shouldReturnNull() {
@@ -144,6 +174,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode listDtoToEntite avec une listDto valide
+	 */
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite correct")
 	public void testListDtoToListEntiteValid_shouldReturnListEntite() {
@@ -167,6 +200,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode listDtoToEntite avec une listDto vide
+	 */
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite correct")
 	public void testListDtoToListEntiteWithNullList_shouldReturnNull() {
@@ -178,6 +214,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode listEntiteToDto avec une listEntite valide
+	 */
 	@Test
 	@DisplayName("Convertion listEntiteToListDto correct")
 	public void testListEntiteToListDtoValid_shouldReturnListEntite() {
@@ -201,6 +240,9 @@ public class NiveauConverterTest {
 	}
 
 	// Valide !
+	/**
+	 * Cette méthode vérifie le fonctionnement de la méthode listEntiteToDto avec une listEntite vide
+	 */
 	@Test
 	@DisplayName("Convertion ListDtoToListEntite null")
 	public void testListEntiteToListDtoWithNullList_shouldReturnNull() {

@@ -2,8 +2,6 @@ package com.fr.adaming.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,7 +46,7 @@ public class NiveauController implements INiveauController {
 
 	@Override
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@Valid @RequestBody NiveauDto dto) {
+	public ResponseEntity<ResponseDto> create( NiveauDto dto) {
 		NiveauDtoCreate etu = 
 			convertCreate.entiteToDto(
 			service.create(convert.dtoToEntite(dto)));
@@ -68,7 +65,7 @@ public class NiveauController implements INiveauController {
 
 	@Override
 	@PutMapping
-	public ResponseEntity<ResponseDto> update(@Valid @RequestBody NiveauDtoCreate dto) {
+	public ResponseEntity<ResponseDto> update( NiveauDtoCreate dto) {
 		boolean result = service.update(convertCreate.dtoToEntite(dto));
 		ResponseDto resp = null;
 
@@ -84,7 +81,7 @@ public class NiveauController implements INiveauController {
 
 	@Override
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
+	public ResponseEntity<ResponseDto> findById(Integer id) {
 		NiveauDto dto = convert.entiteToDto(service.findById(id));
 		ResponseDto resp = null;
 
@@ -111,7 +108,7 @@ public class NiveauController implements INiveauController {
 
 	@Override
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id) {
+	public ResponseEntity<ResponseDto> delete( int id) {
 		boolean result = service.deleteById(id);
 		ResponseDto resp = null;
 
@@ -129,7 +126,7 @@ public class NiveauController implements INiveauController {
 	@GetMapping(path = "/classe/{idNiveau}")
 	public ResponseEntity<ResponseDto> findClasseByNiveau(@PathVariable(name = "idNiveau") int id) {
 		List<ClasseDto> list = convertClasse.listEntiteToDto(service.findListClasseByIdNiveau(id));
-		if(list != null && list.isEmpty()) {
+		if(list != null && !list.isEmpty()) {
 
 			log.info("NiveauFindClasseByNiveau OK");
 			ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);

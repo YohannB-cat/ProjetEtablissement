@@ -27,6 +27,7 @@ import com.fr.adaming.service.IEtudiantService;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Slf4j
 @RestController
 @RequestMapping(path = "/etudiant")

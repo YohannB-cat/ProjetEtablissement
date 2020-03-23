@@ -23,6 +23,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fr.adaming.dto.NoteDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
+/**
+ * Classe test de la couche controller de l'entité note
+ * @author clara
+ * @since 1.0.X
+ *
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class NoteControllerTest {
@@ -32,6 +38,11 @@ public class NoteControllerTest {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
+	/**
+	 * Teste la création d'une note et vérifie que le controller retourne bien la note qu'on lui a demandé de créer
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'exception générale
+	 */
 	@Test
 	public void testCreatingNoteWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 
@@ -57,6 +68,11 @@ public class NoteControllerTest {
 		assertThat(noteDtoCreate).isNotNull().hasFieldOrPropertyWithValue("valeur", requestDto.getValeur());
 	}
 
+	/**
+	 * Teste la recherche d'une note par un identifiant connu dans la base de donnée et vérifie le succès
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'exception générale
+	 */
 	@Sql(statements = "INSERT INTO note (id, valeur) values (5, 18)" ,executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM note", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -74,6 +90,11 @@ public class NoteControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 	
+	/**
+	 * Teste la recherche d'une note par un identifiant inconnu dans la base de donnée et vérifie que ça ne fonctionne pas
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'exception générale
+	 */
 	@Test
 	public void testFindByIdNotExistingWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
@@ -91,6 +112,11 @@ public class NoteControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
+	/**
+	 * Teste la recherche de tout les notes et vérifie le succès
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'exception générale
+	 */
 	@Test
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		// test requete
@@ -103,6 +129,11 @@ public class NoteControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	/**
+	 * Teste la modification d'une note connue dans la base de donnée et vérifie le succès
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'exception générale
+	 */
 	@Sql(statements = "INSERT INTO note (id, valeur) values (25, 18)" ,executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM note", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -126,6 +157,11 @@ public class NoteControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 	
+	/**
+	 * Teste la modification d'une note inconnue dans la base de donnée et vérifie l'échec
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'exception générale
+	 */
 	@Test
 	public void testUpdateNotExistingNoteWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 
@@ -147,6 +183,11 @@ public class NoteControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 	
+	/**
+	 * Teste la suppression d'une note connue dans la base de donnée et vérifie le succès
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'exception générale
+	 */
 	@Sql(statements = "INSERT INTO note (id, valeur) values (5, 18)" ,executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Test
 	public void testDeleteByExistingIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -165,6 +206,11 @@ public class NoteControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 	
+	/**
+	 * Teste la suppression d'une note inconnue dans la base de donnée et vérifie l'échec
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'exception générale
+	 */
 	@Test
 	public void testDeleteByNotExistingIdWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
@@ -182,6 +228,11 @@ public class NoteControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 	
+	/**
+	 * Teste la recherche de notes par l'identifiant d'un étudiant connu et vérifie le succès
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'exception générale
+	 */
 	@Sql(statements = "INSERT INTO etudiant (id, nom,cni,code_postale,telephone,sexe,en_etude) values (24, 'bob',11,11,11,1,1)" ,executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO note (id, valeur, etudiant_id) values (5, 18,24)" ,executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM note", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -200,6 +251,11 @@ public class NoteControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 	
+	/**
+	 * Teste la recheche de notes par l'identifiant d'un étudiant inconnu dans la base de donnée et vérifie l'échec
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON - String
+	 * @throws Exception en cas d'exception générale
+	 */
 	@Test
 	public void testFindByIdEtudiantNotExistingWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;

@@ -110,7 +110,7 @@ public class ExamenController implements IExamenController {
 	public ResponseEntity<ResponseDto> listByMatiere(int idMatiere){
 		ResponseDto resp = null;
 		List<Examen> list = service.listByMatiere(idMatiere);
-		if (list != null) {
+		if (!list.isEmpty()) {
 			resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}

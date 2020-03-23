@@ -2,6 +2,7 @@ package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,12 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import com.fr.adaming.entity.Matiere;
 import com.fr.adaming.entity.Module;
 
+/**
+ * Test service Module
+ * 
+ * @author IN-LY-004
+ * @since 1.0.x
+ */
 @SpringBootTest
 public class ModuleServiceTest {
 
@@ -25,6 +32,10 @@ public class ModuleServiceTest {
 	private IMatiereService matService;
 
 	// Tests create
+	/**
+	 * Création d'un module null
+	 * L'objet renvoyé est null
+	 */
 	@Test
 	@DisplayName("Création d'un Module null")
 	public void testCreatingModuleNull_shouldReturnNull() {
@@ -32,45 +43,50 @@ public class ModuleServiceTest {
 		assertNull(service.create(m));
 	}
 
+	/**
+	 * Création d'un module avec id sans nom
+	 * Condition valide
+	 */
 	@Test
-	@DisplayName("Création d'un Module avec param null")
-	@Sql(statements = "DELETE FROM Module WHERE nom ='null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE id=1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@DisplayName("Création d'un Module avec id sans nom")
+	@Sql(statements = "DELETE FROM Module WHERE nom ='null'", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingModuleWithNullName_shouldReturnModule() {
 		Module m = new Module(1, null);
 		Module modulCreate = service.create(m);
 		assertThat(modulCreate).hasFieldOrPropertyWithValue("nom", m.getNom());
-//		assertThat(modulCreate).hasFieldOrPropertyWithValue("id", m.getId());
 	}
 
+	/**
+	 * Création d'un module
+	 * Condition valide
+	 */
 	@Test
-	@DisplayName("Création d'un Module avec correct")
-	@Sql(statements = "DELETE FROM Module WHERE nom='null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Matiere WHERE nom ='Matiere4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE nom ='JAVA4Test'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@DisplayName("Création d'un Module correct")
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingCorrectModule_shouldReturnModule() {
-		Matiere mat = new Matiere(1,"Matiere4Test");
-
-		List<Matiere> list = new ArrayList<>();
-		list.add(mat);
-		matService.create(mat);
-		Module m = new Module(1, "JAVA4Test", list);
-		Module mcreate = service.create(m);
-		
-//		assertThat(mcreate).hasFieldOrPropertyWithValue("id", m.getId());
-		assertThat(mcreate).hasFieldOrPropertyWithValue("nom", m.getNom());
-		assertThat(mcreate.getMatieres()).asList().hasSize(1);
-		assertThat(mcreate.getMatieres().get(0)).hasFieldOrPropertyWithValue("nom", "Matiere4Test");
+		Module m = new Module(1, "JAVA4Test", null);
+		Module cm = service.create(m);
+		assertEquals(cm.getNom(), m.getNom());
 	}
 
 	// Test findAll
+	/**
+	 * Affichage de la liste avec DB vide
+	 * La liste retournée est vide
+	 */
 	@Test
 	@DisplayName("Demande de la liste vide")
 	public void testGetList_shouldReturnNull() {
 		assertThat(service.findAll()).isEmpty();
 	}
 
-	@Sql (statements = "DELETE FROM Module WHERE nom = 'null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	/**
+	 * Affichage de la liste
+	 * Condition valide
+	 */
+	@Sql(statements = "DELETE FROM Module WHERE nom = 'null'", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module  VALUES (null, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module VALUES (null, 'Spring')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Module WHERE nom = 'JAVA'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -82,16 +98,23 @@ public class ModuleServiceTest {
 	}
 
 	// Test findById
+	/**
+	 * Affichage d'un module par id sans DB
+	 * L'obejt retournée est null
+	 */
 	@Test
 	@DisplayName("Recherche de Module par id non existant")
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
-	
-	
-	@Sql(statements = "DELETE FROM Module WHERE nom='null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+
+	/**
+	 * Affichage d'un module par id
+	 * Condition valide
+	 */
+	@Sql(statements = "DELETE FROM Module ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE nom = 'JAVA'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche de Module par id")
 	public void testFindById_shouldReturnModule() {
@@ -102,6 +125,10 @@ public class ModuleServiceTest {
 	}
 
 	// Test update
+	/**
+	 * Modification d'un module null
+	 * La méthode update n'est pas executée
+	 */
 	@Test
 	@DisplayName("Update d'un Module null")
 	public void testUpdateNullModule_shouldReturnFalse() {
@@ -109,6 +136,10 @@ public class ModuleServiceTest {
 		assertThat(service.update(m)).isFalse();
 	}
 
+	/**
+	 * Modification d'un module sans DB
+	 * La méthode update n'est pas executée
+	 */
 	@Test
 	@DisplayName("Update d'un Module inexistant dans la bd")
 	public void testUpdateInexistantModule_shouldReturnFalse() {
@@ -118,27 +149,28 @@ public class ModuleServiceTest {
 		Module m = new Module(1, "JAVA", list);
 		assertThat(service.update(m)).isFalse();
 	}
-	
-	
-	//PROBLEMMMMMMEE false/true
-	// pb colum doesn'tcount match value at row 1
-	@Sql(statements = "DELETE FROM Module WHERE nom='null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+
+
+	/**
+	 * Modification d'un module
+	 * Condition valide
+	 */
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module (id,nom)  VALUES (1,'it4TEST')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE nom = 'JAVA4TEST'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Update d'un Module enregistrer dans la BD")
 	public void testUpdateModuleWithId_shouldReturnTrue() {
-		Matiere mat = new Matiere(1,"JAVA4TEST");
-		List<Matiere> list = new ArrayList<>();
-		list.add(mat);
-		Module m = new Module("JPA", list);
+		Module m = new Module("JPA", null);
+		m.setId(1);
 		assertThat(service.update(m)).isTrue();
 	}
 
 	// Test deleteById
-	@Sql (statements = "DELETE FROM Module WHERE nom = 'null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Module VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	/**
+	 * Suppression d'un module par id =0
+	 * La méthode delete n'est pas executée
+	 */
 	@Test
 	@DisplayName("Delete avec id = 0")
 	public void testDeleteByIdWithIdEqualsZero_shouldReturnFalse() {
@@ -146,9 +178,13 @@ public class ModuleServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
-	@Sql (statements = "DELETE FROM Module WHERE nom = 'null'",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	/**
+	 * Suppression d'un module par son id
+	 * Condition valide
+	 */
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module VALUES (1, 'JAVA')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Module WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Module", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Delete avec id valid")
 	public void testDeleteByIdWithValidId_shouldReturnTrue() {

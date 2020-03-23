@@ -19,7 +19,6 @@ import com.fr.adaming.entity.Niveau;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@SuppressWarnings("squid:S1148")
 @Service("niveauservice")
 public class NiveauService implements INiveauService {
 
@@ -49,16 +48,8 @@ public class NiveauService implements INiveauService {
 
 	@Override
 	public Niveau findById(int id) {
-		try {
-			if (id != 0) {
-				return dao.findById(id).orElse(null);
-			} else {
-				return null;
-			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			log.warn(e.getMessage());
-			return null;
-		}
+		log.info("Recuperation d'un Niveau");
+		return dao.findById(id).orElse(null);
 	}
 
 	@Override

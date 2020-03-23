@@ -12,6 +12,7 @@ import com.fr.adaming.entity.Absence;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Service("absenceservice")
 @Slf4j
 public class AbsenceService implements IAbsenceService {

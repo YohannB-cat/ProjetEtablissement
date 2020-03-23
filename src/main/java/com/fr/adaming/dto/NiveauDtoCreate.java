@@ -10,6 +10,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * DtoCreate de l'entité Niveau (avec id)
+ * @author Flavien
+ * @since 1.0.x
+ *
+ */
 @Getter @Setter @ToString @NoArgsConstructor @AllArgsConstructor
 public class NiveauDtoCreate {
 
@@ -17,7 +23,6 @@ public class NiveauDtoCreate {
 	
 	private int id;
 
-	private String nom;
-	
+	private String nom;	
 
 }

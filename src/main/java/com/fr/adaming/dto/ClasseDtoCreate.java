@@ -10,6 +10,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * DtoCreate de l'entité Classe (avec id)
+ * @author Flavien
+ * @since 1.0.x
+ *
+ */
 @Getter @Setter @ToString @NoArgsConstructor @AllArgsConstructor
 public class ClasseDtoCreate {
 	

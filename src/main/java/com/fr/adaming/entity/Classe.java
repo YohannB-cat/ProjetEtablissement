@@ -16,6 +16,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * modèle de l'entité Classe
+ * @author Flavien
+ * @since 1.0.x
+ *
+ */
 @Entity
 @Getter
 @Setter

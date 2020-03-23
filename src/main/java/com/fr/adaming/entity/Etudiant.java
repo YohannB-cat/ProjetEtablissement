@@ -11,6 +11,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Modèle de l'entité Etudiant
+ * 
+ * @author clara
+ * @since 1.0.x
+ */
 @Entity
 @Getter
 @Setter
@@ -36,6 +42,10 @@ public class Etudiant {
 	private int cni;
 	@Column
 	private int telephone;
+	
+	/**
+	 * Champ pour le sexe : true pour femme, false pour homme
+	 */
 	@Column
 	private boolean sexe;
 	@Column

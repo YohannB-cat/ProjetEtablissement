@@ -5,6 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Modèle du dto EtudiantDto (similaire à étudiant mais sans id)
+ * @author clara
+ * @since 1.0.x
+ */
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class EtudiantDto {
 	

@@ -17,7 +17,6 @@ import com.fr.adaming.entity.Classe;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@SuppressWarnings("squid:S1148")
 @Service ("classeservice")
 public class ClasseService implements IClasseService{
 	
@@ -31,8 +30,8 @@ public class ClasseService implements IClasseService{
 				return null;
 			}
 			return dao.save(classe);
-		} catch (DataIntegrityViolationException e) {
-			log.warn(e.getMessage());
+		} catch (DataIntegrityViolationException ep) {
+			log.warn(ep.getMessage());
 			return null;
 		}
 
@@ -70,8 +69,8 @@ public class ClasseService implements IClasseService{
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException er) {
-			log.warn(er.getMessage());
+		} catch (InvalidDataAccessApiUsageException ex) {
+			log.warn(ex.getMessage());
 			return false;
 		} catch (NullPointerException ec) {
 			log.warn(ec.getMessage());
@@ -89,8 +88,8 @@ public class ClasseService implements IClasseService{
 			} else {
 				return false;
 			}
-		} catch (InvalidDataAccessApiUsageException e) {
-			log.warn(e.getMessage());
+		} catch (InvalidDataAccessApiUsageException ef) {
+			log.warn(ef.getMessage());
 			return false;
 		} catch (EmptyResultDataAccessException er) {
 			log.warn(er.getMessage());

@@ -175,79 +175,94 @@ paths:
           description: "SUCCESS : note mis à jour"
           schema:
             $ref: "#/descriptions/ResponseDto"
-  /examen/{id}:
+  /note/{id}:
     get:
       tags:
-      - "examen"
-      summary: "Find Examen by Id"
-      description: "Trouver un examen par son id"
+      - "note"
+      summary: "Find note by Id"
+      description: "Trouver une note par son id"
       produces: 
       - "application/json"
       parameters:
       - in: "path"
         name: "id"
-        description: "Id de l'examen à afficher"
+        description: "Id de la note à afficher"
         required: true
         type: "integer"
         format: "int32"
       responses:
         400:
           description: "FAIL : examen non trouvé"
+          schema:
+            $ref: "#/descriptions/ResponseDto"
         200:
           description: "SUCCESS : examen trouvé"
+          schema:
+            $ref: "#/descriptions/ResponseDto"
     delete:
       tags:
-      - "examen"
-      summary: "Delete Examen by Id"
-      description: "Trouver un examen par son id et le supprime de la base de données"
+      - "note"
+      summary: "Delete note by Id"
+      description: "Trouver une note par son id et le supprime de la base de données"
       produces: 
       - "application/json"
       parameters:
       - in: "path"
         name: "id"
-        description: "Id de l'examen à supprimer"
+        description: "Id de la note à supprimer"
         required: true
         type: "integer"
         format: "int32"
       responses:
         400:
           description: "FAIL : examen non supprimé"
+          schema:
+            $ref: "#/descriptions/ResponseDto"
         200:
           description: "SUCCESS : examen supprimé"
-  /examen/all:
+          schema:
+            $ref: "#/descriptions/ResponseDto"
+  /note/all:
     get:
       tags:
-      - "examen"
-      summary: "Find all Examen"
-      description: "Afficher tous les examens"
+      - "note"
+      summary: "Find all note"
+      description: "Afficher toutes les notes"
       produces: 
       - "application/json"
       responses:
         400:
           description: "FAIL : liste non trouvé"
+          schema:
+            $ref: "#/descriptions/ResponseDto"
         200:
           description: "SUCCESS : liste de tous les examens trouvé"
-  /examen/matiere:
+          schema:
+            $ref: "#/descriptions/ResponseDto"
+  /note/etudiant/{id}:
     get:
       tags:
-      - "examen"
-      summary: "Find all Examen By Matiere"
-      description: "Afficher tous les examens d'une matiere"
+      - "note"
+      summary: "Find all note By Etudiant"
+      description: "Afficher toutes les notes d'un etudiant"
       produces: 
       - "application/json"
       parameters:
       - in: "path"
         name: "id"
-        description: "Id de la matiere"
+        description: "Id de l'etudiant'"
         required: true
         type: "integer"
         format: "int32"
       responses:
         400:
           description: "FAIL : liste non trouvé"
+          schema:
+            $ref: "#/descriptions/ResponseDto"
         200:
-          description: "SUCCESS : liste de tous les examens de la matiere choisie trouvé"
-
+          description: "SUCCESS : liste de toutes les notes de l'etudiant' choisie trouvé"
+          schema:
+            $ref: "#/descriptions/ResponseDto"
 
 
 definitions:
@@ -595,3 +610,28 @@ definitions:
         $ref: "#/definitions/Examen"
     xml:
       name: "Note"
+  Niveau:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      classes:
+        type: "array"
+      nom:
+        type: "string"
+  NiveauDto:
+    type: "object"
+    properties:
+      classes:
+        type: "array"
+      nom:
+        type: "string"
+  NiveauDtoCreate:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      classes:
+        type: "array"
+      nom:
+        type: "string"

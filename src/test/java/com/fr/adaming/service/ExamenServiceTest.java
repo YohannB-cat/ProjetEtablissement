@@ -1,6 +1,7 @@
 package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,12 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.entity.Examen;
 
+/**
+ * Classe test pour la couche service de l'entité examen
+ * @author Yohann
+ * @since 1.0.x
+ *
+ */
 @SpringBootTest
 public class ExamenServiceTest {
 
@@ -19,12 +26,20 @@ public class ExamenServiceTest {
 	private IExamenService service;
 
 	// Tests create
+	/**
+	 * Test de la méthode create avec un examen null
+	 * Doit retourner un objet null
+	 */
 	@Test
 	@DisplayName("Création d'un Examen null")
 	public void testCreatingExamenNull_shouldReturnNull() {
 		Examen exam = null;
 		assertNull(service.create(exam));
 	}
+	/**
+	 * Test de la méthode create avec un examen non valide
+	 * Doit retourner un objet null
+	 */
 	@Test
 	@DisplayName("Création d'un Examen avec length type>20")
 	public void testCreatingNonValidExamen_shouldReturnNull() {
@@ -32,21 +47,35 @@ public class ExamenServiceTest {
 		assertNull(service.create(exam));
 	}
 
+	/**
+	 * Test de la méthode create avec un examen qui a des attributs null
+	 * Doit retourner l'examen  créé
+	 */
 	@Test
 	@DisplayName("Création d'un Examen avec param null")
-	public void testCreatingExamenWithNullName_shouldReturnNiveau() {
+	@Sql(statements = "delete from Examen",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreatingExamenWithNullName_shouldReturnExamen() {
 		Examen exam = new Examen(0, null, null, 0D);
 		assertThat(service.create(exam)).isEqualTo(exam);
 	}
 
+	/**
+	 * Test de la méthode create avec un examen valide
+	 *  Doit retourner l'examen créé
+	 */ 
 	@Test
 	@DisplayName("Création d'un Examen avec correct")
-	public void testCreatingCorrectExamen_shouldReturnNiveau() {
+	@Sql(statements = "delete from Examen",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreatingCorrectExamen_shouldReturnExamen() {
 		Examen exam = new Examen(0, null, "DS", 3D);
 		assertThat(service.create(exam)).isEqualTo(exam);
 	}
 
 	// Test findAll
+	/**
+	 * Test de la méthode findAll sans examens enregistrés
+	 * Doit retourner une liste vide
+	 */
 	@Test
 	@Sql(statements = "delete from Examen",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@DisplayName("Demande de la liste vide")
@@ -54,6 +83,10 @@ public class ExamenServiceTest {
 		assertThat(service.findAll()).isEmpty();
 	}
 
+	/**
+	 * Test de la méthode findAll avec des examens enregistrés
+	 * Doit retourner la liste de tous les examens enregistrés
+	 */
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (1, null, 'DS', 3)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (2, null, 'DM', 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Examen WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -65,22 +98,36 @@ public class ExamenServiceTest {
 	}
 
 	// Test findById
+	/**
+	 * Test de la méthode findById avec un examen qui n'existe pas dans la DB
+	 * Doit retourner un objet null
+	 */
 	@Test
 	@DisplayName("Recherche d'un Examen par id non existant")
 	public void testFindByIdWithInexistantId_shouldReturnNull() {
 		assertThat(service.findById(1)).isNull();
 	}
 
+	/**
+	 * Test de la méthode findById avec un examen enregistré dans la DB
+	 * Doit retourner l'examen recherché
+	 */
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (1, null, 'DS', 3)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Examen WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@DisplayName("Recherche d'un Examen par id")
 	public void testFindById_shouldReturnNiveau() {
 		Examen exam = new Examen(1, null, "DS", 3D);
-		assertThat(service.findById(1)).isEqualTo(exam);
+		assertEquals(service.findById(1).getCoefficient(), exam.getCoefficient());
+		assertEquals(service.findById(1).getDate(), exam.getDate());
+		assertEquals(service.findById(1).getType(), exam.getType());
 	}
 
 	// Test update
+	/**
+	 * Test de la méthode update avec un examen null
+	 * Doit retourner False
+	 */
 	@Test
 	@DisplayName("Update d'un Examen null")
 	public void testUpdateNullExamen_shouldReturnFalse() {
@@ -88,6 +135,10 @@ public class ExamenServiceTest {
 		assertThat(service.update(exam)).isFalse();
 	}
 
+	/**
+	 * Test de la méthode update avec un examen inexistant dans la DB
+	 * Doit retourner False
+	 */
 	@Test
 	@DisplayName("Update d'un Examen inexistant dans la bd")
 	public void testUpdateInexistantExamen_shouldReturnFalse() {
@@ -95,6 +146,10 @@ public class ExamenServiceTest {
 		assertThat(service.update(exam)).isFalse();
 	}
 
+	/**
+	 * Test de la méthode update avec un examen valide qui existe dans la DB
+	 * Doit retourner True
+	 */
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (1, null, 'DS', 3)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Examen WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -105,6 +160,10 @@ public class ExamenServiceTest {
 	}
 
 	// Test deleteById
+	/**
+	 * Test de la méthode deleteById avec un id = 0
+	 * Doit retourner False
+	 */
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (1, null, 'DS', 3)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Examen WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -114,6 +173,10 @@ public class ExamenServiceTest {
 		assertThat(service.deleteById(id)).isFalse();
 	}
 
+	/**
+	 * Test de la méthode deleteById avec un id valide
+	 * Doit retourner True
+	 */
 	@Sql(statements = "INSERT INTO Examen (id, date, type, coefficient) VALUES (1, null, 'DS', 3)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Examen WHERE id = 1", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -123,6 +186,10 @@ public class ExamenServiceTest {
 		assertThat(service.deleteById(id)).isTrue();
 	}
 
+	/**
+	 * Test de la méthode ListByMatiere avec une matière valide
+	 * Doit retourner la liste des examens correspondant à la matiere recherchée
+	 */
 	@Sql(statements = "INSERT INTO Examen (id, type) VALUES (1, 'exam1')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Examen (id, type) VALUES (2, 'exam2')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module (id, nom) VALUES (1, 'module1')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -138,9 +205,13 @@ public class ExamenServiceTest {
 		assertThat(service.listByMatiere(1)).hasSize(2).hasOnlyElementsOfType(Examen.class);
 		
 	}
+	/**
+	 * Test de la méthode ListByMatiere avec une matiere qui n'existe pas dans la DB
+	 * Doit retourner une liste vide
+	 */
 	@Test
-	public void testListByNonExistingMatiere_shouldReturnNull() {
-		assertThat(service.listByMatiere(1)).isNull();
+	public void testListByNonExistingMatiere_shouldReturnEmptyList() {
+		assertThat(service.listByMatiere(1)).isEmpty();
 		
 	}
 	

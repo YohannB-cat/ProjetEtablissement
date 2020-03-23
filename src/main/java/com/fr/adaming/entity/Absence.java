@@ -10,12 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Modèle de l'entité Absence. Getter et Setter des attributs de l'entité. Constructeur vide et contructeurs variés avec certains ou tous les attributs
+ * @author Isaline
+ * @since 1.0.X
+ *
+ */
 @Entity
 @Getter @Setter @ToString
 @NoArgsConstructor

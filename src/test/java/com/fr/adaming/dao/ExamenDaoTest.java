@@ -10,12 +10,21 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.entity.Examen;
 
+/**
+ * Classe test de la couche DAO pour l'entité examen
+ * @author Yohann
+ *
+ */
 @SpringBootTest
 public class ExamenDaoTest {
 	
 	@Autowired
 	private IExamenDao dao;
 	
+	/**
+	 * Test de la méthode ListeByMatiere d'une matiere existante
+	 * Doit retourner la liste des examens de la matiere demandée
+	 */
 	@Sql(statements = "INSERT INTO Examen (id, type) VALUES (1, 'exam1')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Examen (id, type) VALUES (2, 'exam2')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Module (id, nom) VALUES (1, 'module1')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
