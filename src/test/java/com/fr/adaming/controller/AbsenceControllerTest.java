@@ -26,14 +26,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
+/**
+ * Cette classe teste les différentes méthodes de la couche controller de l'entité Absence
+ * @author Isaline
+ * @since 1.0.X
+ *
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AbsenceControllerTest {
+	
 	@Autowired
 	private MockMvc mockMvc;
 
 	private ObjectMapper mapper = new ObjectMapper();
 
+	/**
+	 * Cette méthode teste la création d'une absence via la couche controller.
+	 * En conditions valides (paramètres fournis valides)
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Sql(statements = "delete from Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testCreatingAbsenceWithController_shouldWork() throws UnsupportedEncodingException, Exception {
@@ -65,6 +78,12 @@ public class AbsenceControllerTest {
 		assertFalse(responseDto.isError());
 	}
 
+	/**
+	 * Cette méthode teste la création d'une absence via la couche controller.
+	 * En conditions INVALIDES (paramètres fournis invalides : manque des params requis)
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Test
 	@DisplayName("test creation absence withtout attribute")
 	@Sql(statements = "delete from Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -85,6 +104,12 @@ public class AbsenceControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
+	/**
+	 * Cette méthode teste la récupération d'une absence via son id par la couche controller.
+	 * En conditions valides (id donné correspond à celui d'une absence enregistrée dans la BD)
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (5, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -104,6 +129,12 @@ public class AbsenceControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	/**
+	 * Cette méthode teste la récupération d'une absence via son id par la couche controller.
+	 * En conditions INVALIDES (id donné ne correspond pas à celui d'une absence enregistrée dans la BD)
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Test
 	public void testFindByIdInvalid_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 5;
@@ -121,6 +152,11 @@ public class AbsenceControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
+	/**
+	 * Cette méthode teste la récupération de la liste des absences par la couche controller.
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Test
 	public void testFindAllWithController_shouldWork() throws UnsupportedEncodingException, Exception {
 		// test requete
@@ -133,6 +169,12 @@ public class AbsenceControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	/**
+	 * Cette méthode teste la modification d'une absence par la couche controller.
+	 * En conditions valides (paramètres fournis valides)
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (5, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -157,6 +199,12 @@ public class AbsenceControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	/**
+	 * Cette méthode teste la modification d'une absence par la couche controller.
+	 * En conditions INVALIDES (absence inexistantes dans la BD)
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Test
 	public void testUpdateAbsenceWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		AbsenceDtoCreate requestDto = new AbsenceDtoCreate();
@@ -179,6 +227,12 @@ public class AbsenceControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "FAIL");
 	}
 
+	/**
+	 * Cette méthode teste la suppression d'une absence par la couche controller.
+	 * En conditions valides (id donnée correspond à celui d'une absence enregistrée dans la BD)
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Sql(statements = "INSERT INTO Absence (id, debut, fin) VALUES (5, '2020-02-20', '2020-02-20')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Absence", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -198,6 +252,12 @@ public class AbsenceControllerTest {
 		assertThat(responseDto).isNotNull().hasFieldOrPropertyWithValue("message", "SUCCESS");
 	}
 
+	/**
+	 * Cette méthode teste la suppression d'une absence par la couche controller.
+	 * En conditions INVALIDES (id donnée ne correspond pas à celui d'une absence enregistrée dans la BD)
+	 * @throws UnsupportedEncodingException en cas d'erreur de conversion JSON
+	 * @throws Exception en cas d'erreur générale
+	 */
 	@Test
 	public void testDeleteByNotExistingIdWithController_shouldNotWork() throws UnsupportedEncodingException, Exception {
 		int id = 28;

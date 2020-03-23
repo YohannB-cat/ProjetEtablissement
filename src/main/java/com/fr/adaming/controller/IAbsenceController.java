@@ -26,7 +26,7 @@ public interface IAbsenceController {
 	/**
 	 * Cette méthode sert à créer et enregistrer de façon persistante une absence
 	 * @param absenceDtoCreate valide (avec dates début et fin sous forme de string) 
-	 * @return Renvoie un ResponseEnttity<ResponseDto> avec un boolean erreur, un String message, et un objet (absence si succes).
+	 * @return Renvoie un ResponseEntity avec un boolean erreur, un String message, et un objet (absence si succes).
 	 */
 	@PostMapping
 	public ResponseEntity<ResponseDto> create(@Valid @RequestBody AbsenceDtoCreate absenceDtoCreate);
@@ -34,7 +34,7 @@ public interface IAbsenceController {
 	/**
 	 * Cette méthode sert à modifier une absence déjà enregistrée dans la BD
 	 * @param absenceDtoCreate valide (avec dates début et fin sous forme de string) avec l'id de l'absence à modifier
-	 * @return Renvoie un ResponseEnttity<ResponseDto> avec un boolean erreur, un String message, et un objet null.
+	 * @return Renvoie un ResponseEntity avec un boolean erreur, un String message, et un objet null.
 	 */
 	@PutMapping
 	public ResponseEntity<ResponseDto> update(@Valid @RequestBody AbsenceDtoCreate absenceDtoCreate);
@@ -42,14 +42,14 @@ public interface IAbsenceController {
 	/**
 	 * Cette méthode sert à trouver une absence enregistrée dans la BD via son Id
 	 * @param id l'identifiant de l'absence que l'on cherche
-	 * @return Renvoie un ResponseEnttity<ResponseDto> avec un boolean erreur, un String message, et un objet (asebnce si succes).
+	 * @return Renvoie un ResponseEntity avec un boolean erreur, un String message, et un objet (asebnce si succes).
 	 */
 	@GetMapping(path = "/one/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id);
 
 	/**
 	 * Cette méthode permet de rechercher toutes les absences enregistrées dans la BD
-	 * @return Renvoie un ResponseEnttity<ResponseDto> avec un boolean erreur, un String message, et un objet (liste d'absences si succes).
+	 * @return Renvoie un ResponseEntity avec un boolean erreur, un String message, et un objet (liste d'absences si succes).
 	 */
 	@GetMapping(path = "/all")
 	public ResponseEntity<ResponseDto> findAll();
@@ -57,7 +57,7 @@ public interface IAbsenceController {
 	/**
 	 * Cette méthode permet de supprimer une absence dans la BD via son identifiant
 	 * @param id l'identifiant de l'absence que l'on souhaite supprimer
-	 * @return Renvoie un ResponseEnttity<ResponseDto> avec un boolean erreur, un String message, et un objet null.
+	 * @return Renvoie un ResponseEntity avec un boolean erreur, un String message, et un objet null.
 	 */
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> delete(@PathVariable(name = "id") int id);
