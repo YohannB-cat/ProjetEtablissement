@@ -17,12 +17,21 @@ import com.fr.adaming.dto.AbsenceDtoCreate;
 import com.fr.adaming.entity.Absence;
 import com.fr.adaming.entity.Etudiant;
 
+/**
+ * Cette classe teste la couche converter de l'entité Absence et du Dto AbsenceCreateDto
+ * @author Isaline
+ * @since 1.0.X
+ *
+ */
 @SpringBootTest
 public class AbsenceCreateConverterTest {
 
 	@Autowired
 	public IConverter<Absence, AbsenceDtoCreate> convert;
 
+	/**
+	 * Cette méthode teste la conversion de AbsenceCreateDto vers Absence - conditions valides
+	 */
 	@Test
 	public void testDtoToEntiteValid_shouldReturnEntite() {		
 		Etudiant etu = new Etudiant();
@@ -41,6 +50,9 @@ public class AbsenceCreateConverterTest {
 		assertTrue(abs.getDescription().equals("desc"));
 	}
 	
+	/**
+	 * Cette méthode teste la conversion de AbsenceCreateDto vers Absence - conditions valides sans étudiant lié à l'absence
+	 */
 	@Test
 	public void testDtoToEntiteValidSansEtudiant_shouldReturnEntite() {		
 		AbsenceDtoCreate dto = new AbsenceDtoCreate(5, "2020-02-20", "2020-02-20","justif","desc");
@@ -58,18 +70,27 @@ public class AbsenceCreateConverterTest {
 		assertTrue(abs.getDescription().equals("desc"));
 	}
 
+	/**
+	 * Cette méthode teste la conversion de AbsenceCreateDto vers Absence - conditions invalides (attributs requis manquants)
+	 */
 	@Test
 	public void testDtoToEntiteInvalidSansDates_shouldReturnNull() {
 		AbsenceDtoCreate dto = new AbsenceDtoCreate();
 		assertNull(convert.dtoToEntite(dto));
 	}
 
+	/**
+	 * Cette méthode teste la conversion de AbsenceCreateDto vers Absence - conditions invalides (absenceDto nulle)
+	 */
 	@Test
 	public void testDtoToEntiteNull_shouldReturnNull() {
 		assertNull(convert.dtoToEntite(null));
 
 	}
 
+	/**
+	 * Cette méthode teste la conversion de Absence vers AbsenceCreateDto - conditions valides
+	 */
 	@Test
 	public void testEntiteToDtoValid_shouldReturnEntite() {
 		Etudiant etu = new Etudiant();
@@ -88,6 +109,9 @@ public class AbsenceCreateConverterTest {
 		assertTrue(dto.getDescription().equals("desc"));
 	}
 
+	/**
+	 * Cette méthode teste la conversion de Absence vers AbsenceCreateDto - conditions valides sans étudiant lié à l'absence
+	 */
 	@Test
 	public void testEntiteToDtoValidSansEtudiant_shouldReturnEntite() {
 		String date = "2020-02-20";
@@ -105,17 +129,26 @@ public class AbsenceCreateConverterTest {
 		assertTrue(dto.getDescription().equals("desc"));
 	}
 	
+	/**
+	 * Cette méthode teste la conversion de Absence vers AbsenceCreateDto - conditions invalides (attributs requis manquants)
+	 */
 	@Test
 	public void testEntiteToDtoInvalidSansDates_shouldReturnEntite() {
 		Absence abs = new Absence();
 		assertNull(convert.entiteToDto(abs));
 	}	
 
+	/**
+	 * Cette méthode teste la conversion de Absence vers AbsenceCreateDto - conditions invalides (absenceDto nulle)
+	 */
 	@Test
 	public void testEntiteToDtoNull_shouldReturnNull() {
 		assertNull(convert.entiteToDto(null));
 	}
 
+	/**
+	 * Cette méthode teste la conversion d'une liste AbsenceCreateDto vers liste Absence - conditions valides 
+	 */
 	@Test
 	public void testListDtoToEntiteValid_shouldReturnEntite() {
 		List<AbsenceDtoCreate> listeDto = new ArrayList<AbsenceDtoCreate>();
@@ -129,6 +162,9 @@ public class AbsenceCreateConverterTest {
 		assertTrue((convert.listDtoToEntite(listeDto).size()==2));
 	}
 	
+	/**
+	 * Cette méthode teste la conversion d'une liste AbsenceCreateDto vers liste Absence - conditions valides sans étudiant liés aux absences 
+	 */
 	@Test
 	public void testListDtoToEntiteValidSansEtudiant_shouldReturnEntite() {
 		List<AbsenceDtoCreate> listeDto = new ArrayList<AbsenceDtoCreate>();
@@ -141,6 +177,9 @@ public class AbsenceCreateConverterTest {
 		assertTrue((convert.listDtoToEntite(listeDto).size()==2));
 	}
 	
+	/**
+	 * Cette méthode teste la conversion d'une liste AbsenceCreateDto vers liste Absence - conditions invalides (param requis manquants)
+	 */
 	@Test
 	public void testListDtoToEntiteInvalidSansDates_shouldReturnEmpty() {
 		List<AbsenceDtoCreate> listeDto = new ArrayList<AbsenceDtoCreate>();
@@ -153,12 +192,18 @@ public class AbsenceCreateConverterTest {
 		assertTrue((convert.listDtoToEntite(listeDto)).isEmpty());
 	}
 
+	/**
+	 * Cette méthode teste la conversion d'une liste AbsenceCreateDto vers liste Absence - conditions invalides (liste empty)
+	 */
 	@Test
 	public void testListDtoToEntiteNull_shouldReturnEmpty() {
 		assertTrue((convert.listDtoToEntite(new ArrayList<AbsenceDtoCreate>())).isEmpty());
 
 	}
 
+	/**
+	 * Cette méthode teste la conversion d'une liste Absence vers liste AbsenceCreateDto - conditions valides 
+	 */
 	@Test
 	public void testListEntiteToDtoValid_shouldReturnEntite() {
 		List<Absence> liste = new ArrayList<Absence>();
@@ -176,6 +221,9 @@ public class AbsenceCreateConverterTest {
 		assertTrue(listeReturned.size() > 1);
 	}
 	
+	/**
+	 * Cette méthode teste la conversion d'une liste Absence vers liste AbsenceCreateDto - conditions valides sans étudiant liés aux absences 
+	 */
 	@Test
 	public void testListEntiteToDtoValidSansEtudiant_shouldReturnEntite() {
 		List<Absence> liste = new ArrayList<Absence>();
@@ -192,6 +240,9 @@ public class AbsenceCreateConverterTest {
 		assertTrue(listeReturned.size() > 1);
 	}
 
+	/**
+	 * Cette méthode teste la conversion d'une liste Absence vers liste AbsenceCreateDto - conditions invalides (param requis manquants)
+	 */
 	@Test
 	public void testListEntiteToDtoInvalidSansDates_shouldReturnEmpty() {
 		List<Absence> liste = new ArrayList<Absence>();
@@ -204,7 +255,9 @@ public class AbsenceCreateConverterTest {
 		assertTrue(convert.listEntiteToDto(liste).isEmpty());
 	}
 
-
+	/**
+	 * Cette méthode teste la conversion d'une liste Absence vers liste AbsenceCreateDto - conditions invalides (liste empty)
+	 */
 	@Test
 	public void testListEntiteToDtoNull_shouldReturnEmpty() {
 		assertTrue(convert.listEntiteToDto(new ArrayList<Absence>()).isEmpty());

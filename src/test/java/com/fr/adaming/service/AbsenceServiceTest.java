@@ -17,6 +17,12 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import com.fr.adaming.entity.Absence;
 import com.fr.adaming.entity.Etudiant;
 
+/**
+ * Cette classe teste la couche service de l'entité Absence
+ * @author Isaline
+ * @since 1.0.X
+ *
+ */
 @SpringBootTest
 public class AbsenceServiceTest {
 
