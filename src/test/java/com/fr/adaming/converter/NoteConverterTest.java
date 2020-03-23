@@ -105,7 +105,7 @@ public class NoteConverterTest {
 	@Test
 	@DisplayName("test 9")
 	public void testListDtoToEntiteNull_shouldReturnNull() {
-		assertThat(convert.listDtoToEntite(null).isEmpty());
+		assertTrue(convert.listDtoToEntite(null).isEmpty());
 
 	}
 
@@ -132,7 +132,7 @@ public class NoteConverterTest {
 	@Test
 	@DisplayName("test 12")
 	public void testListEntiteToDtoNull_shouldReturnNull() {
-		assertThat(convert.listEntiteToDto(null).isEmpty());
+		assertTrue(convert.listEntiteToDto(null).isEmpty());
 
 	}
 

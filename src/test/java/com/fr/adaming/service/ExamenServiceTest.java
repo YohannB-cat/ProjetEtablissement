@@ -207,11 +207,11 @@ public class ExamenServiceTest {
 	}
 	/**
 	 * Test de la méthode ListByMatiere avec une matiere qui n'existe pas dans la DB
-	 * Doit retourner un objet null
+	 * Doit retourner une liste vide
 	 */
 	@Test
-	public void testListByNonExistingMatiere_shouldReturnNull() {
-		assertThat(service.listByMatiere(1)).isNull();
+	public void testListByNonExistingMatiere_shouldReturnEmptyList() {
+		assertThat(service.listByMatiere(1)).isEmpty();
 		
 	}
 	

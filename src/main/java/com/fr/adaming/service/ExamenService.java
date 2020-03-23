@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,11 +85,13 @@ public class ExamenService implements IExamenService {
 	
 	@Override
 	public List<Examen> listByMatiere(int idMatiere){
+		List<Examen> list = new ArrayList<>();
 		if (matiereDao.findById(idMatiere).isPresent()) {
 			log.info("SUCCESS LIST BY Matiere");
-			return dao.listByMatiere(idMatiere);
+			list = dao.listByMatiere(idMatiere);
+			return list;
 		}
-		return null;
+		return list;
 	}
 
 }
