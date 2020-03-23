@@ -11,6 +11,12 @@ import com.fr.adaming.entity.Absence;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Interface IConverter responsable de la couche converter de l'entité Absence vers AbsenceDto
+ * @author Isaline
+ * @since 1.0.X
+ *
+ */
 @Component
 @Slf4j
 public class AbsenceConverter implements IConverter<Absence, AbsenceDto> {

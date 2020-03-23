@@ -10,6 +10,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Modèle DTO de l'entité Absence AVEC l'identifiant unique de la BD. Getter et Setter de chaque attribut. Constructeur vide et constructeurs avec certains ou tous les attributs. 
+ * @author Isaline
+ * @since 1.0.X
+ *
+ */
 @Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor
 public class AbsenceDtoCreate {
