@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.hql.internal.ast.tree.IsNotNullLogicOperatorNode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +106,7 @@ public class NoteConverterTest {
 	@Test
 	@DisplayName("test 9")
 	public void testListDtoToEntiteNull_shouldReturnNull() {
-		assertThat(convert.listDtoToEntite(null).isEmpty());
+		assertThat(convert.listDtoToEntite(null)).isNotNull().isEmpty();
 
 	}
 
@@ -132,7 +133,7 @@ public class NoteConverterTest {
 	@Test
 	@DisplayName("test 12")
 	public void testListEntiteToDtoNull_shouldReturnNull() {
-		assertThat(convert.listEntiteToDto(null).isEmpty());
+		assertThat(convert.listEntiteToDto(null)).isNotNull().isEmpty();
 
 	}
 
