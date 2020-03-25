@@ -10,7 +10,7 @@ import com.fr.adaming.service.IMatiereService;
 
 /**
  * Classe writer pour matiere
- * Implemente ItemWriter et redéfinit la méthode read
+ * Implemente ItemWriter et redéfinit la méthode write
  * @author maxime
  *
  */

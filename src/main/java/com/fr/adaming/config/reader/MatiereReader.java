@@ -9,6 +9,7 @@ import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 
 import com.fr.adaming.entity.Matiere;
 
@@ -18,13 +19,14 @@ import com.fr.adaming.entity.Matiere;
  * @author maxime
  *
  */
+@Component
 public class MatiereReader implements ItemReader<FlatFileItemReader<Matiere>>{
 	
 	@Value ("classpath:/matiere.csv")
 	private Resource inputRessource;
 
 	/**
-	 *Méthode read qui va recupérer les données à partir d'un fichier et renvoi un objet
+	 *Méthode read qui va recupérer les données à partir d'un fichier et faire le mapping vers des ojets Java
 	 *@return objet de type matière
 	 */
 	@Override

@@ -9,26 +9,28 @@ import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.stereotype.Component;
 
 /**
- * Classe Listener pour l'entité Matière
- * Implémente StepListener et fait partie du job de MAJ de DB
+ * Classe Listener pour l'entité Matière Implémente StepListener et fait partie
+ * du job de MAJ de DB
+ * 
  * @author maxime
  *
  */
 @Component
-public class MatiereListener implements StepExecutionListener {
+public class ModuleListener implements StepExecutionListener {
 
 	/**
-	 * Méthode affichant un message dans la console avant l'execution du step
-	 * Permet d'avoir un affichage clair dans la console
+	 * Méthode affichant un message dans la console avant l'execution du step Permet
+	 * d'avoir un affichage clair dans la console
 	 */
 	@Override
 	public void beforeStep(StepExecution stepExecution) {
 		System.out.println("-------------> Le step commence");
+
 	}
 
 	/**
-	 *Méthode affichant un message dans la console après l'exdcution du step
-	 *Permet d'avoir un affichage clair dans la console
+	 * Méthode affichant un message dans la console après l'exdcution du step Permet
+	 * d'avoir un affichage clair dans la console
 	 */
 	@Override
 	public ExitStatus afterStep(StepExecution stepExecution) {
