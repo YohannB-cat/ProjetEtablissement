@@ -17,7 +17,7 @@ import com.fr.adaming.entity.Absence;
 @Component
 public class AbsenceReader {
 	
-	@Value("classpath:/Absence.csv")
+	@Value("${FichierAbsence}")
 	private Resource inputResource;
 
 	/**
