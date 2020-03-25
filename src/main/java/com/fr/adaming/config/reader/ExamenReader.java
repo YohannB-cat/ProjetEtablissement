@@ -24,7 +24,7 @@ import com.fr.adaming.entity.Examen;
 @Component
 public class ExamenReader implements ItemReader<FlatFileItemReader<Examen>> {
 	
-	@Value("classpath:/Examens.csv")
+	@Value("${FichierExamens}")
 	private Resource inputResource;
 
 	@Override
