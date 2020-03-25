@@ -12,17 +12,17 @@ import org.springframework.batch.core.StepExecutionListener;
  * @since 1.0.x
  *
  */
-public class ExamenListener implements StepExecutionListener {
+public class NoteListener implements StepExecutionListener {
 
 	@Override
 	public void beforeStep(StepExecution stepExecution) {
-		System.out.println("******************               JOB EXAMEN START          ************************");
+		System.out.println("******************               STEP NOTE START          ************************");
 		System.out.println("Heure de début   :     "+new Date());
 	}
 
 	@Override
 	public ExitStatus afterStep(StepExecution stepExecution) {
-		System.out.println("******************              JOB EXAMEN END           ************************");
+		System.out.println("******************              STEP NOTE END           ************************");
 		return stepExecution.getExitStatus();
 	}
 

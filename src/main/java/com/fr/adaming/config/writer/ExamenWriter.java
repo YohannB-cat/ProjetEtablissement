@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.fr.adaming.entity.Examen;
 import com.fr.adaming.service.IExamenService;
@@ -14,16 +15,12 @@ import com.fr.adaming.service.IExamenService;
  * @since 1.0.x
  *
  */
+@Component
 public class ExamenWriter implements ItemWriter<Examen> {
 	
 	@Autowired
 	private IExamenService service;
 
-	/**
-	 * Méthode qui écrit les données d'une liste d'examen dans la DB
-	 * @param items Liste d'examen provenant de la classe ExamenProcessor
-	 * @throws Exeception Lorsqu'il y a une erreur quelconque
-	 */
 	@Override
 	public void write(List<? extends Examen> items) throws Exception {
 		for (Examen exam : items) {
