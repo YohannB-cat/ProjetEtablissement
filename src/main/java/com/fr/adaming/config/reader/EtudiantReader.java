@@ -31,7 +31,7 @@ public class EtudiantReader implements ItemReader<FlatFileItemReader<Etudiant>>{
         
 		return new FlatFileItemReaderBuilder<Etudiant>()
         		//attribuer un name à notre ItemReader
-                .name("personItemReader")
+                .name("EtudiantReader")
 				// On ignore la première ligne du ficher persons.csv
                 .linesToSkip(1)
                 .resource(inputResource)
