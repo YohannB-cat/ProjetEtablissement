@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.fr.adaming.entity.Etudiant;
 import com.fr.adaming.service.EtudiantService;
@@ -13,6 +14,7 @@ import com.fr.adaming.service.EtudiantService;
  * @author clara
  * @since 1.0.x
  */
+@Component
 public class EtudiantWriter implements ItemWriter<Etudiant>{
 
 	@Autowired

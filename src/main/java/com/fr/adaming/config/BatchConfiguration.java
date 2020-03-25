@@ -4,6 +4,9 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemStreamException;
+import org.springframework.batch.item.NonTransientResourceException;
+import org.springframework.batch.item.ParseException;
+import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.batch.item.validator.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,29 +29,29 @@ public class BatchConfiguration {
 	public StepBuilderFactory stepBuilderFactory;
 	
 	@Autowired
-	public EtudiantReader etReader;
+	public EtudiantReader etudiantReader;
 	
 	@Autowired
-	public EtudiantWriter etWriter;
+	public EtudiantWriter etudiantWriter;
 	
 	@Autowired
-	public EtudiantProcessor etProcessor;
+	public EtudiantProcessor etudiantProcessor;
 	
 	@Autowired
-	public EtudiantListener etListener;
+	public EtudiantListener etudiantListener;
 	
 	
 	@Bean
-	public Step etudiantStep() {
+	public Step etudiantStep() throws UnexpectedInputException, ParseException, NonTransientResourceException, Exception {
         return stepBuilderFactory.get("step1").<Etudiant, Etudiant>chunk(10)
                 .faultTolerant()
                 .skip(ValidationException.class)
                 .skip(FlatFileParseException.class)
                 .skip(ItemStreamException.class)
                 .skipLimit(9)
-                .reader(etReader)
-                .processor(etProcessor)
-                .writer(etWriter)
+                .reader(etudiantReader.read())
+                .processor(etudiantProcessor)
+                .writer(etudiantWriter)
                 .build();
 	}
 

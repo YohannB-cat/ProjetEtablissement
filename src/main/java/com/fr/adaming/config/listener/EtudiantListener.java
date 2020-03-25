@@ -4,12 +4,14 @@ import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.listener.StepExecutionListenerSupport;
+import org.springframework.stereotype.Component;
 
 /**
  * Classe StepListener responsable de l'entité étudiant : Permet d'afficher mode console le début, le status et la fin du step étudiant 
  * @author clara
  * @since 1.0.x
  */
+@Component
 public class EtudiantListener extends StepExecutionListenerSupport {
 	
 	@Override
