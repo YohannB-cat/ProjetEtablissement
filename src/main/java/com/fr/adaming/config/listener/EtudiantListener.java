@@ -1,5 +1,7 @@
 package com.fr.adaming.config.listener;
 
-public class EtudiantListener {
+import org.springframework.batch.core.StepListener;
+
+public class EtudiantListener implements StepListener {
 
 }
