@@ -71,7 +71,7 @@ public class ExamenController implements IExamenController {
 	// find All
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		List<ExamenDto> list = examDto.listEntiteToDto(service.findAll());
+		List<ExamenDtoCreate> list = examCreateDto.listEntiteToDto(service.findAll());
 		ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 		
