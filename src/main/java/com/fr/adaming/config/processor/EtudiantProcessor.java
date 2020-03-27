@@ -24,12 +24,12 @@ public class EtudiantProcessor implements ItemProcessor<Etudiant, Etudiant> {
 	public Etudiant process(Etudiant person) throws Exception {
 		// Envoyer un mail de notification
 		SimpleMailMessage email = new SimpleMailMessage();
-		email.setTo(person.getEmail());
-		email.setSubject("Inscription à l'université Margoulin! :)");
-		email.setText("Bonjour "+person.getNom()+" ! \n\n"
-				+ "Bienvenue à l'université gérée par la PataTeam\n"
-				+ "Cordialement\n");
-		emailSender.send(email);
+//		email.setTo(person.getEmail());
+//		email.setSubject("Inscription à l'université Margoulin! :)");
+//		email.setText("Bonjour "+person.getNom()+" ! \n\n"
+//				+ "Bienvenue à l'université gérée par la PataTeam\n"
+//				+ "Cordialement\n");
+//		emailSender.send(email);
 
 	    return person;
 	}

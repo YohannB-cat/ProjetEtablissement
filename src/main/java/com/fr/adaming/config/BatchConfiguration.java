@@ -72,7 +72,7 @@ public class BatchConfiguration {
                 .build();
 	}
 	
-	@Scheduled(fixedDelay = 30*1000) // On va lancer cette méthode toutes les 30 secondes
+	@Scheduled(fixedDelay = 24*60*60*1000) // On va lancer cette méthode toutes les 30 secondes
     public void scheduleFixedDelayTask() throws Exception {
 
         System.out.println(" ########## Job lancé "+ new Date() + " ##########");
