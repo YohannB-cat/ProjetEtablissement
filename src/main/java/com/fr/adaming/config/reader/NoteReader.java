@@ -24,6 +24,9 @@ import com.fr.adaming.entity.Note;
 @Component
 public class NoteReader implements ItemReader<FlatFileItemReader<Note>> {
 	
+
+//	@Value("classpath:/notes.csv")
+	
 	@Value("${FichierNotes}")
 	private Resource inputResource;
 

@@ -81,10 +81,10 @@ public class BatchConfiguration {
 	public Step etudiantStep() throws UnexpectedInputException, ParseException, NonTransientResourceException, Exception {
         return stepBuilderFactory.get("step1").<Etudiant, Etudiant>chunk(10)
                 .faultTolerant()
-                .skip(ValidationException.class)
-                .skip(FlatFileParseException.class)
-                .skip(ItemStreamException.class)
-                .skipLimit(9)           
+//                .skip(ValidationException.class)
+//                .skip(FlatFileParseException.class)
+//                .skip(ItemStreamException.class)
+//                .skipLimit(9)           
                 .reader(etudiantReader.read())
                 .processor(etudiantProcessor)
                 .writer(etudiantWriter)
@@ -92,6 +92,7 @@ public class BatchConfiguration {
                 .build();
 	}
 	
+	@Scheduled(fixedDelay = 24*60*60*1000) // On va lancer cette méthode 1/j
 	@Bean
 	public Step examenStep() throws UnexpectedInputException, ParseException, NonTransientResourceException, Exception {
         return stepBuilderFactory.get("stepExamen").<Examen, Examen>chunk(10)
@@ -105,6 +106,7 @@ public class BatchConfiguration {
                .listener(examenListener)
                 .build();
 	}	
+	
 	@Bean
 	public Step noteStep() throws UnexpectedInputException, ParseException, NonTransientResourceException, Exception {
         return stepBuilderFactory.get("stepNote").<Note, Note>chunk(10)
@@ -118,7 +120,8 @@ public class BatchConfiguration {
                 .listener(noteListener)
                 .build();
 	}
-	@Scheduled(fixedDelay = 30000*1000) // On va lancer cette méthode toutes les 30 secondes
+	
+	@Scheduled(fixedDelay = 24*60*60*1000) // On va lancer cette méthode 1/j
     public void scheduleFixedDelayTask() throws Exception {
 
         System.out.println(" ########## Job lancé "+ new Date() + " ##########");

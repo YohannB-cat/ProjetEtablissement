@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.fr.adaming.entity.Matiere;
 import com.fr.adaming.service.IMatiereService;
@@ -14,6 +15,7 @@ import com.fr.adaming.service.IMatiereService;
  * @author maxime
  *
  */
+@Component
 public class MatiereWriter implements ItemWriter<Matiere> {
 
 
