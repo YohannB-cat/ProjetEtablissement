@@ -101,7 +101,7 @@ public class EtudiantController implements IEtudiantController {
 	@Override
 	@GetMapping(path = "/all")
 	public ResponseEntity<ResponseDto> findAll() {
-		List<EtudiantDto> list = convert.listEntiteToDto(service.findAll());
+		List<EtudiantDtoCreate> list = convertCreate.listEntiteToDto(service.findAll());
 		this.resp.setObject(list);
 		setResponseSuccess();
 		log.info("Recherche etudiant all Ok");
