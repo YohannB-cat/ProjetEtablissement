@@ -25,10 +25,18 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import com.fr.adaming.config.listener.EtudiantListener;
+import com.fr.adaming.config.listener.ExamenListener;
+import com.fr.adaming.config.listener.NoteListener;
 import com.fr.adaming.config.processor.EtudiantProcessor;
 import com.fr.adaming.config.reader.EtudiantReader;
+import com.fr.adaming.config.reader.ExamenReader;
+import com.fr.adaming.config.reader.NoteReader;
 import com.fr.adaming.config.writer.EtudiantWriter;
+import com.fr.adaming.config.writer.ExamenWriter;
+import com.fr.adaming.config.writer.NoteWriter;
 import com.fr.adaming.entity.Etudiant;
+import com.fr.adaming.entity.Examen;
+import com.fr.adaming.entity.Note;
 
 @Configuration
 @EnableBatchProcessing
@@ -55,24 +63,65 @@ public class BatchConfiguration {
 	
 	@Autowired
 	public EtudiantListener etudiantListener;
+	@Autowired
+	public ExamenReader examenReader;
+	@Autowired
+	public ExamenWriter examenWriter;
+	@Autowired
+	public ExamenListener examenListener;
+	@Autowired
+	public NoteReader noteReader;
+	@Autowired
+	public NoteWriter noteWriter;
+	@Autowired
+	public NoteListener noteListener;
 	
 	
 	@Bean
 	public Step etudiantStep() throws UnexpectedInputException, ParseException, NonTransientResourceException, Exception {
         return stepBuilderFactory.get("step1").<Etudiant, Etudiant>chunk(10)
                 .faultTolerant()
+//                .skip(ValidationException.class)
+//                .skip(FlatFileParseException.class)
+//                .skip(ItemStreamException.class)
+//                .skipLimit(9)           
+                .reader(etudiantReader.read())
+                .processor(etudiantProcessor)
+                .writer(etudiantWriter)
+                .listener(etudiantListener)
+                .build();
+	}
+	
+	@Scheduled(fixedDelay = 24*60*60*1000) // On va lancer cette méthode 1/j
+	@Bean
+	public Step examenStep() throws UnexpectedInputException, ParseException, NonTransientResourceException, Exception {
+        return stepBuilderFactory.get("stepExamen").<Examen, Examen>chunk(10)
+                .faultTolerant()
                 .skip(ValidationException.class)
                 .skip(FlatFileParseException.class)
                 .skip(ItemStreamException.class)
                 .skipLimit(9)           
-                .reader(etudiantReader.read())
-                .processor(etudiantProcessor)
-                .writer(etudiantWriter)
-//                .listener(etudiantListener)
+                .reader(examenReader.read())
+                .writer(examenWriter)
+               .listener(examenListener)
+                .build();
+	}	
+	
+	@Bean
+	public Step noteStep() throws UnexpectedInputException, ParseException, NonTransientResourceException, Exception {
+        return stepBuilderFactory.get("stepNote").<Note, Note>chunk(10)
+                .faultTolerant()
+                .skip(ValidationException.class)
+                .skip(FlatFileParseException.class)
+                .skip(ItemStreamException.class)
+                .skipLimit(9)           
+                .reader(noteReader.read())
+                .writer(noteWriter)
+                .listener(noteListener)
                 .build();
 	}
 	
-	@Scheduled(fixedDelay = 24*60*60*1000) // On va lancer cette méthode toutes les 30 secondes
+	@Scheduled(fixedDelay = 24*60*60*1000) // On va lancer cette méthode 1/j
     public void scheduleFixedDelayTask() throws Exception {
 
         System.out.println(" ########## Job lancé "+ new Date() + " ##########");

@@ -36,7 +36,7 @@ public class EtudiantReader implements ItemReader<FlatFileItemReader<Etudiant>>{
                 .linesToSkip(1)
                 .resource(inputResource)
                 .delimited()
-                .names(new String[]{"id", "nom", "prenom", "email"})
+                .names(new String[]{"id", "nom", "prenom", "adresse","ville", "email","codePostale", "cni", "telephone"})
 				//Préciser le type des objets pour le mapping <Person>
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<Etudiant>() {{
                     setTargetType(Etudiant.class);
