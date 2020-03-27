@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fr.adaming.dto.ExamenDto;
 import com.fr.adaming.dto.ExamenDtoCreate;
 import com.fr.adaming.dto.ResponseDto;
 
@@ -37,7 +38,7 @@ public interface IExamenController {
 	 * @return ResponseEntity de type ResponseDto(<b>boolean</b> error, <b>String</b> message, <b>Object</b> object créé)
 	 */
 	@PostMapping
-	public ResponseEntity<ResponseDto> create(@RequestBody @Valid ExamenDtoCreate dto);
+	public ResponseEntity<ResponseDto> create(@RequestBody @Valid ExamenDto dto);
 	
 	//read examen 
 	/**

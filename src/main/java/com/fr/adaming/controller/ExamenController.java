@@ -35,9 +35,9 @@ public class ExamenController implements IExamenController {
 
 	// create
 	@Override
-	public ResponseEntity<ResponseDto> create(@Valid ExamenDtoCreate dto) {
+	public ResponseEntity<ResponseDto> create(@Valid ExamenDto dto) {
 		ExamenDtoCreate exam =
-				examCreateDto.entiteToDto(service.create(examCreateDto.dtoToEntite(dto)));
+				examCreateDto.entiteToDto(service.create(examDto.dtoToEntite(dto)));
 		
 				//initialisation de la reponse
 				ResponseDto resp = null;

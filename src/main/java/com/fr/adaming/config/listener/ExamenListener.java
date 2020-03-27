@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.stereotype.Component;
 
 /**
  * Classe listener du job associé à l'entité Examen qui notifie l'heure de début et l'heure de fin du job
@@ -12,6 +13,7 @@ import org.springframework.batch.core.StepExecutionListener;
  * @since 1.0.x
  *
  */
+@Component
 public class ExamenListener implements StepExecutionListener {
 
 	@Override
