@@ -84,7 +84,7 @@ public class EtudiantController implements IEtudiantController {
 	@Override
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
-		EtudiantDto dto = convert.entiteToDto(service.findById(id));
+		EtudiantDtoCreate dto = convertCreate.entiteToDto(service.findById(id));
 		this.resp.setObject(dto);
 		
 		if (dto != null) {
