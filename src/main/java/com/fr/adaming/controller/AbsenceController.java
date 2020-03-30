@@ -72,7 +72,7 @@ public class AbsenceController implements IAbsenceController {
 
 	@Override
 	public ResponseEntity<ResponseDto> findById(@PathVariable(name = "id") int id) {
-		AbsenceDto dto = convert.entiteToDto(service.findById(id));
+		AbsenceDtoCreate dto = convertCreate.entiteToDto(service.findById(id));
 		ResponseDto resp = null;
 
 		if (dto != null) {
@@ -87,7 +87,7 @@ public class AbsenceController implements IAbsenceController {
 
 	@Override
 	public ResponseEntity<ResponseDto> findAll() {
-		List<AbsenceDto> list = convert.listEntiteToDto(service.findAll());
+		List<AbsenceDtoCreate> list = convertCreate.listEntiteToDto(service.findAll());
 
 		ResponseDto resp = new ResponseDto(false, WebConstant.SUCCESS, list);
 		log.info("Find all absence Ok");
